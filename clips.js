@@ -2,7 +2,8 @@ $ui.render({
   props: {
     title: "Clips"
   },
-  views: [{
+  views: [
+    {
       type: "button",
       props: {
         title: "选择"
@@ -39,12 +40,14 @@ $ui.render({
       type: "list",
       props: {
         id: "list",
-        actions: [{
-          title: "delete",
-          handler: function(sender, indexPath) {
-            deleteItem(indexPath)
+        actions: [
+          {
+            title: "delete",
+            handler: function(sender, indexPath) {
+              deleteItem(indexPath)
+            }
           }
-        }]
+        ]
       },
       layout: function(make) {
         make.left.bottom.right.equalTo(0)
@@ -88,19 +91,21 @@ function selectItem() {
     props: {
       title: "历史记录"
     },
-    views: [{
-      type: "list",
-      props: {
-        data: $clipboard.list(50)
-      },
-      layout: $layout.fill,
-      events: {
-        didSelect: function(sender, indexPath, title) {
-          insertItem(title)
-          $ui.pop()
+    views: [
+      {
+        type: "list",
+        props: {
+          data: $clipboard.list(50)
+        },
+        layout: $layout.fill,
+        events: {
+          didSelect: function(sender, indexPath, title) {
+            insertItem(title)
+            $ui.pop()
+          }
         }
       }
-    }]
+    ]
   })
 }
 

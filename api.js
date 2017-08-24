@@ -375,7 +375,7 @@ var data = [{
                       $photo.edit({
                         image: image,
                         handler: function(edited) {
-                          $photo.save({ image: edited })
+                          $photo.save({image: edited})
                         }
                       })
                     }

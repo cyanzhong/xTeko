@@ -28,7 +28,7 @@ $ui.render({
         font: $font("bold", 20)
       },
       layout: function(make) {
-        let input = $("input")
+        var input = $("input")
         make.left.equalTo(input.right).offset(10)
         make.centerY.equalTo(input)
       }

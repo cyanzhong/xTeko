@@ -186,7 +186,7 @@ var data = [{
         layout: function(make, view) {
           make.left.right.equalTo(0)
           make.centerY.equalTo(view.super)
-          make.height.equalTo(215)
+          make.height.equalTo(256)
         }
       }]
     }
@@ -234,7 +234,16 @@ var data = [{
           type: "picker",
           props: {
             id: "picker",
-            items: Array(3).fill(Array.from(Array(256).keys()))
+            items: (function() {
+              function fill() {
+                var array = []
+                for (var i=0; i<256; ++i) {
+                  array.push(i)
+                }
+                return array
+              }
+              return [fill(), fill(), fill()]
+            })()
           },
           layout: function(make) {
             make.left.top.right.equalTo(0)

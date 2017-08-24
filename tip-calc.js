@@ -4,7 +4,8 @@ $ui.render({
   props: {
     title: "Tip Calculator"
   },
-  views: [{
+  views: [
+    {
       type: "input",
       props: {
         type: $kbType.decimal

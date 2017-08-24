@@ -2,7 +2,8 @@ $ui.render({
   props: {
     title: "Downloader"
   },
-  views: [{
+  views: [
+    {
       type: "button",
       props: {
         title: "下载"

@@ -310,18 +310,20 @@ $ui.render({
   props: {
     title: "Emoticons"
   },
-  views: [{
-    type: "list",
-    props: {
-      data: data
-    },
-    layout: $layout.fill,
-    events: {
-      didSelect: function(tableView, indexPath, title) {
-        $clipboard.text = title
-        $device.taptic()
-        $app.close()
+  views: [
+    {
+      type: "list",
+      props: {
+        data: data
+      },
+      layout: $layout.fill,
+      events: {
+        didSelect: function(tableView, indexPath, title) {
+          $clipboard.text = title
+          $device.taptic()
+          $app.close()
+        }
       }
     }
-  }]
+  ]
 })
