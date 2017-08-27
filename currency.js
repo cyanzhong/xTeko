@@ -66,10 +66,10 @@ var rate = 0.0
 
 $ui.loading(true)
 $http.get({
-  url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDCNY%22)&format=json&env=store://datatables.org/alltableswithkeys",
+  url: "http://api.fixer.io/latest?base=USD&symbols=CNY",
   handler: function(resp) {
     $ui.loading(false)
-    rate = Number(resp.data.query.results.rate.Rate)
+    rate = resp.data.rates.CNY
     calc(1)
     $("date").text = new Date(resp.data.query.created).toLocaleTimeString()
     $("input").focus()
