@@ -1,5 +1,5 @@
 var regex = /.+id(\d+).*/
-var match = regex.exec($context.link || $clipboard.links[0])
+var match = regex.exec($context.link || $clipboard.link)
 var appid = match[1]
 
 if (appid) {

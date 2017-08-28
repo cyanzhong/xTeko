@@ -3058,7 +3058,7 @@ const rules =
 
 $app.hidden = true
 
-var link = $clipboard.links[0]
+var link = $clipboard.link
 
 if (!link) {
   return

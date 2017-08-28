@@ -55,7 +55,7 @@ function showEngines(url) {
 var inputData = $context.data
 var inputLink = $context.link
 var clipData = $clipboard.image
-var clipLink = $clipboard.links[0]
+var clipLink = $clipboard.link
 
 if (inputData) {
   searchImage(inputData)
