@@ -23,7 +23,7 @@ Pin 最近推出了上线以来最大的一次更新：「xTeko 实验室」，�
 
 正如上述内容提到的，扩展插件支持很多的入口，所以我们有必要看看如何使用他，在这里会尽量介绍一些有趣的例子。
 
-![image](https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/lab.jpg)
+<img src="https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/lab.jpg" width="346px" />
 
 在这里可以点击播放键运行扩展，界面支持滑动返回，继续返回将关闭界面：
 
@@ -39,27 +39,27 @@ Pin 最近推出了上线以来最大的一次更新：「xTeko 实验室」，�
 
 当你需要编辑一个扩展的时候，可以打开代码编辑器：
 
-![image](https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/editor.jpg)
+<img src="https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/editor.jpg" width="346px" />
 
 目前这个编辑器支持简单的代码高亮和格式化操作，将会在之后的更新中逐步完善对自动提示的支持。
 
 想要安装扩展？打开扩展商店便可以浏览在线推荐的扩展插件（目前扩展数量不多，还没有提供搜索操作）：
 
-![image](https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/store.jpg)
+<img src="https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/store.jpg" width="346px" />
 
 # 从通知中心启动扩展
 
 作为从通知中心起步的应用 Pin 来说，对通知中心的支持是必不可少的，所以大部分的扩展都会支持从通知中心运行，并且 Pin 3.0 提供了一个独立的插件：
 
-![image](https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/widget-01.jpg)
+<img src="https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/widget-01.jpg" width="346px" />
 
-![image](https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/widget-02.jpg)
+<img src="https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/widget-02.jpg" width="346px" />
 
 # 从分享面板启动
 
 除了新增加的通知中心小部件以外，Pin 3.0 还提供的独立的分享面板插件，可以方便的从分享面板启动各种扩展：
 
-![image](https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/share.jpg)
+<img src="https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/share.jpg" width="346px" />
 
 # 如何安装扩展
 
@@ -120,7 +120,7 @@ Pin 3.0 支持的是标准 JavaScript，也就是说所有 `ECMAScript` 标准�
 
 在一篇以用户为主要受众的文章中，并不会介绍过多的开发细节，关于开发所有的细节都在官方文档里：
 
-![image](https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/docs.jpg)
+<img src="https://raw.githubusercontent.com/cyanzhong/xTeko/master/user-guides/initial/screenshots/docs.jpg" width="346px" />
 
 # 一些相关的信息
 
