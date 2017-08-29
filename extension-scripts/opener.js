@@ -2005,6 +2005,10 @@ const rules =
       {
         "app": "catchapppad",
         "format": "catchapp://app?id=$1"
+      },
+      {
+        "app": "pricetag",
+        "format": "pricetag://activity?id=$1"
       }
     ]
   },
@@ -3058,7 +3062,7 @@ const rules =
 
 $app.hidden = true
 
-var link = $clipboard.link
+var link = $context.link || $clipboard.link
 
 if (!link) {
   return
