@@ -1,7 +1,7 @@
 function escapeHtml(str) {
   if (str.match(/\\u/))
     str = unescape(str.replace(/\\u/g, '%u'))
-  return str.replace(/\\/g, "").replace(/&amp;/g, "&").replace(/&(quot|apos);.*$/, "")
+  return str.replace(/\\/g, "").replace(/amp;/g, "").replace(/&(quot|apos);.*$/, "")
 }
 
 function unique(array) {
@@ -242,7 +242,7 @@ function mainView(list) {
       type: "list",
       props: {
         data: [{
-          title: "MP4 List",
+          title: "MP4 List (" + list.length + ")",
           rows: list,
           id: "list"
         }],
@@ -271,17 +271,18 @@ function mainView(list) {
         },
         rowHeight: 80,
         actions: [{
-          title: "Edit",
-          handler: function(tableView, indexPath) {
-            editorView(tableView.object(indexPath).url.text)
+            title: "Edit",
+            handler: function(tableView, indexPath) {
+              editorView(tableView.object(indexPath).url.text)
+            }
+          },
+          {
+            title: "Preview",
+            handler: function(tableView, indexPath) {
+              previewView(tableView.object(indexPath).url.text)
+            }
           }
-        },
-        {
-          title: "Preview",
-          handler: function(tableView, indexPath) {
-            previewView(tableView.object(indexPath).url.text)
-          }
-        }]
+        ]
       },
       layout: $layout.fill,
       events: {
@@ -290,7 +291,7 @@ function mainView(list) {
         },
         longPressed: function(sender) {
           $device.taptic(0.5)
-          // Preview Link Todo
+          // Todo: Link to clipboard
         },
         pulled: function(sender) {
           $("list").endRefreshing()
@@ -307,33 +308,17 @@ function mainView(list) {
   })
 }
 
-/* Main */
-
-if (typeof($context.safari) == "undefined") {
-  $ui.alert({
-    title: "Running Error",
-    message: "Universal MP4 should only be run in Safari or any SafariViewController.",
-    actions: [{
-      title: "OK",
-      style: "Cancel",
-      handler: function() {
-        $context.close()
-        $app.close()
-      }
-    }]
-  })
-} else {
-  var items = tryToMatchMP4($context.safari.items.source)
-
+function main(items, message) {
   if (items == null) {
     $ui.alert({
       title: "No MP4 Found",
-      message: "You can try to run again after playing the video.",
+      message: message,
       actions: [{
         title: "OK",
         style: "Cancel",
         handler: function() {
           $context.close()
+          $app.close()
         }
       }]
     })
@@ -347,4 +332,41 @@ if (typeof($context.safari) == "undefined") {
     )
     mainView(list)
   }
+}
+
+/* Main */
+
+if (typeof($context.safari) == "undefined") {
+  var url = $context.link || $clipboard.link ? $context.link || $clipboard.link : ""
+  
+  if (url.match(/https?\:\/\/.+/i)) {
+    $ui.toast("Trying to get HTTP source ...")
+    $ui.loading(true)
+    $http.get({
+      url: url,
+      handler: function(resp) {
+        $ui.loading(false)
+        var items = tryToMatchMP4(resp.data)
+        var message = "Universal MP4 strongly recommend you to run in Safari or any SafariViewController.\n\nIn that way, we can get dynamic web source other than static HTTP source."
+        main(items, message)
+      }
+    })
+  } else {
+    $ui.alert({
+      title: "Running Error",
+      message: "Universal MP4 strongly recommend you to run in Safari or any SafariViewController.\n\nIn that way, we can get dynamic web source other than static HTTP source.",
+      actions: [{
+        title: "OK",
+        style: "Cancel",
+        handler: function() {
+          $context.close()
+          $app.close()
+        }
+      }]
+    })
+  }
+} else {
+  var items = tryToMatchMP4($context.safari.items.source)
+  var message = "You can try to run again after playing the video."
+  main(items, message)
 }
