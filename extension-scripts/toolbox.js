@@ -34,15 +34,20 @@ function showNumberBases(title) {
 
   showViews(title, [
     {
-      type: "label",
+      type: "button",
       props: {
         id: "label-dec",
-        text: "Dec",
+        title: "Dec",
         align: $align.center
       },
       layout: function(make) {
         make.size.equalTo($size(64, 32))
         make.top.right.inset(Constants.margins.regular)
+      },
+      events: {
+        tapped: function(sender){
+          $clipboard.text = $("input-dec").text;
+        }
       }
     },
     {
@@ -63,10 +68,10 @@ function showNumberBases(title) {
       }
     },
     {
-      type: "label",
+      type: "button",
       props: {
         id: "label-hex",
-        text: "Hex",
+        title: "Hex",
         align: $align.center
       },
       layout: function(make) {
@@ -74,6 +79,11 @@ function showNumberBases(title) {
         make.left.right.equalTo(topView)
         make.size.equalTo(topView)
         make.top.equalTo(topView.bottom).offset(Constants.margins.regular)
+      },
+      events: {
+        tapped: function(sender){
+          $clipboard.text = $("input-hex").text;
+        }
       }
     },
     {
@@ -95,10 +105,10 @@ function showNumberBases(title) {
       }
     },
     {
-      type: "label",
+      type: "button",
       props: {
         id: "label-oct",
-        text: "Oct",
+        title: "Oct",
         align: $align.center
       },
       layout: function(make) {
@@ -106,6 +116,11 @@ function showNumberBases(title) {
         make.left.right.equalTo(topView)
         make.size.equalTo(topView)
         make.top.equalTo(topView.bottom).offset(Constants.margins.regular)
+      },
+      events: {
+        tapped: function(sender){
+          $clipboard.text = $("input-oct").text;
+        }
       }
     },
     {
@@ -127,10 +142,10 @@ function showNumberBases(title) {
       }
     },
     {
-      type: "label",
+      type: "button",
       props: {
         id: "label-bin",
-        text: "Bin",
+        title: "Bin",
         align: $align.center
       },
       layout: function(make) {
@@ -138,6 +153,11 @@ function showNumberBases(title) {
         make.left.right.equalTo(topView)
         make.size.equalTo(topView)
         make.top.equalTo(topView.bottom).offset(Constants.margins.regular)
+      },
+      events: {
+        tapped: function(sender){
+          $clipboard.text = $("input-bin").text;
+        }
       }
     },
     {
