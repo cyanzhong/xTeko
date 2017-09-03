@@ -104,7 +104,7 @@ $ui.render({
           title: "Share",
           handler: function(tableView, indexPath) {
             var object = tableView.object(indexPath)
-            $share.sheet([object.url, object.label.text])
+            $share.sheet([object.url, object.title])
           }
         },
         {
