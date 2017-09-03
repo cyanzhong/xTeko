@@ -106,9 +106,7 @@ $ui.render({
               url: tableView.object(indexPath).url,
               handler: function(resp) {
                 var data = resp.data;
-                // For rtmp flv, please check the API response
-                // flv can be streamed by vlc , and not expire
-                // Here simply redirect to hls_url, which could expire
+                //handle flv with nPlayer Plus
                 if(data.data && data.data.rtmp_url && data.data.rtmp_live){
                     var flv = 'nplayer-' + data.data.rtmp_url + '/' + data.data.rtmp_live
                     $app.openURL(flv)
@@ -148,7 +146,7 @@ $ui.render({
 
 function refetch() {
   $http.get({
-    url: "https://api.maxjia.com/api/live/list/",
+    url: "https://api.maxjia.com/api/live/list/",     // Use at your own risk
     handler: function(resp) {
       render(resp.data.result)
     }
