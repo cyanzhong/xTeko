@@ -183,6 +183,10 @@ function render(stories) {
 }
 
 function openURL(url) {
+  if ($app.env == $env.today) {
+    $app.openURL(url)
+    return;
+  }
   $ui.push({
     props: {
       title: url
