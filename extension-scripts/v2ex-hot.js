@@ -99,20 +99,6 @@ $ui.render({
                 make.right.inset(10)
           }
         }
-      ],
-      actions: [{
-          title: "Share",
-          handler: function(tableView, indexPath) {
-            var object = tableView.object(indexPath)
-            $share.sheet([object.url, object.title])
-          }
-        },
-        {
-          title: "Open",
-          handler: function(tableView, indexPath) {
-            $app.openURL(tableView.object(indexPath).url)
-          }
-        }
       ]
     },
     layout: $layout.fill,
