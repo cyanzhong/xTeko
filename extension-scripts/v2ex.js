@@ -1,27 +1,27 @@
 Date.prototype.format = function(fmt) {
-     var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
-    };
-    if(/(y+)/.test(fmt)) {
-            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+  var o = {
+    "M+": this.getMonth() + 1,
+    "d+": this.getDate(),
+    "h+": this.getHours(),
+    "m+": this.getMinutes(),
+    "s+": this.getSeconds(),
+    "q+": Math.floor((this.getMonth() + 3) / 3),
+    "S": this.getMilliseconds()
+  }
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length))
+  }
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
     }
-     for(var k in o) {
-        if(new RegExp("("+ k +")").test(fmt)){
-             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-         }
-     }
-    return fmt;
+  }
+  return fmt
 }
 
 $ui.render({
   props: {
-    title: "v2ex 最热"
+    title: "V2EX 最热"
   },
   views: [{
     type: "list",
@@ -50,7 +50,7 @@ $ui.render({
             make.left.equalTo($("image").right).offset(10)
             make.top.equalTo(10)
             make.right.inset(10)
-            make.height.equalTo(20);
+            make.height.equalTo(20)
           }
         },
         {
@@ -64,9 +64,9 @@ $ui.render({
             radius: 2
           },
           layout: function(make) {
-                make.left.equalTo($("title"))
-                make.top.equalTo($("title").bottom).offset(5)
-                make.bottom.equalTo(-10)
+            make.left.equalTo($("title"))
+            make.top.equalTo($("title").bottom).offset(5)
+            make.bottom.equalTo(-10)
           }
         },
         {
@@ -78,9 +78,9 @@ $ui.render({
             textColor: $color("#777777"),
           },
           layout: function(make) {
-                make.left.equalTo($("node").right)
-                make.top.equalTo($("title").bottom).offset(5)
-                make.bottom.equalTo(-10)
+            make.left.equalTo($("node").right)
+            make.top.equalTo($("title").bottom).offset(5)
+            make.bottom.equalTo(-10)
           }
         },
         {
@@ -92,11 +92,11 @@ $ui.render({
             textColor: $color("#777777"),
           },
           layout: function(make) {
-                make.left.equalTo($("author").right)
-                make.right.equalTo($("title"))
-                make.top.equalTo($("title").bottom).offset(5)
-                make.bottom.equalTo(-10)
-                make.right.inset(10)
+            make.left.equalTo($("author").right)
+            make.right.equalTo($("title"))
+            make.top.equalTo($("title").bottom).offset(5)
+            make.bottom.equalTo(-10)
+            make.right.inset(10)
           }
         }
       ]
@@ -118,7 +118,6 @@ function refetch() {
     url: "https://www.v2ex.com/api/topics/hot.json",
     handler: function(resp) {
       render(resp.data)
-      //$cache.set("stories", resp.data)
     }
   })
 }
@@ -130,19 +129,19 @@ function render(stories) {
     data.push({
       url: "https://www.v2ex.com/t/" + story.id,
       image: {
-        src: "https:"+ story.member.avatar_large
+        src: "https:" + story.member.avatar_large
       },
       title: {
-        text: story.title
+        text: story.title + ''
       },
-      node:{
+      node: {
         text: " " + story.node.title + " "
       },
-      author:{
+      author: {
         text: "  •  " + story.member.username + "  •  "
       },
-      timestamp:{
-        text:  new Date(story.created * 1000).format("yyyy-MM-dd hh:mm")
+      timestamp: {
+        text: new Date(story.created * 1000).format("yyyy-MM-dd hh:mm")
       }
     })
   }
@@ -151,6 +150,10 @@ function render(stories) {
 }
 
 function openURL(url) {
+  if ($app.env == $env.today) {
+    $app.openURL(url)
+    return
+  }
   $ui.push({
     props: {
       title: url
@@ -164,12 +167,4 @@ function openURL(url) {
     }]
   })
 }
-
-//enable cache below
-
-//var cache = $cache.get("stories")
-//if (cache) {
-//  render(cache)
-//}
-
 refetch()
