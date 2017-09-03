@@ -1,3 +1,75 @@
+function deal_with_story(story,play) {
+  if(story.live_name == 'douyu'){
+    if(!story.url_info.url){
+      $ui.alert('API返回错误');
+      return;
+    }
+    $http.get({
+      url: story.url_info.url,
+      handler: function(resp) {
+        var data = resp.data;
+        if(play == 'HLS'){
+          // For rtmp flv, please check the API response
+          // flv can be streamed by vlc , and not expire
+          // Here simply redirect to hls_url, which could expire
+          if(data.data && data.data.hls_url){
+              openURL( data.data.hls_url );
+          }else{
+              $ui.alert('没有 HLS 链接');
+          }
+        }else if (play == 'nPlayer') {
+          //handle flv with nPlayer Plus
+          if(data.data && data.data.rtmp_url && data.data.rtmp_live){
+              var flv = 'nplayer-' + data.data.rtmp_url + '/' + data.data.rtmp_live
+              $app.openURL(flv)
+          }else{
+              $ui.alert('没有 FLV 链接');
+          }
+        }
+      }
+    })
+  }else if (story.live_id && story.live_name){
+    url = "https://api.maxjia.com/api/live/detail/?live_type=" + story.live_name + "&live_id="+story.live_id
+
+    $http.get({
+      url: url,
+      handler: function(resp) {
+        var data = resp.data;
+        if (data.status == 'ok'){
+          var stream_list = resp.data.result.stream_list;
+          if(stream_list){
+            var url = stream_list[0].url
+            if(play == 'HLS'){
+              // For rtmp flv, please check the API response
+              // flv can be streamed by vlc , and not expire
+              // Here simply redirect to hls_url, which could expire
+              if (url){
+                  openURL(url);
+              }else{
+                  $ui.alert('没有 HLS 链接');
+              }
+            }else if (play == 'nPlayer') {
+              //handle flv with nPlayer Plus
+              if(url){
+                  var flv = 'nplayer-' + url
+                  $app.openURL(flv)
+              }else{
+                  $ui.alert('没有 FLV 链接');
+              }
+            }
+          }
+        }else{
+          if(data.msg){
+            $ui.alert(data.msg);
+          }else{
+            $ui.alert('不在线')
+          }
+        }
+      }
+    })
+  }
+}
+
 $ui.render({
   props: {
     title: "DotA Max+"
@@ -83,38 +155,13 @@ $ui.render({
       actions: [{
           title: "HLS",
           handler: function(tableView, indexPath) {
-            $http.get({
-              url: tableView.object(indexPath).url,
-              handler: function(resp) {
-                var data = resp.data;
-                // For rtmp flv, please check the API response
-                // flv can be streamed by vlc , and not expire
-                // Here simply redirect to hls_url, which could expire
-                if(data.data && data.data.hls_url){
-                    openURL( data.data.hls_url );
-                }else{
-                    $ui.alert('没有 HLS 链接');
-                }
-              }
-            })
+            deal_with_story(tableView.object(indexPath).story,'HLS')
           }
         },
         {
           title: "nPlayer",
           handler: function(tableView, indexPath) {
-            $http.get({
-              url: tableView.object(indexPath).url,
-              handler: function(resp) {
-                var data = resp.data;
-                //handle flv with nPlayer Plus
-                if(data.data && data.data.rtmp_url && data.data.rtmp_live){
-                    var flv = 'nplayer-' + data.data.rtmp_url + '/' + data.data.rtmp_live
-                    $app.openURL(flv)
-                }else{
-                    $ui.alert('没有 FLV 链接');
-                }
-              }
-            })
+            deal_with_story(tableView.object(indexPath).story,'nPlayer')
           }
         }
       ]
@@ -122,20 +169,12 @@ $ui.render({
     layout: $layout.fill,
     events: {
       didSelect: function(tableView, indexPath) {
-        $http.get({
-          url: tableView.object(indexPath).url,
-          handler: function(resp) {
-            var data = resp.data;
-            // For rtmp flv, please check the API response
-            // flv can be streamed by vlc , and not expire
-            // Here simply redirect to hls_url, which could expire
-            if(data.data && data.data.hls_url){
-                openURL( data.data.hls_url );
-            }else{
-                $ui.alert('没有 HLS 链接');
-            }
+          //建议斗鱼用 Safari 直接打开，其它使用 nPlayer
+          if(tableView.object(indexPath).story.live_name == 'douyu'){
+            deal_with_story(tableView.object(indexPath).story,'HLS')
+          }else{
+            deal_with_story(tableView.object(indexPath).story,'nPlayer')
           }
-        })
       },
       pulled: function(sender) {
         refetch()
@@ -159,7 +198,6 @@ function render(stories) {
     var story = stories[idx]
 
     data.push({
-        url:  story.url_info? story.url_info.url + '' : '',
         image: {
           src: story.live_img + ''
         },
@@ -167,14 +205,15 @@ function render(stories) {
           text: story.live_title  + ''
         },
         node:{
-          text: " " + (story.live_name?story.live_name:'') + " "
+          text: " " + story.live_name + " "
         },
         author:{
-          text: "  •  " + (story.live_nickname?story.live_nickname:'') + "  •  "
+          text: "  •  " + story.live_nickname + "  •  "
         },
         timestamp:{
-          text:  story.live_online + '正在观看'
-        }
+          text:  story.live_online + '名观众'
+        },
+        story: story
       })
 
   }
