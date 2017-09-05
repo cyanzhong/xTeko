@@ -186,6 +186,7 @@ function refetch() {
     url: "https://api.maxjia.com/api/live/list/", // Use at your own risk
     handler: function(resp) {
       render(resp.data.result)
+      $cache.set("list", resp.data.result)
     }
   })
 }
@@ -237,4 +238,11 @@ function openURL(url) {
     }]
   })
 }
+
+var cache = $cache.get("list")
+
+if (cache) {
+  render(cache)
+}
+
 refetch()
