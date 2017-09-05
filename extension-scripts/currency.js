@@ -45,19 +45,6 @@ $ui.render({
         make.right.inset(10)
         make.centerY.equalTo($("input"))
       }
-    },
-    {
-      type: "label",
-      props: {
-        id: "date",
-        textColor: $color("lightGray"),
-        align: $align.center
-      },
-      layout: function(make) {
-        make.left.right.equalTo(0)
-        make.top.equalTo($("input").bottom).offset(10)
-        make.height.equalTo(24)
-      }
     }
   ]
 })
@@ -71,7 +58,6 @@ $http.get({
     $ui.loading(false)
     rate = resp.data.rates.CNY
     calc(1)
-    $("date").text = new Date(resp.data.query.created).toLocaleTimeString()
     $("input").focus()
   }
 })
