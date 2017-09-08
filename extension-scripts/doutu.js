@@ -1,6 +1,6 @@
 $ui.render({
   props: {
-    title: "斗图"
+    title: "斗图啦"
   },
   views: [
     {
@@ -59,7 +59,7 @@ $ui.render({
           $http.download({
             url: object.image.src,
             handler: function(resp) {
-              $share.sheet(resp.data)
+              $share.universal(resp.data)
             }
           })
         }
@@ -99,3 +99,5 @@ function render(data) {
     }
   })
 }
+
+$("input").focus()
