@@ -2005,6 +2005,10 @@ const rules =
       {
         "app": "catchapppad",
         "format": "catchapp://app?id=$1"
+      },
+      {
+        "app": "pricetag",
+        "format": "pricetag://activity?id=$1"
       }
     ]
   },
@@ -3058,16 +3062,19 @@ const rules =
 
 $app.hidden = true
 
-var link = $clipboard.link
+var link = $context.link || $clipboard.link
 
 if (!link) {
   return
 }
 
+var matched = false
+
 for (var rule of rules) {
   var regex = new RegExp(rule.regex)
   var matches = regex.exec(link)
   if (matches) {
+    matched = true
     var apps = rule.apps
     if (apps.length == 1) {
       open(apps[0], link, matches)
@@ -3081,6 +3088,10 @@ for (var rule of rules) {
     }
     break
   }
+}
+
+if (!matched) {
+  $app.openURL(link)
 }
 
 function open(app, url, matches) {
