@@ -11,7 +11,7 @@ $app.strings = {
     "title9": "Save Codes to Clipboard",
     "title10": "JS Code",
     "text1": "• Paste codes you want above.",
-    "text2": "• Text of variables, lists and objects should be detected manually, just copy any lines of them and paste separated by「new line」.\n• Keep blank if there's no need for modification.",
+    "text2": "• Text of variables, arrays and objects should be detected manually, just repeat selecting lines and unselecting.\n• Keep blank if there's no need for modification.",
     "text3": "• Make edition for the languages, then save as clipboaed text.",
     "toast1": "Clipboard saved."
   },
@@ -27,12 +27,11 @@ $app.strings = {
     "title9": "保存代码到剪切板",
     "title10": "JS 代码",
     "text1": "• 粘贴需要生成格式的代码",
-    "text2": "• 变量、列表、对象的文本需要手动检测，复制需要再转换的行代码并以换行为分割粘贴即可。\n• 如无需要再转换的行代码，请留空。",
+    "text2": "• 变量、数组、对象的文本需要手动检测，反复选择需要再转换的行代码和取消选择即可。\n• 如无需要再转换的行代码，请留空。",
     "text3": "• 编辑本地化语言，点击保存代码到剪切板。",
     "toast1": "已保存到剪切板。"
   }
 }
-
 
 function mainView() {
   $ui.render({
@@ -130,6 +129,21 @@ function modiView(code, preTrans, preCode) {
                 layout: function(make) {
                   make.left.right.inset(5)
                   make.height.equalTo(300)
+                },
+                events: {
+                  didChangeSelection: function(sender) {
+                    var range = sender.selectedRange
+                    var sub = code.substr(range.location, range.length)
+                    if ("" == sub) {
+                      $("lines").text += "\n"
+                      totalLines = $("lines").text
+                    } else {
+                      if ("" == preLine)
+                        totalLines = $("lines").text
+                      $("lines").text = totalLines + sub
+                    }
+                    preLine = sub
+                  }
                 }
               }]
             },
@@ -149,20 +163,20 @@ function modiView(code, preTrans, preCode) {
           ],
           footer: {
             props: {
-              height: 70
+              height: 50
             },
             views: [{
               type: "label",
               props: {
                 lines: 0,
-                align: $align.center,
+                //align: $align.center,
                 font: $font(13),
                 textColor: $color("#AAAAAA"),
                 text: $l10n("text2")
               },
               layout: function(make) {
-                make.left.right.inset(10)
-                make.height.equalTo(70)
+                make.left.right.inset(20)
+                make.height.equalTo(50)
               }
             }]
           }
@@ -334,7 +348,8 @@ function relocalize(code, lines, trans, codeNew) {
     var i = 1
     for (p of patt) {
       var match = code.indexOf(p)
-      if (p == "" || match == -1)
+      var string = /["'][^$\n]+["']/i.test(p)
+      if (p == "" || match == -1 || !string)
         continue
       for (; match != -1; match = code.indexOf(p)) {
         code = code.replace(p, function($0) {
@@ -370,4 +385,6 @@ function relocalize(code, lines, trans, codeNew) {
 
 /* Main */
 $app.autoKeyboardEnabled = true
+preLine = ""
+totalLines = ""
 mainView()
