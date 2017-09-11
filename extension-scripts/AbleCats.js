@@ -1,18 +1,15 @@
 $app.hidden = true
+
 var MusicID = new Array()
 var MusicName = new Array()
 
 function WidgetView(url) {
-
   if (url) {
     URL = "http://music.able.cat/player/#" + url
-    $widget.preview({
-      url: URL
-    })
+    $widget.preview({ url: URL })
   } else {
-    $ui.alert("输入不能为空。。")
+    $ui.alert("输入不能为空")
   }
-
 }
 
 function Delay(url) {
@@ -44,9 +41,9 @@ function Requests(type, text) {
       $ui.menu({
         items: MusicName,
         handler: function(title, idx) {
-          if (type == "wy")
+          if (type == "wy") {
             Delay(MusicID[idx])
-          else {
+          } else {
             info = "str=" + encodeURI(text) + "&id=" + MusicID[idx]
             Delay(info)
           }
@@ -62,13 +59,10 @@ function Manual(type) {
       if (text) {
         Requests(type, text)
       } else {
-        $ui.alert("输入不能为空。。")
+        $ui.alert("输入不能为空")
       }
-
     }
-
   })
-
 }
 
 function Platform() {
