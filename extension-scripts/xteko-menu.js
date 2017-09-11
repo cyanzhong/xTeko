@@ -22,6 +22,7 @@ $ui.render({
       type: "list",
       props: {
         id: "list",
+        rowHeight: $app.env == $env.today ? 36.0 : 44.0,
         actions: [
           {
             title: "delete",
