@@ -1,6 +1,6 @@
 $ui.render({
   props: {
-    title: "斗图啦"
+    title: "斗图啦网页版"
   },
   views: [
     {

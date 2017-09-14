@@ -1,6 +1,6 @@
 $ui.render({
   props: {
-    title: "U表情包"
+    title: "斗图啦"
   },
   views: [
     {
@@ -71,14 +71,14 @@ $ui.render({
 function search() {
   var keyword = $("input").text
   $("input").blur()
-  var url = "http://www.ubiaoqing.com/search/" + encodeURIComponent(keyword)
+  var url = "https://www.doutula.com/search?keyword=" + encodeURIComponent(keyword)
   $ui.loading(true)
   $http.get({
     url: url,
     handler: function(resp) {
       $ui.loading(false)
       var html = resp.data
-      var regex = /src="(.*?)".*class="img-responsive center-block"/g
+      var regex = /original="(.*?)"/g
       var data = []
       var match = regex.exec(html)
       while (match != null) {
@@ -92,7 +92,7 @@ function search() {
 
 function render(data) {
   $("matrix").data = data.map(function(item) {
-    return { image: { src: item } }
+    return { image: { src: "http:" + item } }
   })
 }
 
