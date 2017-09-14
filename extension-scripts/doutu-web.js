@@ -37,7 +37,17 @@ $ui.render({
     {
       type: "web",
       props: {
-        script: "for(var images=document.getElementsByTagName(\"img\"),i=0;i<images.length;++i){var element=images[i];element.onclick=function(e){var t=e.target||e.srcElement;return $notify(\"share\",{url:t.getAttribute(\"data-original\")}),!1}}"
+        script: function() {
+          var images = document.getElementsByTagName("img")
+          for (var i=0; i<images.length; ++i) {
+            var element = images[i]
+            element.onclick = function(event) {
+              var source = event.target || event.srcElement
+              $notify("share", {"url": source.getAttribute("data-original")})
+              return false
+            }
+          }
+        }
       },
       layout: function(make) {
         make.left.bottom.right.equalTo(0)
