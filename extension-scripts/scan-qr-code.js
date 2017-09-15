@@ -8,6 +8,11 @@ $app.strings = {
     "title": "二维码",
     "btn-clipboard-title": "复制到剪贴板",
     "btn-open-title": "打开",
+  },
+  "zh-Hant": {
+    "title": "二維碼",
+    "btn-clipboard-title": "複製到剪貼板",
+    "btn-open-title": "打開",
   }
 }
 
@@ -77,6 +82,3 @@ var resultView = function(result) {
 $qrcode.scan(function(text) {
   $ui.render(resultView(text))  
 })
-
-
-
