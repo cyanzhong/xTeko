@@ -48,6 +48,11 @@ function showContactsPicker() {
         layout: function(make) {
           make.top.equalTo($("button").bottom).offset(10)
           make.left.bottom.right.equalTo(0)
+        },
+        events: {
+          didSelect: function(sender, indexPath) {
+            $system.call(contacts[indexPath.row].number)
+          }
         }
       }
     ]
