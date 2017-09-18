@@ -73,8 +73,12 @@ function search() {
   $("input").blur()
   var url = "https://www.doutula.com/search?keyword=" + encodeURIComponent(keyword)
   $ui.loading(true)
-  $http.get({
+    $http.request({
+    method: "GET",
     url: url,
+    header: {
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.0 Mobile/14G60 Safari/602.1"
+    },
     handler: function(resp) {
       $ui.loading(false)
       var html = resp.data
@@ -92,7 +96,10 @@ function search() {
 
 function render(data) {
   $("matrix").data = data.map(function(item) {
-    return { image: { src: "http:" + item } }
+    if (item.indexOf("http") != 0) {
+      item = "http:" + item
+    }
+    return { image: { src: item } }
   })
 }
 
