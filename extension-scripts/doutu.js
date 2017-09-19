@@ -73,7 +73,7 @@ function search() {
   $("input").blur()
   var url = "https://www.doutula.com/search?keyword=" + encodeURIComponent(keyword)
   $ui.loading(true)
-    $http.request({
+  $http.request({
     method: "GET",
     url: url,
     header: {
