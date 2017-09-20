@@ -80,8 +80,13 @@ if ($app.env != $env.app) {
     }).map(function(item) {
       return item.name
     }),
-    handler: function(title, idx) {
-      browsers[idx].handler()
+    handler: function(title) {
+      for (var idx=0; idx<browsers.length; ++idx) {
+        if (browsers[idx].name === title) {
+          browsers[idx].handler()
+          break
+        }
+      }
     }
   })
   return
