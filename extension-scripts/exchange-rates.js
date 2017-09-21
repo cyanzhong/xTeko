@@ -137,9 +137,7 @@ $ui.render({
     },
     {
       type: "button",
-      props: {
-        title: names[selectedIndex]
-      },
+      props: { title: names[selectedIndex] },
       layout: function(make) {
         var input = $("input")
         make.left.equalTo(input.right).offset(10)
