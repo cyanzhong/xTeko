@@ -3,7 +3,7 @@ $app.strings = {
   "en": {
     "main-title": "Exchange Rates",
     "copied": "Copied",
-    "name-eur": "💶 Euro",
+    "name-eur": "🇪🇺 Euro",
     "name-cny": "🇨🇳 Chinese Yuan",
     "name-hkd": "🇭🇰 Hong Kong Dollar",
     "name-usd": "🇺🇸 US Dollar",
@@ -39,7 +39,7 @@ $app.strings = {
   "zh-Hans": {
     "main-title": "汇率查询",
     "copied": "已复制",
-    "name-eur": "💶 欧元",
+    "name-eur": "🇪🇺 欧元",
     "name-cny": "🇨🇳 人民币",
     "name-hkd": "🇭🇰 港币",
     "name-usd": "🇺🇸 美元",
@@ -75,7 +75,7 @@ $app.strings = {
   "zh-Hant": {
     "main-title": "匯率查詢",
     "copied": "已復制",
-    "name-eur": "💶 歐元",
+    "name-eur": "🇪🇺 歐元",
     "name-cny": "🇨🇳 人民幣",
     "name-hkd": "🇭🇰 港幣",
     "name-usd": "🇺🇸 美元",
