@@ -132,9 +132,7 @@ $ui.render({
         make.width.equalTo(view.super).multipliedBy(0.5).offset(-15)
       },
       events: {
-        changed: function(sender) {
-          calculate()
-        }
+        changed: function(sender) { calculate() }
       }
     },
     {
@@ -195,6 +193,7 @@ $ui.render({
         make.left.bottom.right.equalTo(0)
       },
       events: {
+        pulled: function() { fetch(true) },
         didSelect: function(sender, indexPath) {
           var base = rates[symbols[selectedIndex]] || 1.0
           var number = Number($("input").text)
@@ -217,12 +216,17 @@ function calculate() {
   })
 }
 
-$ui.loading(true)
-$http.get({
-  url: "https://api.fixer.io/latest",
-  handler: function(resp) {
-    $ui.loading(false)
-    rates = resp.data.rates
-    calculate()
-  }
-})
+function fetch(pulled) {
+  $ui.loading(!pulled)
+  $http.get({
+    url: "https://api.fixer.io/latest",
+    handler: function(resp) {
+      $ui.loading(false)
+      $("list").endRefreshing()
+      rates = resp.data.rates
+      calculate()
+    }
+  })
+}
+
+fetch(false)
