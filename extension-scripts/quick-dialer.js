@@ -9,7 +9,7 @@ function showAllContacts() {
   $ui.menu({
     items: contactNames(),
     handler: function(title, idx) {
-      $system.call(contacts[idx].number)
+      call(contacts[idx])
     }
   })
 }
@@ -51,7 +51,7 @@ function showContactsPicker() {
         },
         events: {
           didSelect: function(sender, indexPath) {
-            $system.call(contacts[indexPath.row].number)
+            call(contacts[indexPath.row])
           }
         }
       }
@@ -64,9 +64,10 @@ function pickContacts() {
     multi: true,
     handler: function(results) {
       var contacts = results.map(function(item) {
+        var name = en ? (item.givenName + item.middleName + item.familyName) : (item.familyName + item.givenName + item.middleName)
         return {
-          name: en ? (item.givenName + item.middleName + item.familyName) : (item.familyName + item.givenName + item.middleName),
-          number: item.phoneNumbers[0].content
+          name: name || item.organizationName,
+          numbers: item.phoneNumbers.map(function(number) { return number.content })
         }
       })
       insertContacts(contacts)
@@ -83,6 +84,25 @@ function insertContacts(items) {
 function deleteContact(index) {
   contacts.splice(index, 1)
   $cache.set("contacts", contacts)
+}
+
+function call(contact) {
+  var numbers = contact.numbers || []
+  if (numbers.length > 1) { // Multiple
+    $thread.main({
+      delay: 0.3,
+      handler: function() {
+        $ui.menu({
+          items: numbers,
+          handler: function(title, idx) {
+            $system.call(title)
+          }
+        })
+      }
+    })
+  } else { // Legacy logic
+    $system.call(numbers[0] || contact.number)
+  }
 }
 
 if ($app.env == $env.app) {
