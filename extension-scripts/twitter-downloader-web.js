@@ -15,7 +15,9 @@ $ui.render({
               return false
             }
           }
-          window.scrollTo(0, document.body.scrollHeight)
+          if (window.location.href.match("download$")) {
+            window.scrollTo(0, document.body.scrollHeight)
+          }
         }
       },
       layout: $layout.fill,
