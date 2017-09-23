@@ -45,9 +45,10 @@ $ui.create({
     hidden: true,
     url: "http://twittervideodownloader.com/",
     script: function() {
-      var timer = setInterval(function() {
+      var finished = false
+      var worker = function() {
         var elements = document.getElementsByClassName("expanded button small float-right") || []
-        if (elements.length > 0) {
+        if (elements.length > 0 && !finished) {
           var items = []
           for (var i=0; i<elements.length; ++i) {
             var element = elements[i]
@@ -56,8 +57,11 @@ $ui.create({
           }
           $notify("showMenu", { items: items })
           clearInterval(timer)
+          finished = true
         }
-      }, 500)
+      }
+      worker()
+      var timer = setInterval(worker, 500)
     }
   },
   layout: $layout.fill,
