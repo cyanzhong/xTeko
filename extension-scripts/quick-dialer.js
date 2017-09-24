@@ -36,6 +36,7 @@ function showContactsPicker() {
         type: "list",
         props: {
           data: contactNames(),
+          reorder: true,
           actions: [
             {
               title: "delete",
@@ -52,6 +53,12 @@ function showContactsPicker() {
         events: {
           didSelect: function(sender, indexPath) {
             call(contacts[indexPath.row])
+          },
+          reorderMoved: function(from, to) {
+            contacts.move(from.row, to.row)
+          },
+          reorderFinished: function() {
+            $cache.set("contacts", contacts)
           }
         }
       }
@@ -109,4 +116,10 @@ if ($app.env == $env.app) {
   showContactsPicker()
 } else {
   showAllContacts()
+}
+
+Array.prototype.move = function(from, to) {
+  var object = this[from]
+  this.splice(from, 1)
+  this.splice(to, 0, object)
 }
