@@ -34,6 +34,7 @@ $ui.render({
       type: "list",
       props: {
         id: "list",
+        reorder: true,
         actions: [
           {
             title: "delete",
@@ -50,6 +51,12 @@ $ui.render({
       events: {
         didSelect: function(sender, indexPath, title) {
           $app.openExtension(title)
+        },
+        reorderMoved: function(from, to) {
+          extensions.move(from.row, to.row)
+        },
+        reorderFinished: function() {
+          saveItems()
         }
       }
     }
@@ -102,4 +109,10 @@ function selectItem() {
 
 function saveItems() {
   $cache.set("extensions", extensions)
+}
+
+Array.prototype.move = function(from, to) {
+  var object = this[from]
+  this.splice(from, 1)
+  this.splice(to, 0, object)
 }
