@@ -56,7 +56,7 @@ var options = [
 var link = $context.link || $clipboard.link
 
 if (!link) {
-  $ui.toast("link-not-found")
+  $ui.toast($l10n("link-not-found"))
   return
 }
 
