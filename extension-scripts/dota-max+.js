@@ -15,7 +15,7 @@ function deal_with_story(story, play) {
               if (url) {
                 openURL(url)
               } else {
-                $ui.alert('没有 HLS 链接')
+                $ui.toast('没有 HLS 链接，下拉刷新')
               }
             } else if (play == 'nPlayer') {
               //handle flv with nPlayer Plus
@@ -23,15 +23,15 @@ function deal_with_story(story, play) {
                 var flv = 'nplayer-' + url
                 $app.openURL(flv)
               } else {
-                $ui.alert('没有 FLV 链接')
+                $ui.toast('没有 FLV 链接，下拉刷新')
               }
             }
           }
         } else {
           if (data.msg) {
-            $ui.alert(data.msg)
+            $ui.toast(data.msg)
           } else {
-            $ui.alert('不在线')
+            $ui.toast('不在线')
           }
         }
       }
