@@ -26,14 +26,18 @@ $http.get({
   handler: function(resp) {
     var data = resp.data
     if (!data.error) {
-      if (data.data && data.data.hls_url) { //&& false
-        var hls_url = data.data.hls_url
-        $app.openURL(hls_url.replace('http://', 'https://'))
-      } else if (data.data && data.data.rtmp_url && data.data.rtmp_live) {
-        var flv = data.data.rtmp_url + '/' + data.data.rtmp_live;
-        $app.openURL('nplayer-' + flv.replace('http://', 'https://'))
-      } else {
-        $ui.toast('No URL')
+      if(data.data.online || data.data.show_status == 1){
+        if (data.data && data.data.hls_url) { //&& false
+          var hls_url = data.data.hls_url
+          $app.openURL(hls_url.replace('http://', 'https://'))
+        } else if (data.data && data.data.rtmp_url && data.data.rtmp_live) {
+          var flv = data.data.rtmp_url + '/' + data.data.rtmp_live;
+          $app.openURL('nplayer-' + flv.replace('http://', 'https://'))
+        } else {
+          $ui.toast('No URL')
+        }
+      }else{
+        $ui.toast('Not Online')
       }
     } else {
       $ui.toast('Not Online')
