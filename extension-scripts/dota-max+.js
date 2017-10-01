@@ -1,34 +1,5 @@
 function deal_with_story(story, play) {
-  if (story.live_name == 'douyu') {
-    if (!story.url_info.url) {
-      $ui.alert('API返回错误')
-      return
-    }
-    $http.get({
-      url: story.url_info.url,
-      handler: function(resp) {
-        var data = resp.data
-        if (play == 'HLS') {
-          // For rtmp flv, please check the API response
-          // flv can be streamed by vlc , and not expire
-          // Here simply redirect to hls_url, which could expire
-          if (data.data && data.data.hls_url) {
-            openURL(data.data.hls_url)
-          } else {
-            $ui.alert('没有 HLS 链接')
-          }
-        } else if (play == 'nPlayer') {
-          //handle flv with nPlayer Plus
-          if (data.data && data.data.rtmp_url && data.data.rtmp_live) {
-            var flv = 'nplayer-' + data.data.rtmp_url + '/' + data.data.rtmp_live
-            $app.openURL(flv)
-          } else {
-            $ui.alert('没有 FLV 链接')
-          }
-        }
-      }
-    })
-  } else if (story.live_id && story.live_name) {
+  if (story.live_id && story.live_name) {
     $http.get({
       url: "https://api.maxjia.com/api/live/detail/?live_type=" + story.live_name + "&live_id=" + story.live_id,
       handler: function(resp) {
@@ -44,7 +15,7 @@ function deal_with_story(story, play) {
               if (url) {
                 openURL(url)
               } else {
-                $ui.alert('没有 HLS 链接')
+                $ui.toast('没有 HLS 链接，下拉刷新')
               }
             } else if (play == 'nPlayer') {
               //handle flv with nPlayer Plus
@@ -52,15 +23,15 @@ function deal_with_story(story, play) {
                 var flv = 'nplayer-' + url
                 $app.openURL(flv)
               } else {
-                $ui.alert('没有 FLV 链接')
+                $ui.toast('没有 FLV 链接，下拉刷新')
               }
             }
           }
         } else {
           if (data.msg) {
-            $ui.alert(data.msg)
+            $ui.toast(data.msg)
           } else {
-            $ui.alert('不在线')
+            $ui.toast('不在线')
           }
         }
       }
