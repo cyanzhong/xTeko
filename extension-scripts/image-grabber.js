@@ -4,6 +4,7 @@ $app.strings = {
     "btn-grab": "Grab",
     "downloading": "Downloading...",
     "save-all": "Save all",
+    "share-all": "Share all",
     "zip-n-share": "Zip & Share",
     "quicklook": "Quick look",
     "tips-message": "Tap image to grab"
@@ -13,6 +14,7 @@ $app.strings = {
     "btn-grab": "抓取",
     "downloading": "下载中...",
     "save-all": "保存全部",
+    "share-all": "分享全部",
     "zip-n-share": "打包分享",
     "quicklook": "预览全部",
     "tips-message": "点击图片进行抓取"
@@ -22,6 +24,7 @@ $app.strings = {
     "btn-grab": "抓取",
     "downloading": "下載中...",
     "save-all": "保存全部",
+    "share-all": "分享全部",
     "zip-n-share": "打包分享",
     "quicklook": "預覽全部",
     "tips-message": "點擊圖片進行抓取"
@@ -152,6 +155,7 @@ $ui.render({
       type: "label",
       props: {
         id: "tip-view",
+        font: $font(17),
         text: $l10n("tips-message"),
         align: $align.center
       },
@@ -192,7 +196,7 @@ function insertImage(url) {
             value: { image: { data: file } }
           })
         }
-        setupTipsView()
+        setTipViewAlpha()
       }
     }
   })
@@ -201,10 +205,10 @@ function insertImage(url) {
 function deleteImage(indexPath) {
   files.splice(indexPath.item, 1)
   $("matrix").delete(indexPath)
-  setupTipsView()
+  setTipViewAlpha()
 }
 
-function setupTipsView() {
+function setTipViewAlpha() {
   var alpha = files.length > 0 ? 0.0 : 1.0
   $ui.animate({
     duration: 0.2,
@@ -216,12 +220,13 @@ function setupTipsView() {
 
 function showMenu() {
   $ui.menu({
-    items: [$l10n("save-all"), $l10n("zip-n-share"), $l10n("quicklook")],
+    items: [$l10n("save-all"), $l10n("share-all"), $l10n("zip-n-share"), $l10n("quicklook")],
     handler: function(title, idx) {
       switch (idx) {
         case 0: save(); break
-        case 1: zip(); break
-        case 2: quicklook(); break
+        case 1: share(); break
+        case 2: zip(); break
+        case 3: quicklook(); break
         default: break
       }
     }
@@ -232,6 +237,10 @@ function save() {
   files.forEach(function(file) {
     $photo.save({ data: file })
   })
+}
+
+function share() {
+  $share.sheet(files)
 }
 
 function zip() {
