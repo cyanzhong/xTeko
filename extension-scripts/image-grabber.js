@@ -74,13 +74,35 @@ $ui.render({
       type: "web",
       props: {
         script: function() {
-          var images = document.getElementsByTagName("img")
-          for (var i=0; i<images.length; ++i) {
-            var element = images[i]
-            element.onclick = function(event) {
-              var source = event.target || event.srcElement
-              $notify("prepareImage", { "url": source.src })
-              return false
+          function extract(element) {
+            var style = getComputedStyle(element, false)
+            var props = style["backgroundImage"] || style["background"] || style["content"]
+            var matches = props.match(/(https?:\/\/[^ "'()]*)/)
+            if (matches) {
+              return matches[1]
+            }
+            return null
+          }
+          function notify(url) {
+            if (url) {
+              $notify("prepareImage", { "url": url })
+            }
+          }
+          var elements = document.getElementsByTagName("*")
+          for (var i=0; i<elements.length; ++i) {
+            var element = elements[i]
+            if (element.tagName.toLowerCase() === "img") {
+              element.onclick = function(event) {
+                notify(event.target.src)
+                return false
+              }
+            } else {
+              var url = extract(element)
+              if (url) {
+                element.onclick = function(event) {
+                  notify(extract(event.target))
+                }
+              }
             }
           }
         }
