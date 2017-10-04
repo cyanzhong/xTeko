@@ -1,8 +1,6 @@
-$ui.loading(true)
 $http.get({
   url: "http://api.ineal.me/tss/all",
   handler: function(resp) {
-    $ui.loading(false)
     next(resp.data["iPhone9,2"].firmwares)
   }
 })
@@ -10,16 +8,24 @@ $http.get({
 function next(result) {
   var Version = result[0].version
   for (var i = 1; i < result.length; i++) {
-    var data = result[i].version
-    var Version = Version + "," + data
+    var Version = Version + "," + result[i].version
   }
+  match(Version)
+}
+
+function match(Version) {
   var mine = $device.info.version
-  var match = Version.match(mine)[0]
-  if (match === mine) {
-    output(mine + " (可以验证)", Version)
-  } else {
-    output(mine + " (验证已关)", Version)
-  }
+  $http.get({
+    url: "https://api.ipsw.me/v2.1/iphone9,2/" + mine + "/info.json",
+    handler: function(resp) {
+      var data = resp.data.signed
+      if (data === 1) {
+        output(mine + " (可以验证)", Version)
+      } else {
+        output(mine + " (不可验证)", Version)
+      }
+    }
+  })
 }
 
 function output(information, Version) {
