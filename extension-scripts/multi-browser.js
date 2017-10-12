@@ -8,6 +8,9 @@ $app.strings = {
     "browser_quark": "Quark",
     "browser_icab": "iCab",
     "browser_dolphin": "Dolphin",
+    "browser_get": "Get",
+    "browser_seach": "Seach",
+    "browser_aloha": "Aloha",
     "browser_safari": "Safari"
   },
   "zh-Hans": {
@@ -19,6 +22,9 @@ $app.strings = {
     "browser_quark": "夸克",
     "browser_icab": "iCab",
     "browser_dolphin": "海豚",
+    "browser_get": "盖特",
+    "browser_seach": "鲨鱼",
+    "browser_aloha": "Aloha",
     "browser_safari": "Safari"
   },
   "zh-Hant": {
@@ -30,6 +36,9 @@ $app.strings = {
     "browser_quark": "夸克",
     "browser_icab": "iCab",
     "browser_dolphin": "海豚",
+    "browser_get": "蓋特",
+    "browser_seach": "鯊魚",
+    "browser_aloha": "Aloha",
     "browser_safari": "Safari"
   }
 }
@@ -66,6 +75,18 @@ var browsers = [
   {
     name: $l10n("browser_dolphin"),
     handler: function() { $app.openURL("dolphin://" + link) }
+  },
+  {
+    name: $l10n("browser_get"),
+    handler: function() { $app.openURL("getbrowser://" + link) }
+  },
+  {
+    name: $l10n("browser_seach"),
+    handler: function() { $app.openURL("searchss://open?link=" + encoded) }
+  },
+  {
+    name: $l10n("browser_aloha"),
+    handler: function() { $app.openURL("alohabrowser://open?link=" + encoded) },
   },
   {
     name: $l10n("browser_safari"),
