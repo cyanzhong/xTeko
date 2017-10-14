@@ -25,7 +25,7 @@ if ($context.text) {
       showEngines($context.text)
     }
   })
-} else if ($clipboard.text) {
+} else {
   $ui.menu({
     items: ["搜索剪贴板", "输入内容"],
     handler: function(title, idx) {
@@ -44,9 +44,7 @@ if ($context.text) {
 
 function showEngines(text) {
   $ui.menu({
-    items: engines.map(function(item) {
-      return item.name
-    }),
+    items: engines.map(function(item) { return item.name }),
     handler: function(title, idx) {
       $thread.main({
         delay: 0.4,
@@ -59,7 +57,5 @@ function showEngines(text) {
 }
 
 function search(pattern, text) {
-  $safari.open({
-    url: pattern + encodeURIComponent(text)
-  })
+  $safari.open({ url: pattern + encodeURIComponent(text) })
 }
