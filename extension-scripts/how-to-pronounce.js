@@ -13,16 +13,8 @@ $app.strings = {
   }
 }
 
-$input.text({
-  type: $kbType.ascii,
-  text: $context.text || $clipboard.text,
-  placeholder: $l10n("placeholder"),
-  handler: function(text) {
-    query(text.split(" ").filter(function(item) { return item.length > 0 }).join("-"))
-  }
-})
-
 function query(text) {
+  text = text.split(" ").filter(function(item) { return item.length > 0 }).join("-")
   $ui.toast($l10n("loading"))
   $http.get({
     url: "https://www.howtopronounce.com/" + encodeURIComponent(text),
@@ -53,6 +45,19 @@ function parse(html) {
     handler: function(title, idx) {
       $ui.toast($l10n("loading"))
       $audio.play({ url: links[idx] })
+    }
+  })
+}
+
+if ($context.text) {
+  query($context.text)
+} else {
+  $input.text({
+    type: $kbType.ascii,
+    text: $clipboard.text,
+    placeholder: $l10n("placeholder"),
+    handler: function(text) {
+      query(text)
     }
   })
 }
