@@ -1,15 +1,18 @@
 $app.strings = {
   "en": {
     "placeholder": "Enter word or name",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "no-result": "No result"
   },
   "zh-Hans": {
     "placeholder": "输入单词或名字",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "no-result": "没找到结果"
   },
   "zh-Hant": {
     "placeholder": "輸入單詞或名字",
-    "loading": "加載中..."
+    "loading": "加載中...",
+    "no-result": "沒找到結果"
   }
 }
 
@@ -40,13 +43,17 @@ function parse(html) {
     match = regex.exec(html)
   }
 
-  $ui.menu({
-    items: links,
-    handler: function(title, idx) {
-      $ui.toast($l10n("loading"))
-      $audio.play({ url: links[idx] })
-    }
-  })
+  if (links.length > 0) {
+    $ui.menu({
+      items: links,
+      handler: function(title, idx) {
+        $ui.toast($l10n("loading"))
+        $audio.play({ url: links[idx] })
+      }
+    })
+  } else {
+    $ui.toast($l10n("no-result"))
+  }
 }
 
 if ($context.text) {
