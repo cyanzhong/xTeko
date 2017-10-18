@@ -1,8 +1,9 @@
 $define({
   type: "Helper",
   classEvents: {
-    open: function(id) {
-      $objc("LSApplicationWorkspace").invoke("defaultWorkspace.openApplicationWithBundleID", id)
+    open: function(scheme) {
+      var url = $objc("NSURL").invoke("URLWithString", scheme)
+      $objc("UIApplication").invoke("sharedApplication.openURL", url)
     }
   }
 })
@@ -22,7 +23,7 @@ $ui.render({
       },
       events: {
         tapped: function(sender) {
-          $objc("Helper").invoke("open", "com.tencent.xin")
+          $objc("Helper").invoke("open", "weixin://")
         }
       }
     }
