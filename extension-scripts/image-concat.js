@@ -13,13 +13,15 @@ $app.strings = {
 $photo.pick({
   multi: true,
   handler: function(resp) {
-    $input.text({
-      type: $kbType.decimal,
-      placeholder: $l10n("hint"),
-      handler: function(text) {
-        concat(resp.results, Number(text))
-      }
-    })
+    if (resp.results.length > 0) {
+      $input.text({
+        type: $kbType.decimal,
+        placeholder: $l10n("hint"),
+        handler: function(text) {
+          concat(resp.results, Number(text))
+        }
+      })
+    }
   }
 })
 
