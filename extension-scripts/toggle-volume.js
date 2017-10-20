@@ -1,0 +1,1 @@
+$system.volume = ((Math.floor($system.volume * 4) + 1)) % 5 * 0.25
