@@ -1,3 +1,75 @@
+$app.strings = {
+  "en": {
+    "title1": "More",
+    "title2": "Save Link to Clipboard",
+    "title3": "Open Share Sheet",
+    "title4": "Cancel",
+    "title5": "Link Editor",
+    "title6": "URL VIEW",
+    "title7": "Download",
+    "title8": "Preview Link",
+    "title9": "URL VIEW",
+    "title10": "MP4 VIEW",
+    "title11": "Universal MP4",
+    "title12_1": "MP4 List (",
+    "title12_2": ")",
+    "title13": "Edit",
+    "title14": "Preview",
+    "title15": "No MP4 Found",
+    "title16": "OK",
+    "title17": "Running Error",
+    "title18": "OK",
+    "text1": "•「SWIPE BACK」and click the link to download it\nif it's what you want.",
+    "text2": "•「SWIPE LEFT」and Preview if you are finding link.\n\n•「SWIPE LEFT」and try Edit if the link is incorrect.",
+    "msg1": "What else to do ?",
+    "msg2": "Invalid URL, please try to edit it.",
+    "msg3": "Universal MP4 strongly recommend you to run in Safari or any SafariViewController.\n\nIn that way, we can get dynamic web source other than static HTTP source.",
+    "toast1": "Downloading ...",
+    "toast2": "Download succeeded.",
+    "toast3": "Link saved.",
+    "toast4": "Download failed.",
+    "toast5": "Closing ...",
+    "toast6": "Trying to get HTTP source ...",
+    "va1": "Universal MP4 strongly recommend you to run in Safari or any SafariViewController.\n\nIn that way, we can get dynamic web source other than static HTTP source.",
+    "va2": "You can try to run again after playing the video."
+  },
+  "zh-Hans": {
+    "title1": "更多",
+    "title2": "保存链接到剪切板",
+    "title3": "打开分享菜单",
+    "title4": "取消",
+    "title5": "链接编辑",
+    "title6": "URL 显示",
+    "title7": "下载",
+    "title8": "链接预览",
+    "title9": "URL 显示",
+    "title10": "MP4 显示",
+    "title11": "Universal MP4",
+    "title12_1": "MP4 列表 (",
+    "title12_2": ")",
+    "title13": "修改",
+    "title14": "预览",
+    "title15": "未捕获 MP4",
+    "title16": "好的",
+    "title17": "运行错误",
+    "title18": "好的",
+    "text1": "•「右划返回」并点击您想要的链接以下载。",
+    "text2": "•「左划」并预览以快速寻找链接。\n\n•「左划」并尝试修改错误链接。",
+    "msg1": "您还可以",
+    "msg2": "无效链接，请尝试修改。",
+    "msg3": "Universal MP4 强烈建议您在 Safari 或任何 SafariViewController 运行。\n\n否则，我们只能获取静态 HTTP 资源而非动态网页源码。",
+    "toast1": "正在下载 ...",
+    "toast2": "下载成功。",
+    "toast3": "链接已保存。",
+    "toast4": "下载失败。",
+    "toast5": "正在关闭 ...",
+    "toast6": "正在尝试获取 HTTP 资源  ...",
+    "va1": "Universal MP4 强烈建议您在 Safari 或任何 SafariViewController 运行。\n\n否则，我们只能获取静态 HTTP 资源而非动态网页源码。",
+    "va2": "您可以播放视频后再尝试运行。"
+  }
+}
+
+
 function escapeHtml(str) {
   if (str.match(/\\u/))
     str = unescape(str.replace(/\\u/g, '%u'))
@@ -26,18 +98,14 @@ function tryToMatchMP4(source) {
       return null
     } else {
       var list = []
-      match.forEach(
-        function(value) {
-          var matchNew = decodeURIComponent(value).match(/https?\:\\?\/\\?\/[^\s"';]+?mp4[^\s"';]*/g)
-          if (matchNew != null) {
-            matchNew.forEach(
-              function(v) {
-                list.push(v)
-              }
-            )
+      for (var i of match) {
+        var matchNew = decodeURIComponent(value).match(/https?\:\\?\/\\?\/[^\s"';]+?mp4[^\s"';]*/g)
+        if (matchNew != null) {
+          for (var j of matchNew) {
+            list.push(j)
           }
         }
-      )
+      }
       return list.length > 0 ? list : null
     }
   } else {
@@ -46,31 +114,31 @@ function tryToMatchMP4(source) {
 }
 
 function handleTableSelect(url) {
-  $ui.toast("Downloading ...")
+  $ui.toast($l10n("toast1"))
   $ui.loading(true)
   $http.download({
     url: url,
     handler: function(resp) {
       $ui.loading(false)
       if (resp.response.statusCode == "200") {
-        $ui.toast("Download succeeded.")
+        $ui.toast($l10n("toast2"))
         $device.taptic(1)
         $quicklook.open({
           type: "mp4",
           data: resp.data,
           handler: function() {
             $ui.alert({
-              title: "More",
-              message: "What else to do ?",
+              title: $l10n("title1"),
+              message: $l10n("msg1"),
               actions: [{
-                  title: "Save Link to Clipboard",
+                  title: $l10n("title2"),
                   handler: function() {
                     $clipboard.text = url
-                    $ui.toast("Link saved.")
+                    $ui.toast($l10n("toast3"))
                   }
                 },
                 {
-                  title: "Open Share Sheet",
+                  title: $l10n("title3"),
                   handler: function() {
                     $share.sheet([
                       "download.mp4",
@@ -79,7 +147,7 @@ function handleTableSelect(url) {
                   }
                 },
                 {
-                  title: "Cancel",
+                  title: $l10n("title4"),
                   style: "Cancel"
                 }
               ]
@@ -87,10 +155,10 @@ function handleTableSelect(url) {
           }
         })
       } else {
-        $ui.toast("Download failed.")
+        $ui.toast($l10n("toast4"))
         $ui.alert({
           title: resp.response.statusCode,
-          message: "Invalid URL, please try to edit it."
+          message: $l10n("msg2")
         })
       }
     }
@@ -100,149 +168,125 @@ function handleTableSelect(url) {
 function editorView(text) {
   $ui.push({
     props: {
-      title: "Link Editor"
+      title: $l10n("title5")
     },
     views: [{
-        type: "label",
-        props: {
-          text: "URL VIEW",
-          id: "url",
-          font: $font(14),
-          textColor: $color("#839595")
+      type: "list",
+      props: {
+        scrollEnabled: false,
+        data: [{
+          title: $l10n("title6"),
+          rows: [{
+            type: "text",
+            props: {
+              text: text
+            },
+            layout: function(make) {
+              make.left.right.inset(5)
+              make.height.equalTo(250)
+            }
+          }]
+        }],
+        footer: {
+          props: {
+            height: 40
+          },
+          views: [{
+            type: "button",
+            props: {
+              title: $l10n("title7")
+            },
+            layout: function(make) {
+              make.left.right.inset(30)
+              make.height.equalTo(40)
+            },
+            events: {
+              tapped: function() {
+                $("text").blur()
+                handleTableSelect($("text").text)
+              }
+            }
+          }]
         },
-        layout: function(make) {
-          make.top.inset(35)
-          make.left.right.inset(15)
-          make.height.equalTo(15)
-        }
+        rowHeight: 250
       },
-      {
-        type: "text",
-        props: {
-          id: "text",
-          text: text,
-          type: $kbType.url
-        },
-        layout: function(make) {
-          var preView = $("url")
-          make.top.equalTo(preView.bottom)
-          make.left.right.inset(10)
-          make.height.equalTo(250)
-        }
-      },
-      {
-        type: "button",
-        props: {
-          title: "Download",
-        },
-        layout: function(make) {
-          var preView = $("text")
-          make.top.equalTo(preView.bottom).inset(20)
-          make.left.right.inset(30)
-          make.height.equalTo(40)
-        },
-        events: {
-          tapped: function() {
-            $("text").blur()
-            handleTableSelect($("text").text)
-          }
-        }
-      }
-    ]
+      layout: $layout.fill
+    }]
   })
 }
 
 function previewView(text) {
   $ui.push({
     props: {
-      title: "Preview Link"
+      title: $l10n("title8")
     },
     views: [{
-        type: "label",
-        props: {
-          text: "URL VIEW",
-          id: "url",
-          font: $font(14),
-          textColor: $color("#839595")
-        },
-        layout: function(make) {
-          make.top.inset(35)
-          make.left.right.inset(15)
-          make.height.equalTo(15)
+      type: "list",
+      props: {
+        scrollEnabled: false,
+        data: [{
+            title: $l10n("title9"),
+            rows: [{
+              type: "text",
+              props: {
+                text: text,
+                editable: false,
+              },
+              layout: function(make) {
+                make.left.right.inset(5)
+                make.height.equalTo(140)
+              }
+            }]
+          },
+          {
+            title: $l10n("title10"),
+            rows: [{
+              type: "web",
+              props: {
+                url: text
+              },
+              layout: function(make) {
+                make.left.right.inset(0)
+                make.height.equalTo(230)
+              }
+            }]
+          }
+        ],
+        footer: {
+          type: "label",
+          props: {
+            height: 40,
+            text: $l10n("text1"),
+            lines: 2,
+            font: $font(13),
+            align: $align.center,
+            textColor: $color("#AAAAAA")
+          }
         }
       },
-      {
-        type: "text",
-        props: {
-          id: "text",
-          text: text,
-          editable: false,
-        },
-        layout: function(make) {
-          var preView = $("url")
-          make.top.equalTo(preView.bottom)
-          make.left.right.inset(10)
-          make.height.equalTo(140)
-        }
-      },
-      {
-        type: "label",
-        props: {
-          text: "MP4 VIEW",
-          id: "mp4",
-          font: $font(14),
-          textColor: $color("#839595")
-        },
-        layout: function(make) {
-          var preView = $("text")
-          make.top.equalTo(preView.bottom).inset(30)
-          make.left.right.inset(15)
-          make.height.equalTo(15)
-        }
-      },
-      {
-        type: "web",
-        props: {
-          url: text,
-          id: "web"
-        },
-        layout: function(make) {
-          var preView = $("mp4")
-          make.top.equalTo(preView.bottom).inset(10)
-          make.left.right.inset(15)
-          make.height.equalTo(230)
-        }
-      },
-      {
-        type: "label",
-        props: {
-          text: "•「SWIPE BACK」and click the link to download it\nif it's what you want.",
-          lines: 2,
-          font: $font(13),
-          align: $align.center,
-          textColor: $color("#AAAAAA")
-        },
-        layout: function(make) {
-          var preView = $("web")
-          make.top.equalTo(preView.bottom).inset(20)
-          make.left.right.inset(10)
-          make.height.equalTo(40)
+      layout: $layout.fill,
+      events: {
+        rowHeight: function(sender, indexPath) {
+          if (indexPath.section == 0)
+            return 140.0
+          else
+            return 230.0
         }
       }
-    ]
+    }]
   })
 }
 
 function mainView(list) {
   $ui.render({
     props: {
-      title: "Universal MP4"
+      title: $l10n("title11")
     },
     views: [{
       type: "list",
       props: {
         data: [{
-          title: "MP4 List (" + list.length + ")",
+          title: $l10n("title12_1") + list.length + $l10n("title12_2"),
           rows: list,
           id: "list"
         }],
@@ -263,21 +307,21 @@ function mainView(list) {
           props: {
             height: 60,
             lines: 0,
-            text: "•「SWIPE LEFT」and Preview if you are finding link.\n\n•「SWIPE LEFT」and try Edit if the link is incorrect.",
+            text: $l10n("text2"),
             textColor: $color("#AAAAAA"),
             align: $align.center,
             font: $font(13)
-          },
+          }
         },
         rowHeight: 80,
         actions: [{
-            title: "Edit",
+            title: $l10n("title13"),
             handler: function(tableView, indexPath) {
               editorView(tableView.object(indexPath).url.text)
             }
           },
           {
-            title: "Preview",
+            title: $l10n("title14"),
             handler: function(tableView, indexPath) {
               previewView(tableView.object(indexPath).url.text)
             }
@@ -295,7 +339,7 @@ function mainView(list) {
         },
         pulled: function(sender) {
           $("list").endRefreshing()
-          $ui.toast("Closing ...")
+          $ui.toast($l10n("toast5"))
           $thread.main({
             delay: 0.8,
             handler: function() {
@@ -311,10 +355,10 @@ function mainView(list) {
 function main(items, message) {
   if (items == null) {
     $ui.alert({
-      title: "No MP4 Found",
+      title: $l10n("title15"),
       message: message,
       actions: [{
-        title: "OK",
+        title: $l10n("title16"),
         style: "Cancel",
         handler: function() {
           $context.close()
@@ -325,11 +369,9 @@ function main(items, message) {
   } else {
     var list = []
     url = unique(items)
-    url.forEach(
-      function(value) {
-        list.push({ url: { text: value } })
-      }
-    )
+    for (var i of url) {
+      list.push({ url: { text: i } })
+    }
     mainView(list)
   }
 }
@@ -338,25 +380,25 @@ function main(items, message) {
 
 if (typeof($context.safari) == "undefined") {
   var url = $context.link || $clipboard.link ? $context.link || $clipboard.link : ""
-  
+
   if (url.match(/https?\:\/\/.+/i)) {
-    $ui.toast("Trying to get HTTP source ...")
+    $ui.toast($l10n("toast6"))
     $ui.loading(true)
     $http.get({
       url: url,
       handler: function(resp) {
         $ui.loading(false)
         var items = tryToMatchMP4(resp.data)
-        var message = "Universal MP4 strongly recommend you to run in Safari or any SafariViewController.\n\nIn that way, we can get dynamic web source other than static HTTP source."
+        var message = $l10n("va1")
         main(items, message)
       }
     })
   } else {
     $ui.alert({
-      title: "Running Error",
-      message: "Universal MP4 strongly recommend you to run in Safari or any SafariViewController.\n\nIn that way, we can get dynamic web source other than static HTTP source.",
+      title: $l10n("title17"),
+      message: $l10n("msg3"),
       actions: [{
-        title: "OK",
+        title: $l10n("title18"),
         style: "Cancel",
         handler: function() {
           $context.close()
@@ -367,6 +409,6 @@ if (typeof($context.safari) == "undefined") {
   }
 } else {
   var items = tryToMatchMP4($context.safari.items.source)
-  var message = "You can try to run again after playing the video."
+  var message = $l10n("va2")
   main(items, message)
 }
