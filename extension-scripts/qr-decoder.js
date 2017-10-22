@@ -98,14 +98,6 @@ if (qr == null) {
   $ui.alert({
     title: $l10n("title8"),
     actions: [{
-        title: $l10n("title9"),
-        handler: function() {
-          $qrcode.scan(function(text) {
-            showResult(text, false)
-          })
-        }
-      },
-      {
         title: $l10n("title10"),
         handler: function() {
           $photo.pick({
