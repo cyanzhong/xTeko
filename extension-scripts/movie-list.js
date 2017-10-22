@@ -1022,9 +1022,199 @@ function fetchCache(idx) {
   }
 }
 
+function fetchRecent(type = ON_SCREEN, pulled = false, start = 0) {
+  var prePage = $("page").text
+  $("page").text = "Loading..."
 
-////////::::
+  var title = $("segment").items[type]
+  var data = [{
+    title: title,
+    rows: []
+  }]
+  var uri = (type == ON_SCREEN) ? "in_theaters" : "coming_soon"
+  var count = SETTING_FILE[0][2]
+  $ui.loading(true)
+  $http.get({
+    url: "https://api.douban.com/v2/movie/" + uri + "?start=" + start + "&count=" + count,
+    handler: function(resp) {
+      $ui.loading(false)
+      var status = resp.response.statusCode
+      if (status != "200") {
+        $("page").text = prePage
+        $("recent").endFetchingMore()
+        $ui.alert({
+          title: status,
+          message: "Public API has limit of request frequency, take a rest :)",
+          actions: [{
+            title: "OK",
+            style: "Cancel"
+          }]
+        })
+        return
+      }
+      var res = resp.data.subjects
+      var resLen = res.length
+      var total = resp.data.total
+      if (res.length === 0) {
+        $("page").text = prePage
+        $ui.toast("No result")
+        return
+      }
+      var quality = SETTING_FILE[0][0]
+      var pageLastIndex = (start + resLen) > total ? total : (start + resLen)
+      var page = pageLastIndex + " / " + total
+      var idx = 0
+      for (var i of res) {
+        var d = {
+          cover: {
+            src: i.images[quality]
+          },
+          title: {
+            text: i.title
+          },
+          original: {
+            text: i.original_title == i.title ? "" : "(" + i.original_title + ")"
+          },
+          genres: {
+            text: " " + i.genres.join(" | ") + " "
+          },
+          director: {
+            text: "导演: " + i.directors.map(function(x) {
+              return x.name
+            }).join(" / ")
+          },
+          cast: {
+            text: "主演: " + i.casts.map(function(x) {
+              return x.name
+            }).join(" / ")
+          },
+          id: i.id
+        }
+        // Insert Each Result
+        if (start > 0) {
+          $("recent").insert({
+            indexPath: $indexPath(0, start + idx),
+            value: d
+          })
+        } else {
+          data[0].rows.push(d)
+        }
+        idx++
+      }
+      // Upadate Page Info
+      $("page").text = page
+      $("recent").endFetchingMore()
+      // Update Results
+      if (start === 0) {
+        $("recent").data = data
+      }
+      if (pulled) {
+        $("recent").endRefreshing()
+        $ui.toast("Refreshed")
+      }
+      // Cache
+      if (SETTING_FILE[0][3]) {
+        if (type == ON_SCREEN) {
+          $cache.set("onScreen", [$("recent").data, page])
+        } else if (type == COMING_SOON) {
+          $cache.set("comingSoon", [$("recent").data, page])
+        }
+      }
+    }
+  })
+}
 
+function fetchQuery(keyword, pulled = false, start = 0) {
+  var prePage = $("page").text
+  $("page").text = "Loading..."
+
+  var data = [{
+    title: "Query Results",
+    rows: []
+  }]
+  var count = SETTING_FILE[0][2]
+  $ui.loading(true)
+  $http.get({
+    url: "https://api.douban.com/v2/movie/search?q=" + encodeURI(keyword) + "&start=" + start + "&count=" + count,
+    handler: function(resp) {
+      $ui.loading(false)
+      var status = resp.response.statusCode
+      if (status != "200") {
+        $("page").text = prePage
+        $("recent").endFetchingMore()
+        $ui.alert({
+          title: status,
+          message: "Public API has limit of request frequency, take a rest :)",
+          actions: [{
+            title: "OK",
+            style: "Cancel"
+          }]
+        })
+        return
+      }
+      var res = resp.data.subjects
+      var resLen = res.length
+      var total = resp.data.total
+      if (res.length === 0) {
+        $("page").text = prePage
+        $ui.toast("No result")
+        return
+      }
+      var quality = SETTING_FILE[0][0]
+      var pageLastIndex = (start + resLen) > total ? total : (start + resLen)
+      var page = pageLastIndex + " / " + total
+      var idx = 0
+      for (var i of res) {
+        var d = {
+          cover: {
+            src: i.images[quality]
+          },
+          title: {
+            text: i.title
+          },
+          original: {
+            text: i.original_title == i.title ? "" : "(" + i.original_title + ")"
+          },
+          genres: {
+            text: " " + i.genres.join(" | ") + " "
+          },
+          director: {
+            text: "导演: " + i.directors.map(function(x) {
+              return x.name
+            }).join(" / ")
+          },
+          cast: {
+            text: "主演: " + i.casts.map(function(x) {
+              return x.name
+            }).join(" / ")
+          },
+          id: i.id
+        }
+        // Insert Each Result
+        if (start > 0) {
+          $("recent").insert({
+            indexPath: $indexPath(0, start + idx),
+            value: d
+          })
+        } else {
+          data[0].rows.push(d)
+        }
+        idx++
+      }
+      // Upadate Page Info
+      $("page").text = page
+      $("recent").endFetchingMore()
+      // Update Results
+      if (start === 0) {
+        $("recent").data = data
+      }
+      if (pulled) {
+        $("recent").endRefreshing()
+        $ui.toast("Refreshed")
+      }
+    }
+  })
+}
 
 function favoriteItem(cellData) {
   $("favorite").insert({
