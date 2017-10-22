@@ -1,3 +1,15 @@
+var extensions = $cache.get("extensions") || []
+
+if ($app.env != $env.app) {
+  $ui.menu({
+    items: extensions,
+    handler: function(title, idx) {
+      $app.openExtension(title)
+    }
+  })
+  return
+}
+
 $ui.render({
   props: {
     title: "xTeko 收藏夹"
@@ -22,7 +34,7 @@ $ui.render({
       type: "list",
       props: {
         id: "list",
-        rowHeight: $app.env == $env.today ? 36.0 : 44.0,
+        reorder: true,
         actions: [
           {
             title: "delete",
@@ -34,15 +46,17 @@ $ui.render({
       },
       layout: function(make) {
         make.left.bottom.right.equalTo(0)
-        if ($app.env == $env.today) {
-          make.top.equalTo(0)
-        } else {
-          make.top.equalTo($("button").bottom).offset(10)
-        }
+        make.top.equalTo($("button").bottom).offset(10)
       },
       events: {
         didSelect: function(sender, indexPath, title) {
           $app.openExtension(title)
+        },
+        reorderMoved: function(from, to) {
+          extensions.move(from.row, to.row)
+        },
+        reorderFinished: function() {
+          saveItems()
         }
       }
     }
@@ -50,7 +64,6 @@ $ui.render({
 })
 
 var listView = $("list")
-var extensions = $cache.get("extensions") || []
 listView.data = extensions
 
 function insertItem(text) {
@@ -96,4 +109,10 @@ function selectItem() {
 
 function saveItems() {
   $cache.set("extensions", extensions)
+}
+
+Array.prototype.move = function(from, to) {
+  var object = this[from]
+  this.splice(from, 1)
+  this.splice(to, 0, object)
 }

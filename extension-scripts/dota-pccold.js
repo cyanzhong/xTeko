@@ -1,50 +1,32 @@
+var roomId = '20360'
+var tt = (new Date()).getTime().toString().substr(0, 10)
+var apikey = 'Y237pxTx2In5ayGz'
+var authstr = "room/" + roomId + "?aid=androidhd1&cdn=ws&client_sys=android&time=" + tt
+var authstr1 = authstr + apikey
+var sign = $text.MD5(authstr1)
+//CryptoJS.MD5(authstr1).toString()
+var apiurl = "https://capi.douyucdn.cn/api/v1/" + authstr + "&auth=" + sign
+
 $http.get({
-  url: "https://api.maxjia.com/api/live/list/",
+  url: apiurl,
   handler: function(resp) {
     var data = resp.data
-    if (!data) {
-      $ui.alert('API返回为空，检查网络')
-      return
-    }
-    var results = data.result
-    if (!results) {
-      $ui.alert('API返回为空')
-      return
-    }
-    var online = false
-    var url = null
-    results.forEach(function(live) {
-      var live_id = live.live_id
-      if (live_id == '20360') { // 20360 for Pc冷冷
-        online = true
-        var url_info = live.url_info
-        if (url_info && url_info.url) {
-          url = url_info.url
+    if (!data.error) {
+      if(data.data.online || data.data.show_status == 1){
+        if (data.data && data.data.hls_url) { //&& false
+          var hls_url = data.data.hls_url
+          $app.openURL(hls_url.replace('http://', 'https://'))
+        } else if (data.data && data.data.rtmp_url && data.data.rtmp_live) {
+          var flv = data.data.rtmp_url + '/' + data.data.rtmp_live;
+          $app.openURL('nplayer-' + flv.replace('http://', 'https://'))
+        } else {
+          $ui.toast('No URL')
         }
-        return true
+      }else{
+        $ui.toast('Not Online')
       }
-    })
-    if (!online) {
-      $ui.alert('未在 DotA 区上线')
     } else {
-      if (!url) {
-        $ui.alert('没有 URL')
-        return
-      }
-      $http.get({
-        url: url,
-        handler: function(resp) {
-          var data = resp.data
-          // For rtmp flv, please check the API response
-          // flv can be streamed by vlc , and not expire
-          // Here simply redirect to hls_url, which could expire
-          if (data.data && data.data.hls_url) {
-            $app.openURL(data.data.hls_url)
-          } else {
-            $ui.alert('没有 HLS 链接')
-          }
-        }
-      })
+      $ui.toast('Not Online')
     }
   }
 })
