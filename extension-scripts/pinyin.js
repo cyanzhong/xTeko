@@ -1996,6 +1996,9 @@ $ui.render({
         make.height.equalTo(120)
       },
       events: {
+				ready: function(sender) {
+					sender.focus()
+				},
         changed: function(sender) {
 					$("text-output").text = pinyin(sender.text).join(" ")
 				}
