@@ -1,12 +1,50 @@
+$app.strings = {
+  "en": {
+    "title1": "Clipboard Saved",
+    "title2": "Open URL",
+    "title3": "Cancel",
+    "title4": "Clipboard Saved",
+    "title5": "OK",
+    "title6": "QR Code Error",
+    "title7": "OK",
+    "title8": "QR Decoder",
+    "title9": "Scan from QR Code",
+    "title10": "Pick from Photos",
+    "title11": "Cancel",
+    "msg1_1": "The image you ",
+    "msg1_2": " should be a QR Code.\n\nPlease try again.",
+    "va1": "pick from Photos",
+    "va2": "run through Action Extension"
+  },
+  "zh-Hans": {
+    "title1": "已保存到剪切板",
+    "title2": "打开 URL",
+    "title3": "取消",
+    "title4": "已保存到剪切板",
+    "title5": "好的",
+    "title6": "二维码有误",
+    "title7": "好的",
+    "title8": "二维码解码",
+    "title9": "扫描二维码",
+    "title10": "从相册选取二维码",
+    "title11": "取消",
+    "msg1_1": "您的图片",
+    "msg1_2": "不是二维码。\n\n请再次尝试。",
+    "va1": "(来自相册获取)",
+    "va2": "(来自 Action Extension)"
+  }
+}
+
+
 function showResult(text, runningExt) {
   var url = text.match(/\w+:\/\/[^\s]+/i)
   $clipboard.text = text
   if (url) {
     $ui.alert({
-      title: "Clipboard Saved",
+      title: $l10n("title1"),
       message: text,
       actions: [{
-        title: "Open URL",
+        title: $l10n("title2"),
         handler: function() {
           $app.openURL(url)
           if (runningExt)
@@ -14,7 +52,7 @@ function showResult(text, runningExt) {
         }
       },
       {
-        title: "Cancel",
+        title: $l10n("title3"),
         style: "Cancel",
         handler: function() {
           if (runningExt)
@@ -24,10 +62,10 @@ function showResult(text, runningExt) {
     })
   } else {
     $ui.alert({
-      title: "Clipboard Saved",
+      title: $l10n("title4"),
       message: text,
       actions: [{
-        title: "OK",
+        title: $l10n("title5"),
         style: "Cancel",
         handler: function() {
           if (runningExt)
@@ -40,10 +78,10 @@ function showResult(text, runningExt) {
 
 function showWarning(text, runningExt) {
   $ui.alert({
-    title: "QR Code Error",
-    message: "The image you " + text + " should be a QR Code.\n\nPlease try again.",
+    title: $l10n("title6"),
+    message: $l10n("msg1_1") + text + $l10n("msg1_2"),
     actions: [{
-      title: "OK",
+      title: $l10n("title7"),
       style: "Cancel",
       handler: function() {
         if (runningExt)
@@ -58,17 +96,9 @@ function showWarning(text, runningExt) {
 var qr = $context.image
 if (qr == null) {
   $ui.alert({
-    title: "QR Decoder",
+    title: $l10n("title8"),
     actions: [{
-        title: "Scan from QR Code",
-        handler: function() {
-          $qrcode.scan(function(text) {
-            showResult(text, false)
-          })
-        }
-      },
-      {
-        title: "Pick from Photos",
+        title: $l10n("title10"),
         handler: function() {
           $photo.pick({
             handler: function(resp) {
@@ -76,14 +106,14 @@ if (qr == null) {
               if (text) {
                 showResult(text, false)
               } else {
-                showWarning("pick from Photos", false)
+                showWarning($l10n("va1"), false)
               }
             }
           })
         }
       },
       {
-        title: "Cancel",
+        title: $l10n("title11"),
         style: "Cancel"
       }
     ]
@@ -93,6 +123,6 @@ if (qr == null) {
   if (text) {
     showResult(text, true)
   } else {
-    showWarning("run through Share Extension", true)
+    showWarning($l10n("va2"), true)
   }
 }
