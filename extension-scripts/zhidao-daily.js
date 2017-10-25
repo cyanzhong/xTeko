@@ -1,3 +1,4 @@
+$app.open()
 $ui.loading(true)
 $http.get({
   url: "https://zhidao.baidu.com/daily",
