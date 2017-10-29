@@ -21,8 +21,8 @@ $app.strings = {
     "Qq": "QQ Mail",
     "Xtzd": "Email",
     "Wy": "NetEase Mail",
-    "Tfsyff": "JS Use help",
-    "JSsyff": "TestFlight Use help",
+    "Tfsyff": "TestFlight Use help",
+    "JSsyff": "JS Use help",
     "Gy": "About",
     "Cs": "Case Sensitive",
     "About": "Author: Hhdº\n\nProduct with: L.",
@@ -32,7 +32,7 @@ $app.strings = {
     "Yy": "Scripting Language",
     "yyts": "Please change the language in settings of Pin",
     "Sssz": "Search settings",
-    "Jqqd": "To be continued"
+    "Jqqd": "To be continued",
   },
   "zh-Hans": {
     "title": "TestFlight内测申请",
@@ -206,7 +206,7 @@ $ui.render({
       },
       events: {
         didSelect: function(sender, indexPath, data) {
-          var url = $cache.get(data).replace(" ", "")
+          var url = $cache.get(data).replace(/\s|;/g, "")
           var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
           var check = reg.test(url)
           if (check == 0) {
@@ -277,11 +277,13 @@ $ui.render({
 })
 
 function al() {
+  if (typeof($cache.get("data")) == "undefined") {
+    $ui.loading(true)
+  }
   $http.get({
-    url: "https://zhuanlan.zhihu.com/p/28822240",
+    url: "https://coding.net/u/L928737095/p/L928737095.Coding.me/git/raw/master/TF%25E5%2586%2585%25E5%25AE%25B9",
     handler: function(resp) {
-      var data = JSON.stringify(resp.data.match(/\",\"content\":\".*?(?=,\"updated\":\")/)).replace("[\"\\\",\\\"content\\\":\\\"", "").replace("\"\]", "").replace("\\", "").replace("\"", "")
-      var tfs = $text.base64Decode(data).replace(/;/g, "").split("\n")
+      var tfs = resp.data.split("\n")
       $("list").data = [""]
       for (var i = 1; i < tfs.length; i++) {
         var json = tfs[i].split(": ")
@@ -298,6 +300,7 @@ function al() {
         }
         $cache.set(title, json[1])
       }
+      $ui.loading(false)
       var umessage = tfs[0].split(": http")[0].match(/\d+年\d+月\d+日\s\d+:\d+/)[0].replace(/年|月|日/g, "/")
       $("tip").text = umessage
       $("list").endRefreshing()
@@ -330,6 +333,7 @@ function Setting() {
     views: [{
       type: "list",
       props: {
+        id: "list1",
         data: [{
             title: $l10n("Ty"),
             rows: [$l10n("Sssz"), $l10n("Yy")]
@@ -351,11 +355,36 @@ function Setting() {
             About()
           } else if (title == $l10n("Cfu")) {
             $ui.alert($l10n("Jqqd"))
+          } else if (title.indexOf("公告") == 0) {
+            $ui.alert($cache.get("board"))
           }
         }
       }
     }]
   })
+  if (typeof($cache.get("board")) == "undefined") {
+    $ui.loading(true)
+    $http.get({
+      url: "https://coding.net/u/Hhhd/p/Hhhd1507206502721.Coding.me/git/raw/master/TestFlight%25E5%2586%2585%25E6%25B5%258B%25E7%2594%25B3%25E8%25AF%25B7%25E5%2585%25AC%25E5%2591%258A",
+      handler: function(resp) {
+        $ui.loading(false)
+        $cache.set("board", resp.data)
+        if (resp.data == "无公告") {} else {
+          $("list1").insert({
+            indexPath: $indexPath(1, 2),
+            value: resp.data
+          })
+        }
+      }
+    })
+  } {
+    if ($cache.get("board") == "无公告") {} else {
+      $("list1").insert({
+        indexPath: $indexPath(1, 2),
+        value: $cache.get("board")
+      })
+    }
+  }
 }
 
 function search(keywords, times) {
@@ -364,7 +393,7 @@ function search(keywords, times) {
   for (var i = 1; i < data.length; i++) {
     var name = data[i]
     var bd = $cache.get("CS")
-    var reg = (bd == "False")? eval("/" + keywords + "/i"):eval("/" + keywords + "/")
+    var reg = (bd == "False") ? eval("/" + keywords + "/i") : eval("/" + keywords + "/")
     var check = reg.test(name)
     if (check == false) {} else {
       if (times == "0") {
@@ -379,7 +408,7 @@ function search(keywords, times) {
       }
     }
   }
-  $("tip").text = (times == 0)? "0 " + $l10n("searchmessage"):$("list").data.length + " " + $l10n("searchmessage")
+  $("tip").text = (times == 0) ? "0 " + $l10n("searchmessage") : $("list").data.length + " " + $l10n("searchmessage")
 }
 
 if ($device.networkType == 0) {
@@ -443,8 +472,8 @@ function SearchSetting() {
             },
             events: {
               changed: function(sender) {
-                $cache.set("CS", ($("switch").on == true)? "True":"False")
-                
+                $cache.set("CS", ($("switch").on == true) ? "True" : "False")
+
               }
             }
           }
@@ -453,15 +482,15 @@ function SearchSetting() {
       layout: $layout.fill,
     }, ]
   })
-  $("switch").on = ($cache.get("CS") == "True")? true:false
+  $("switch").on = ($cache.get("CS") == "True") ? true : false
 }
 
 $app.keyboardToolbarEnabled = true
 
 $app.open()
 
-al()
-
 $cache.clear()
+
+al()
 
 $cache.set("CS", "False")
