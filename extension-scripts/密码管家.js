@@ -1,8 +1,3 @@
-/*
- * by:Hhdº
- * 未经允许，禁止转载
- */
-
 $app.keyboardToolbarEnabled = true
 function inputpassword(number) {
   $ui.render({
