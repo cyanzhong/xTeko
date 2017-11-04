@@ -1121,7 +1121,7 @@ var Header = {
   'Referer': 'https://www.instagram.com/'
 };
 
-var config = "instagram-lite.json"
+var config = ".instagram-lite.json"
 var shortCodes = [],
   mediaData = {};
 $thread.background({
