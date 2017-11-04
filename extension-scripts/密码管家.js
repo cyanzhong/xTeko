@@ -1,4 +1,5 @@
 $app.keyboardToolbarEnabled = true
+
 function inputpassword(number) {
   $ui.render({
     props: {
@@ -42,15 +43,20 @@ function inputpassword(number) {
                   load()
                 } else {
                   $ui.toast("密码错误")
+                  $("PasswordInput").text = ""
                 }
               } else {
-                $file.write({
-                  data: $data({ string: $("PasswordInput").text }),
-                  path: "mmgj.txt"
-                })
-                $ui.toast("密码设置成功！")
-                zy()
-                load()
+                if ($("PasswordInput").text == "") {
+                  $ui.toast("密码不能为空")
+                } else {
+                  $file.write({
+                    data: $data({ string: $("PasswordInput").text }),
+                    path: "mmgj.txt"
+                  })
+                  $ui.toast("密码设置成功！")
+                  zy()
+                  load()
+                }
               }
             } else if (indexPath.row == 9) {
               $("PasswordInput").text = $("PasswordInput").text.substring(0, $("PasswordInput").text.length - 1)
@@ -76,6 +82,8 @@ function inputpassword(number) {
   })
 }
 
+$app.open()
+
 if ($file.exists("mmgj.txt") == true) {
   if ($cache.get("LoginSet") == "1") {
     zy()
@@ -86,7 +94,7 @@ if ($file.exists("mmgj.txt") == true) {
   }
 } else {
   inputpassword(1)
-  $ui.toast("请设置脚本登录密码")
+  $ui.toast("首次使用请设置脚本登录密码")
 }
 
 function zy() {
@@ -148,8 +156,8 @@ function zy() {
                 $ui.menu({
                   items: ["删除"],
                   handler: function() {
-                    $file.delete("密码管家/" + $("list").data[indexPath.row].Label.text + ".txt")
-                    $("list").delete(indexPath)
+                    $file.delete("密码管家/" + sender.data[indexPath.row].Label.text + ".txt")
+                    sender.delete(indexPath)
                   }
                 })
               }
@@ -157,7 +165,7 @@ function zy() {
             {
               title: "打开网站",
               handler: function(sender, indexPath) {
-                OpenURL($("list").data[indexPath.row].Data[0])
+                OpenURL(sender.data[indexPath.row].Data[0])
               }
             }
           ]
@@ -397,12 +405,31 @@ function change(number, data, website) {
         },
         events: {
           tapped: function(sender) {
-            $file.write({
-              data: $data({ string: $("URL").text + "," + $("UserName").text + "," + $("Password").text + "," + $("Notes").text }),
-              path: "密码管家/" + $("Website").text + ".txt"
-            })
-            load()
-            $ui.pop()
+            if ($("Website").text.replace(/\s/g, "") == "") {
+              $ui.toast("请输入网站名称")
+            } else {
+              if ($("Website").text == website) {
+                $file.write({
+                  data: $data({ string: $("URL").text + "," + $("UserName").text + "," + $("Password").text + "," + $("Notes").text }),
+                  path: "密码管家/" + website + ".txt"
+                })
+              } else {
+                if (number == 0) {
+                  $file.write({
+                    data: $data({ string: $("URL").text + "," + $("UserName").text + "," + $("Password").text + "," + $("Notes").text }),
+                    path: "密码管家/" + $("Website").text + ".txt"
+                  })
+                } else {
+                  $file.delete("密码管家/" + website + ".txt")
+                  $file.write({
+                    data: $data({ string: $("URL").text + "," + $("UserName").text + "," + $("Password").text + "," + $("Notes").text }),
+                    path: "密码管家/" + $("Website").text + ".txt"
+                  })
+                }
+              }
+              load()
+              $ui.pop()
+            }
           }
         }
       }
