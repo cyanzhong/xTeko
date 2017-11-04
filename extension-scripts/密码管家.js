@@ -106,11 +106,14 @@ function zy() {
         type: "button",
         props: {
           id: "button",
-          type: 5,
-          title: " 添加网站"
+          type: ($cache.get("MainColor") == "1") ? 1 : 5,
+          title: " 添加网站",
+          font:$font(17),
+          titleColor: $color(($cache.get("MainColor") == "1") ? "black" : "red"),
         },
         layout: function(make) {
-          make.top.right.inset(10)
+          make.right.inset(10)
+          make.top.inset(15)
         },
         events: {
           tapped: function(sender) {
@@ -124,6 +127,7 @@ function zy() {
           id: "button",
           type: 1,
           title: "设置",
+          titleColor: $color(($cache.get("MainColor") == "1") ? "black" : "red"),
           font: $font(17)
         },
         layout: function(make) {
@@ -143,7 +147,7 @@ function zy() {
             type: "label",
             props: {
               id: "Label",
-              font: $font("16")
+              font: $font(16)
             },
             layout: function(make, view) {
               make.left.inset(10)
@@ -212,7 +216,7 @@ function setting() {
       props: {
         id: "setlist",
         data: [{
-            title: "密码设置",
+            title: "项目",
             rows: [{
                 Title: {
                   text: "更改密码"
@@ -224,8 +228,7 @@ function setting() {
                 views: [{
                     type: "label",
                     props: {
-                      id: "Title",
-                      font: $font("16"),
+                      font: $font(16),
                       text: "自动登录"
                     },
                     layout: function(make, view) {
@@ -237,6 +240,7 @@ function setting() {
                     type: "switch",
                     props: {
                       id: "LoginSwitch",
+                      onColor: $color(($cache.get("MainColor") == "1") ? "black" : "red"),
                       on: ($cache.get("LoginSet") == "1") ? true : false
                     },
                     layout: function(make, view) {
@@ -246,6 +250,53 @@ function setting() {
                     events: {
                       changed: function(sender) {
                         $cache.set("LoginSet", ($("LoginSwitch").on == true) ? "1" : "0")
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                type: "view",
+                layout: $layout.fill,
+                views: [{
+                    type: "label",
+                    props: {
+                      font: $font(16),
+                      text: "主颜色"
+                    },
+                    layout: function(make, view) {
+                      make.left.inset(10)
+                      make.centerY.equalTo(view.super)
+                    }
+                  },
+                  {
+                    type: "tab",
+                    props: {
+                      items: ["红色(默认)", "黑色"],
+                      tintColor: $color(($cache.get("MainColor") == "1") ? "black" : "red"),
+                      index: ($cache.get("MainColor") == "1") ? 1 : 0
+                    },
+                    layout: function(make, view) {
+                      make.centerY.equalTo(view.super)
+                      make.right.inset(10)
+                    },
+                    events: {
+                      changed: function(sender) {
+                        $cache.set("MainColor", sender.index)
+                        $ui.alert({
+                          title: "提示",
+                          message: "重启脚本生效，立即关闭脚本？",
+                          actions: [{
+                              title: "取消",
+                            },
+                            {
+                              title: "重启",
+                              handler: function() {
+                                $app.close()
+                              }
+                            }
+                          ]
+                        })
                       }
                     }
                   }
@@ -263,23 +314,36 @@ function setting() {
               {
                 Title: {
                   text: "清除所有网站",
-                  textColor: $color("red")
+                  textColor: $color(($cache.get("MainColor") == "1") ? "black" : "red")
                 }
               }
             ]
           }
         ],
         template: [{
-          type: "label",
-          props: {
-            id: "Title",
-            font: $font("16")
+            type: "label",
+            props: {
+              id: "Title",
+              font: $font(16)
+            },
+            layout: function(make, view) {
+              make.left.inset(10)
+              make.centerY.equalTo(view.super)
+            }
           },
-          layout: function(make, view) {
-            make.left.inset(10)
-            make.centerY.equalTo(view.super)
+          {
+            type: "label",
+            props: {
+              font: $font("bold", 18),
+              text: ">",
+              textColor: $color("#AAAAAA"),
+            },
+            layout: function(make, view) {
+              make.right.inset(10)
+              make.centerY.equalTo(view.super)
+            }
           }
-        }],
+        ],
         footer: {
           type: "label",
           props: {
@@ -399,6 +463,7 @@ function change(number, data, website) {
         props: {
           id: "OK",
           title: "完成",
+          bgcolor: $color(($cache.get("MainColor") == "1") ? "black" : "red")
         },
         layout: function(make) {
           make.bottom.right.left.inset(10)
