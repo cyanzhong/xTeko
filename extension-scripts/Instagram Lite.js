@@ -114,7 +114,7 @@ let userViews = {
           type: "label",
           props: {
             id: "casefullname",
-            font: $font("Menlo",18)
+            font: $font("AppleSDGothicNeo-Bold",18)
           },
           layout: function(make, view) {
             make.left.equalTo($("casecover").right).offset(15)
