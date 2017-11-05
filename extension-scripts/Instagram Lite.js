@@ -103,7 +103,7 @@ let userViews = {
             id: "casecover",
             radius: 30,
             borderWidth: 1,
-            borderColor:$color("#ff1493")
+            borderColor: $color("#ff1493")
           },
           layout: function(make, view) {
             make.left.inset(15)
@@ -114,7 +114,7 @@ let userViews = {
           type: "label",
           props: {
             id: "casefullname",
-            font: $font("AppleSDGothicNeo-Bold",18)
+            font: $font("AppleSDGothicNeo-Bold", 18)
           },
           layout: function(make, view) {
             make.left.equalTo($("casecover").right).offset(15)
@@ -135,11 +135,11 @@ let userViews = {
             make.height.equalTo(16)
             make.right.inset(50)
           }
-        },{
+        }, {
           type: "label",
           props: {
             id: "caselike",
-            bgcolor: $rgba(255,0,0,0.7),
+            bgcolor: $rgba(255, 0, 0, 0.7),
             textColor: $color("white"),
             font: $font(11),
             radius: 3
@@ -195,12 +195,13 @@ let userViews = {
           events: {
             tapped(sender) {
               $device.taptic(0);
-              sender.alpha = 0.3;
-              if (sender.info.is_private) {
+              if (sender.info[0].is_private) {
                 $ui.toast("❌ 不支持浏览私密账户")
               } else {
-
-                updateLocalUserData("add", sender.info)
+                updateLocalUserData("add", sender.info[0]);
+                var data = $("userList").data;
+                data[sender.info[1]].caseadd.alpha = 0.3;
+                $("userList").data = data
               }
             }
           }
@@ -214,7 +215,7 @@ let userViews = {
             updateLocalUserData("del", indexPath.row)
           }
         }
-      },{
+      }, {
         title: "分享",
         handler: function(sender, indexPath) {
           $device.taptic(0);
@@ -276,11 +277,11 @@ let postViews = {
           type: "label",
           props: {
             id: "postInfo",
-            bgcolor: $rgba(0,0,0,0.5),
+            bgcolor: $rgba(0, 0, 0, 0.5),
             textColor: $color("white"),
             align: $align.center,
             font: $font(14),
-            autoFontSize:true
+            autoFontSize: true
           },
           layout: function(make) {
             make.left.right.bottom.inset(0)
@@ -307,7 +308,7 @@ let postViews = {
 $ui.render({
   props: {
     id: "rootView",
-    title:"Instagram Lite",
+    title: "Instagram Lite",
     iconColor: $color("red"),
     titleColor: $color("red")
   },
@@ -373,7 +374,7 @@ function userHomePageView(name) {
               font: $font(12),
               align: $align.center,
               textColor: $color("white"),
-              bgcolor: $rgba(0,0,0,0.5),
+              bgcolor: $rgba(0, 0, 0, 0.5),
               autoFontSize: true
             },
             layout: function(make, view) {
@@ -712,7 +713,6 @@ function getUserHomePageJson(input, mode) {
         homePageMode = "user";
         updateLocalUserData("add", homePageJson)
       } else {
-
         postDataFormat(homePageJson, "home")
       }
     }
@@ -720,13 +720,14 @@ function getUserHomePageJson(input, mode) {
 }
 
 function search(keyword) {
-  $ui.toast("搜索中...");
+  $ui.toast("搜索中...",100);
   homePageMode = "search";
   $http.get({
     url: "https://www.instagram.com/web/search/topsearch/?context=blended&query=" + $text.URLEncode(keyword),
     handler: function(resp) {
       var data = [];
-      resp.data.users.map(function(i) {
+      for (idx in resp.data.users) {
+        var i = resp.data.users[idx];
         data.push({
           info: i.user,
           casecover: {
@@ -734,7 +735,7 @@ function search(keyword) {
           },
           casefullname: {
             text: i.user.full_name || i.user.username,
-            textColor:$color("black")
+            textColor: $color("black")
           },
           caseusername: {
             text: i.user.username
@@ -744,20 +745,20 @@ function search(keyword) {
           },
           caseprivate: {
             text: i.user.is_private ? " 私密账户 " : " 公开账户 ",
-            bgcolor: i.user.is_private ? $color("#8e8e8e") : $rgba(0,90,0,0.7)
+            bgcolor: i.user.is_private ? $color("#8e8e8e") : $rgba(0, 90, 0, 0.7)
           },
           caseverified: {
             text: i.user.is_verified ? " 官方认证 " : " 未经认证 ",
-            bgcolor: i.user.is_verified ? $rgba(0,0,145,0.7) : $color("#8e8e8e")
+            bgcolor: i.user.is_verified ? $rgba(0, 0, 145, 0.7) : $color("#8e8e8e")
           },
           caseadd: {
-            info: i.user,
+            info: [i.user, idx],
             hidden: false,
             alpha: i.user.is_private || LocalUserName.indexOf(i.user.username) > -1 ? 0.3 : 1
           }
         })
-      });
-      $ui.toast("✅完成",1);
+      };
+      $ui.toast("✅完成", 0.1);
       $("userList").data = data;
       $("userTitle").align = $align.right;
       $("back").hidden = false;
@@ -981,10 +982,10 @@ function updateLocalUserData(mode, data) {
       loadLocalUserData()
     };
   } else if (mode == "del") {
-    $("userList").delete(data);
     LocalData.user.splice(data, 1);
+    LocalUserName.splice(data, 1);
+    $("userTitle").text = "已关注" + LocalUserName.length + "位用户";
     $ui.toast("✅已取消对 " + LocalUserName[data] + " 的关注", 1);
-    LocalUserName.splice(data, 1)
   };
   $drive.write({
     data: $data({
@@ -1004,11 +1005,11 @@ function updateLocalPostData(mode, code, x) {
       "postDate": data.postDate,
       "thumbnail": data.thumbnail
     });
-    $ui.toast("✅已收藏", 1);
+    $ui.toast("✅已收藏", 0.5);
   } else if (mode == "del") {
     LocalPostCode.splice(code, 1);
     LocalData.post.splice(code, 1);
-    $ui.toast("✅已取消收藏", 1)
+    $ui.toast("✅已取消收藏", 0.5)
     if (x) {
       $("postList").delete(code)
     }
@@ -1080,21 +1081,22 @@ function loadLocalUserData() {
       },
       casefullname: {
         text: i.fullname || i.username,
-        textColor:i.verified?$color("#000091"):$color("black")
+        textColor: i.verified ? $color("#000091") : $color("black")
       },
       caseusername: {
-        text: i.username},
+        text: i.username
+      },
       caselike: {
         text: likedCountFormat(i.liked) + " "
       },
       caseprivate: {
-text:""
+        text: ""
       },
       caseverified: {
-text:""
-},
+        text: ""
+      },
       caseadd: {
-        hidden:true
+        hidden: true
       }
     })
   })
