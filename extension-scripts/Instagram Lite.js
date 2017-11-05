@@ -983,9 +983,9 @@ function updateLocalUserData(mode, data) {
     };
   } else if (mode == "del") {
     LocalData.user.splice(data, 1);
-    LocalUserName.splice(data, 1);
-    $("userTitle").text = "已关注" + LocalUserName.length + "位用户";
     $ui.toast("✅已取消对 " + LocalUserName[data] + " 的关注", 1);
+    LocalUserName.splice(data, 1);
+    $("userTitle").text = "已关注" + LocalUserName.length + "位用户"
   };
   $drive.write({
     data: $data({
