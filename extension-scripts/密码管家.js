@@ -106,14 +106,14 @@ function zy() {
         type: "button",
         props: {
           id: "button",
-          type: ($cache.get("MainColor") == "1") ? 1 : 5,
+          type: 1,
           title: " 添加网站",
           font:$font(17),
           titleColor: $color(($cache.get("MainColor") == "1") ? "black" : "red"),
         },
         layout: function(make) {
           make.right.inset(10)
-          make.top.inset(15)
+          make.top.inset(10)
         },
         events: {
           tapped: function(sender) {
@@ -124,7 +124,7 @@ function zy() {
       {
         type: "button",
         props: {
-          id: "button",
+          id: "button1",
           type: 1,
           title: "设置",
           titleColor: $color(($cache.get("MainColor") == "1") ? "black" : "red"),
