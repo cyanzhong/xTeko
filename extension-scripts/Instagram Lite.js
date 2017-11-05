@@ -391,7 +391,7 @@ function userHomePageView(name) {
           getPostMediaUrls(data.info.code)
         },
         didReachBottom(sender) {
-          if (mediaData.length == userPosted) {
+          if (!NextPage) {
             $device.taptic(0);
             sender.endFetchingMore();
           } else {
