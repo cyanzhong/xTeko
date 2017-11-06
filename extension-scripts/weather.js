@@ -4,7 +4,7 @@ $http.get({
   handler: function(resp) {
     $ui.loading(false)
     $ui.alert({
-      title: resp.data.weather[0].city_name + "当下\n天气：" + resp.data.weather[0].now.text + "\n温度：" + resp.data.weather[0].now.temperature + "\n" + resp.data.weather[0].now.wind_direction + "风" + resp.data.weather[0].now.wind_scale + "级\nPM2.5：" + resp.data.weather[0].now.air_quality.city.pm25 + "\n日出：" + resp.data.weather[0].today.sunrise + "\n日落：" + resp.data.weather[0].today.sunset,
+      title: resp.data.weather[0].city_name + "当下\n天气：" + resp.data.weather[0].now.text + "\n温度：" + resp.data.weather[0].now.temperature + "\n" + resp.data.weather[0].now.wind_direction + "风" + resp.data.weather[0].now.wind_scale + "级\nPM2.5：" + resp.data.weather[0].now.air_quality.city.pm25 + "  " + resp.data.weather[0].now.air_quality.city.quality + "\n日出：" + resp.data.weather[0].today.sunrise + "\n日落：" + resp.data.weather[0].today.sunset,
       actions: [
         {
           title: "知道了",
