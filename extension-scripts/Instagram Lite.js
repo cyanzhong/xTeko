@@ -412,11 +412,13 @@ function postDetailView(code, scale) {
   selectCode = code;
   var data = mediaData[code];
   var items = [];
-  data.media.map(function(i) {
+  for (idx in data.media) {
+    var i = data.media[idx];
     if (i.video) {
       items.push({
         type: "video",
         props: {
+          info: "video",
           src: i.video,
           poster: i.image
         }
@@ -425,11 +427,12 @@ function postDetailView(code, scale) {
       items.push({
         type: "image",
         props: {
+          info: "image",
           src: i.image
         }
       })
     };
-  });
+  };
   $ui.push({
     type: "view",
     props: {
@@ -629,7 +632,13 @@ function postDetailView(code, scale) {
       },
       events: {
         tapped(sender) {
-          mediaSaveAction("save")
+          var id = "__item__" + $("detail").page;
+          var type = $(id).info;
+          if (type == "video") {
+            mediaSaveAction("video")
+          } else {
+            mediaSaveAction("saveImage")
+          }
         }
       }
 
@@ -652,7 +661,14 @@ function postDetailView(code, scale) {
       },
       events: {
         tapped(sender) {
-          mediaSaveAction("share")
+          $device.taptic(0);
+          var id = "__item__" + $("detail").page;
+          var type = $(id).info;
+          if (type == "video") {
+            mediaSaveAction("video")
+          } else {
+            mediaSaveAction("shareImage")
+          }
         }
       }
 
@@ -706,7 +722,8 @@ function getUserHomePageJson(input, mode) {
       var match = /window\.\_sharedData\s=\s.+?(?=\;\<\/script\>)/g.exec(resp.data)[0].replace("window._sharedData = ", "");
       homePageJson = JSON.parse(match).entry_data.ProfilePage[0].user;
       if (homePageJson.is_private) {
-        $ui.toast("暂不支持浏览私密账户", 1);
+        $ui.toast("❌暂不支持浏览私密账户", 1);
+        $ui.pop();
         return;
       };
       if (mode == "import") {
@@ -720,7 +737,7 @@ function getUserHomePageJson(input, mode) {
 }
 
 function search(keyword) {
-  $ui.toast("搜索中...",100);
+  $ui.toast("搜索中...", 100);
   homePageMode = "search";
   $http.get({
     url: "https://www.instagram.com/web/search/topsearch/?context=blended&query=" + $text.URLEncode(keyword),
@@ -900,39 +917,47 @@ function Trans(keyword) {
 }
 
 function mediaSaveAction(mode) {
-  if ($("progress").value > 0) {
-    return
-  };
   $device.taptic(0);
-  if (mode == "link") {
-    $share.sheet("https://www.instagram.com/p/" + selectCode)
-  } else {
-    var i = mediaData[selectCode]["media"][$("detail").page];
-    var url = i.video || i.image;
-    var ext = url.split(".").pop();
-    $http.download({
-      header: Header,
-      url: url,
-      progress: function(bytesWritten, totalBytes) {
-        var num = bytesWritten * 1.0 / totalBytes;
-        $("progress").value = num
-      },
-      handler: function(resp) {
-        $("progress").value = 0;
-        if (ext == "mp4") {
+  var id = "__item__" + $("detail").page;
+  var json = mediaData[selectCode]["media"][$("detail").page];
+  switch (mode) {
+    case "link":
+      $share.sheet("https://www.instagram.com/p/" + selectCode);
+      break;
+    case "video":
+    if($("progress").value>0){
+      $ui.toast("⌛️请等待上一个任务下载完成",1)
+    }else{
+      $http.download({
+        header: Header,
+        url: json.video,
+        progress: function(bytesWritten, totalBytes) {
+          var num = bytesWritten * 1.0 / totalBytes;
+          $("progress").value = num
+        },
+        handler: function(resp) {
+          $("progress").value = 0;
           $share.sheet(resp.data)
-        } else if (mode == "save" && ext != "mp4") {
-          $photo.save({
-            data: resp.data,
-            handler: function(res) {
-              res ? $ui.toast("✅已保存到相册", 1) : $ui.toast("❌保存失败", 1)
-            }
-          })
-        } else if (mode == "share" && ext != "mp4") {
-          $share.universal(resp.data)
         }
-      }
-    })
+      })};
+      break;
+    case "saveImage":
+      if ($(id).image) {
+        $photo.save({
+          image: $(id).image
+        });
+        $ui.toast("✅已保存到相册", 1)
+      } else {
+        $ui.toast("⌛️请等待图片加载完成", 1);
+      };
+      break;
+    case "shareImage":
+      if ($(id).image) {
+        $share.universal($(id).image)
+      } else {
+        $ui.toast("⌛️请等待图片加载完成", 1);
+      };
+      break;
   }
 }
 
@@ -1042,9 +1067,9 @@ function userHomePageDataPush() {
       }
     })
   });
-  $ui.toast("✅加载完成", 0.1);
   $("show").endFetchingMore();
   $("show").data = $("show").data.concat(data);
+  $ui.toast("✅加载完成 ("+$("show").data.length+"/"+userPosted+")", 1);
 }
 
 function loadLocalPostData() {
