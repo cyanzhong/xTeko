@@ -2,14 +2,16 @@ let userViews = {
   type: "view",
   props: {
     id: "userContent",
-    hidden: false
+    hidden: false,
+    bgcolor: $color("#fffae1")
   },
   layout: $layout.fill,
   views: [{
     type: "text",
     props: {
       id: "userTitle",
-      bgcolor: $color("#eeeeed"),
+      bgcolor: $rgba(165, 210, 150, 0.3),
+      textColor: $color("#71226e"),
       selectable: false,
       scrollEnabled: false,
       insets: $insets(5, 5, 5, 5)
@@ -25,7 +27,7 @@ let userViews = {
       title: "返回",
       hidden: true,
       bgcolor: $color("clear"),
-      titleColor: $color("black")
+      titleColor: $color("#006400")
     },
     layout: function(make, view) {
       make.top.inset(0)
@@ -44,19 +46,21 @@ let userViews = {
     props: {
       id: "userList",
       rowHeight: 90,
+      bgcolor: $color("#fffae1"),
       //separatorHidden: true,
       header: {
         type: "view",
         props: {
           height: 45,
-          bgcolor: $color("#eeeeee")
+          bgcolor: $rgba(165, 210, 150, 0.3)
         },
         views: [{
           type: "input",
           props: {
             id: "keyword",
             clearsOnBeginEditing: true,
-            bgcolor: $color("white"),
+            bgcolor: $color("#fffff5"),
+            textColor: $color("#71226e"),
             radius: 5
           },
           layout: function(make) {
@@ -81,7 +85,7 @@ let userViews = {
             id: "quickImport",
             title: "导入",
             titleColor: $color("white"),
-            bgcolor: $color("#bdc3c7"),
+            bgcolor: $color("#77af9c"),
             borderColor: $color("#598987"),
             borderWidth: 0
           },
@@ -98,6 +102,12 @@ let userViews = {
         }]
       },
       template: [{
+          type: "view",
+          props: {
+            bgcolor: $color("#fffae1")
+          },
+          layout: $layout.fill
+        }, {
           type: "image",
           props: {
             id: "casecover",
@@ -139,7 +149,6 @@ let userViews = {
           type: "label",
           props: {
             id: "caselike",
-            bgcolor: $rgba(255, 0, 0, 0.7),
             textColor: $color("white"),
             font: $font(11),
             radius: 3
@@ -184,7 +193,7 @@ let userViews = {
           type: "button",
           props: {
             id: "caseadd",
-            type: 5,
+            title: "🔘",
             bgcolor: $color("clear")
           },
           layout: function(make, view) {
@@ -242,14 +251,16 @@ let postViews = {
   type: "view",
   props: {
     id: "postContent",
-    hidden: true
+    hidden: true,
+    bgcolor: $color("#fffae1")
   },
   layout: $layout.fill,
   views: [{
       type: "label",
       props: {
         id: "postTitle",
-        bgcolor: $color("#eeeeed")
+        bgcolor: $rgba(165, 210, 150, 0.3),
+        textColor: $color("#71226e"),
       },
       layout: function(make) {
         make.left.top.right.inset(0)
@@ -261,6 +272,7 @@ let postViews = {
       props: {
         id: "postList",
         rowHeight: $device.info.screen.width,
+        bgcolor: $color("#fdf6e5"),
         actions: [{
           title: "delete",
           handler: function(sender, indexPath) {
@@ -277,15 +289,15 @@ let postViews = {
           type: "label",
           props: {
             id: "postInfo",
-            bgcolor: $rgba(0, 0, 0, 0.5),
-            textColor: $color("white"),
+            bgcolor: $rgba(165, 210, 150, 0.6),
+            textColor: $color("#71226e"),
             align: $align.center,
             font: $font(14),
             autoFontSize: true
           },
           layout: function(make) {
             make.left.right.bottom.inset(0)
-            make.height.equalTo(35)
+            make.height.equalTo(30)
           }
         }]
       },
@@ -309,14 +321,15 @@ $ui.render({
   props: {
     id: "rootView",
     title: "Instagram Lite",
-    iconColor: $color("red"),
-    titleColor: $color("red")
+    iconColor: $color("#006400"),
+    titleColor: $color("#006400"),
+    barColor: $color("#fff1b9")
   },
   views: [{
     type: "menu",
     props: {
       id: "menu",
-      bgcolor: $color("#eeeeed"),
+      bgcolor: $color("#fff1b9"),
       items: ["关注列表", "收藏列表"]
     },
     layout: function(make) {
@@ -339,9 +352,20 @@ $ui.render({
     }
   }, {
     type: "view",
+    props: {
+      id: "line",
+      bgcolor: $color("#8b8687")
+    },
+    layout: function(make) {
+      make.bottom.equalTo($("menu").top)
+      make.left.right.inset(0)
+      make.height.equalTo(0.5)
+    }
+  }, {
+    type: "view",
     layout: function(make) {
       make.top.left.right.equalTo(0)
-      make.bottom.equalTo($("menu").top)
+      make.bottom.equalTo($("line").top)
     },
     views: [userViews, postViews]
   }]
@@ -359,11 +383,11 @@ function userHomePageView(name) {
         columns: 2,
         spacing: 1,
         square: true,
-        bgcolor: $color("#eeeeed"),
+        bgcolor: $color("#fffae1"),
         template: [{
             type: "image",
             props: {
-              id: "cover"
+              id: "cover",
             },
             layout: $layout.fill
           },
@@ -373,13 +397,13 @@ function userHomePageView(name) {
               id: "detail",
               font: $font(12),
               align: $align.center,
-              textColor: $color("white"),
-              bgcolor: $rgba(0, 0, 0, 0.5),
+              textColor: $color("#71226e"),
+              bgcolor: $rgba(165, 210, 150, 0.6),
               autoFontSize: true
             },
             layout: function(make, view) {
               make.left.right.bottom.inset(0)
-              make.height.equalTo(25)
+              make.height.equalTo(20)
             }
           },
         ]
@@ -454,7 +478,7 @@ function postDetailView(code, scale) {
       },
       props: {
         id: "content",
-        bgcolor: $color("clear"),
+        bgcolor: $color("#fffae1"),
         showsVerticalIndicator: false,
         data: [{
             rows: [{
@@ -465,7 +489,7 @@ function postDetailView(code, scale) {
                 props: {
                   id: "detail",
                   items: items,
-                  bgcolor: $color("#eeeeed")
+                  bgcolor: $color("#fffae1")
                 },
                 layout: $layout.fill
               }, {
@@ -481,12 +505,17 @@ function postDetailView(code, scale) {
             }, {
               type: "view",
               layout: $layout.fill,
+              props: {
+                bgcolor: $color("#fffae1")
+              },
               views: [{
                 type: "button",
                 props: {
                   id: "usercover",
                   src: userCover,
-                  radius: 25
+                  radius: 25,
+                  borderColor: $color("#008000"),
+                  borderWidth: 1
                 },
                 layout: function(make) {
                   make.top.bottom.inset(5)
@@ -512,6 +541,7 @@ function postDetailView(code, scale) {
                   id: "username",
                   font: $font("bold", 13),
                   text: userName,
+                  textColor: $color("#71226e"),
                   autoFontSize: true
                 },
                 layout: function(make) {
@@ -539,7 +569,7 @@ function postDetailView(code, scale) {
                 type: "button",
                 props: {
                   id: "favorite",
-                  title: " ♥ ",
+                  title: "♥️",
                   alpha: 0.8,
                   bgcolor: LocalPostCode.indexOf(code) < 0 ? $color("#eeeeed") : $color("#4caf50")
                 },
@@ -564,6 +594,9 @@ function postDetailView(code, scale) {
             }, {
               type: "view",
               layout: $layout.fill,
+              props: {
+                bgcolor: $color("#fffae1")
+              },
               views: [{
                 type: "button",
                 props: {
@@ -598,6 +631,7 @@ function postDetailView(code, scale) {
                   text: data.caption,
                   font: $font(14),
                   textColor: $color("#777c7c"),
+                  bgcolor: $color("clear"),
                   radius: 0,
                   showsVerticalIndicator: false,
                   editable: false,
@@ -612,15 +646,15 @@ function postDetailView(code, scale) {
           }
 
         ]
-      } //list props end
+      }
 
     }, {
       type: "button",
       props: {
         id: "save",
         title: "保存文件",
-        bgcolor: $color("#eeeeed"),
-        titleColor: $color("black"),
+        bgcolor: $color("#fff1b9"),
+        titleColor: $color("#006400"),
         alpha: 0.9,
         font: $font("bold", 18),
         radius: 0,
@@ -647,8 +681,8 @@ function postDetailView(code, scale) {
       props: {
         id: "share",
         title: "分享文件",
-        bgcolor: $color("#eeeeed"),
-        titleColor: $color("black"),
+        bgcolor: $color("#fff1b9"),
+        titleColor: $color("#006400"),
         alpha: 0.9,
         font: $font("bold", 18),
         radius: 0,
@@ -677,8 +711,8 @@ function postDetailView(code, scale) {
       props: {
         id: "link",
         title: "分享链接",
-        bgcolor: $color("#eeeeed"),
-        titleColor: $color("black"),
+        bgcolor: $color("#fff1b9"),
+        titleColor: $color("#006400"),
         alpha: 0.9,
         font: $font("bold", 18),
         radius: 0,
@@ -710,7 +744,7 @@ function postDetailView(code, scale) {
     }]
 
   })
-  $ui.toast("✅加载完成", 0.1)
+  $ui.toast("✅ 加载完成", 0.1)
 }
 
 function getUserHomePageJson(input, mode) {
@@ -722,7 +756,7 @@ function getUserHomePageJson(input, mode) {
       var match = /window\.\_sharedData\s=\s.+?(?=\;\<\/script\>)/g.exec(resp.data)[0].replace("window._sharedData = ", "");
       homePageJson = JSON.parse(match).entry_data.ProfilePage[0].user;
       if (homePageJson.is_private) {
-        $ui.toast("❌暂不支持浏览私密账户", 1);
+        $ui.toast("❌ 暂不支持浏览私密账户", 1);
         $ui.pop();
         return;
       };
@@ -752,21 +786,22 @@ function search(keyword) {
           },
           casefullname: {
             text: i.user.full_name || i.user.username,
-            textColor: $color("black")
+            textColor: $color("#274555")
           },
           caseusername: {
             text: i.user.username
           },
           caselike: {
-            text: likedCountFormat(i.user.follower_count)
+            text: likedCountFormat(i.user.follower_count),
+            bgcolor: $rgba(250, 0, 0, 0.4),
           },
           caseprivate: {
             text: i.user.is_private ? " 私密账户 " : " 公开账户 ",
-            bgcolor: i.user.is_private ? $color("#8e8e8e") : $rgba(0, 90, 0, 0.7)
+            bgcolor: i.user.is_private ? $color("#8e8e8e") : $rgba(32, 92, 85, 0.6)
           },
           caseverified: {
             text: i.user.is_verified ? " 官方认证 " : " 未经认证 ",
-            bgcolor: i.user.is_verified ? $rgba(0, 0, 145, 0.7) : $color("#8e8e8e")
+            bgcolor: i.user.is_verified ? $rgba(113, 18, 110, 0.6) : $color("#8e8e8e")
           },
           caseadd: {
             info: [i.user, idx],
@@ -775,7 +810,7 @@ function search(keyword) {
           }
         })
       };
-      $ui.toast("✅完成", 0.1);
+      $ui.toast("✅ 完成", 0.1);
       $("userList").data = data;
       $("userTitle").align = $align.right;
       $("back").hidden = false;
@@ -829,6 +864,10 @@ function postDataFormat(resdata, mode) {
         "type": i.__typename
       };
     });
+    var idx = LocalUserName.indexOf(userName);
+    if (idx > -1) {
+      updateLocalUserData("update", resdata)
+    }
   } else if (mode = "continue") {
     AfterID = resdata.data.user.edge_owner_to_timeline_media.page_info.end_cursor;
     NextPage = resdata.data.user.edge_owner_to_timeline_media.page_info.has_next_page;
@@ -910,7 +949,7 @@ function Trans(keyword) {
         return i.trans
       });
 
-      $("caption").text = text.join("\n");
+      $("caption").text = text.join("");
       $("trans").title = "显示原文"
     }
   })
@@ -925,37 +964,38 @@ function mediaSaveAction(mode) {
       $share.sheet("https://www.instagram.com/p/" + selectCode);
       break;
     case "video":
-    if($("progress").value>0){
-      $ui.toast("⌛️请等待上一个任务下载完成",1)
-    }else{
-      $http.download({
-        header: Header,
-        url: json.video,
-        progress: function(bytesWritten, totalBytes) {
-          var num = bytesWritten * 1.0 / totalBytes;
-          $("progress").value = num
-        },
-        handler: function(resp) {
-          $("progress").value = 0;
-          $share.sheet(resp.data)
-        }
-      })};
+      if ($("progress").value > 0) {
+        $ui.toast("⏳ 请等待上一个任务下载完成", 1)
+      } else {
+        $http.download({
+          header: Header,
+          url: json.video,
+          progress: function(bytesWritten, totalBytes) {
+            var num = bytesWritten * 1.0 / totalBytes;
+            $("progress").value = num
+          },
+          handler: function(resp) {
+            $("progress").value = 0;
+            $share.sheet(resp.data)
+          }
+        })
+      };
       break;
     case "saveImage":
       if ($(id).image) {
         $photo.save({
           image: $(id).image
         });
-        $ui.toast("✅已保存到相册", 1)
+        $ui.toast("✅ 已保存到相册", 1)
       } else {
-        $ui.toast("⌛️请等待图片加载完成", 1);
+        $ui.toast("⏳ 请等待图片加载完成", 1);
       };
       break;
     case "shareImage":
       if ($(id).image) {
         $share.universal($(id).image)
       } else {
-        $ui.toast("⌛️请等待图片加载完成", 1);
+        $ui.toast("⏳ 请等待图片加载完成", 1);
       };
       break;
   }
@@ -979,7 +1019,7 @@ function likedCountFormat(num) {
 function quickImport(input) {
   var match = /^http.+?instagram.com\/[^\/]+?\/?$/g.exec(input);
   if (!match) {
-    $ui.toast("❌剪贴板地址非用户主页地址", 1);
+    $ui.toast("❌ 剪贴板地址非用户主页地址", 1);
     return;
   } else {
     getUserHomePageJson(input, "import")
@@ -988,9 +1028,24 @@ function quickImport(input) {
 }
 
 function updateLocalUserData(mode, data) {
-  if (mode == "add") {
+  if (mode == "update") {
+    $thread.background({
+      handler: function() {
+        var idx = LocalUserName.indexOf(userName);
+        LocalData.user[idx] = {
+          "username": data.username,
+          "fullname": data.full_name,
+          "cover": data.profile_pic_url,
+          "liked": data.follower_count || data.followed_by.count,
+          "private": data.is_private,
+          "verified": data.is_verified
+        };
+        loadLocalUserData()
+      }
+    })
+  } else if (mode == "add") {
     if (LocalUserName.indexOf(data.username) > -1) {
-      $ui.toast("❌" + data.username + "已在关注列表中", 1);
+      $ui.toast("❗️" + data.username + "已在关注列表中", 1);
       return;
     }
     LocalUserName.push(data.username);
@@ -1002,13 +1057,13 @@ function updateLocalUserData(mode, data) {
       "private": data.is_private,
       "verified": data.is_verified
     });
-    $ui.toast("✅已关注 " + data.username, 1);
+    $ui.toast("✅ 已关注 " + data.username, 1);
     if (homePageMode == "user") {
       loadLocalUserData()
     };
   } else if (mode == "del") {
     LocalData.user.splice(data, 1);
-    $ui.toast("✅已取消对 " + LocalUserName[data] + " 的关注", 1);
+    $ui.toast("✅ 已取消对 " + LocalUserName[data] + " 的关注", 1);
     LocalUserName.splice(data, 1);
     $("userTitle").text = "已关注" + LocalUserName.length + "位用户"
   };
@@ -1030,11 +1085,11 @@ function updateLocalPostData(mode, code, x) {
       "postDate": data.postDate,
       "thumbnail": data.thumbnail
     });
-    $ui.toast("✅已收藏", 0.5);
+    $ui.toast("✅ 已收藏", 0.5);
   } else if (mode == "del") {
     LocalPostCode.splice(code, 1);
     LocalData.post.splice(code, 1);
-    $ui.toast("✅已取消收藏", 0.5)
+    $ui.toast("✅ 已取消收藏", 0.5)
     if (x) {
       $("postList").delete(code)
     }
@@ -1069,7 +1124,7 @@ function userHomePageDataPush() {
   });
   $("show").endFetchingMore();
   $("show").data = $("show").data.concat(data);
-  $ui.toast("✅加载完成 ("+$("show").data.length+"/"+userPosted+")", 1);
+  $ui.toast("✅ 加载完成 (" + $("show").data.length + "/" + userPosted + ")", 0.6);
 }
 
 function loadLocalPostData() {
@@ -1106,13 +1161,14 @@ function loadLocalUserData() {
       },
       casefullname: {
         text: i.fullname || i.username,
-        textColor: i.verified ? $color("#000091") : $color("black")
+        textColor: i.verified ? $color("#600473") : $color("#118077")
       },
       caseusername: {
         text: i.username
       },
       caselike: {
-        text: likedCountFormat(i.liked) + " "
+        text: likedCountFormat(i.liked) + " ",
+        bgcolor: $rgba(91, 96, 73, 0.6)
       },
       caseprivate: {
         text: ""
@@ -1148,7 +1204,7 @@ var Header = {
   'Referer': 'https://www.instagram.com/'
 };
 
-var config = ".instagram-lite.json"
+var config = ".instagram-lite.json";
 var shortCodes = [],
   mediaData = {};
 $thread.background({
