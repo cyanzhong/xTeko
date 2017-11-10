@@ -5,6 +5,7 @@ $location.fetch({
     getCityID(query)
   }
 })
+
 function getCityID(query) {
   $http.get({
     url: "https://weixin.jirengu.com/weather/cityid?location=" + query,
@@ -21,8 +22,7 @@ function getWheatherData(cityID) {
       $ui.loading(false)
       $ui.alert({
         title: resp.data.weather[0].city_name + "当下\n天气：" + resp.data.weather[0].now.text + "\n温度：" + resp.data.weather[0].now.temperature + "\n" + resp.data.weather[0].now.wind_direction + "风" + resp.data.weather[0].now.wind_scale + "级\nPM2.5：" + resp.data.weather[0].now.air_quality.city.pm25 + "  " + resp.data.weather[0].now.air_quality.city.quality + "\n日出：" + resp.data.weather[0].today.sunrise + "\n日落：" + resp.data.weather[0].today.sunset,
-        actions: [
-          {
+        actions: [{
             title: "知道了",
             handler: function() {}
           },
@@ -44,8 +44,7 @@ function showMenu(resp) {
     handler: function(title, idx) {
       $ui.alert({
         title: resp.data.weather[0].city_name + "\n" + resp.data.weather[0].future[idx + 1].date + "\n天气：" + resp.data.weather[0].future[idx + 1].text + "\n温度：" + resp.data.weather[0].future[idx + 1].low + "~" + resp.data.weather[0].future[idx + 1].high + "\n" + resp.data.weather[0].future[idx + 1].wind,
-        actions: [
-          {
+        actions: [{
             title: "知道了",
             handler: function() {}
           },
