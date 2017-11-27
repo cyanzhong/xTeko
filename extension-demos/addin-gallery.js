@@ -57,7 +57,7 @@ $ui.render({
         },
         layout: function(make) {
           make.size.equalTo($size(20, 20))
-          make.left.top.equalTo(15)
+          make.left.top.equalTo(20)
         }
       }, {
         type: "label",
@@ -75,13 +75,14 @@ $ui.render({
         props: {
           id: "summary-label",
           lines: 0,
+          textColor: $color("#666666"),
           font: $font(15)
         },
         layout: function(make) {
           var view = $("icon-view")
           make.left.equalTo(view)
-          make.right.inset(15)
-          make.top.equalTo(view.bottom).offset(15)
+          make.right.inset(20)
+          make.top.equalTo(view.bottom).offset(20)
         }
       }]
     },
@@ -128,7 +129,7 @@ function queryAddins(id) {
     $("list").data = data.map(function(item) {
       return {
         "icon-view": {
-          icon: $icon(item.icon)
+          icon: $icon(item.icon, $color("#b7bec6"))
         },
         "name-label": {
           text: item.name
