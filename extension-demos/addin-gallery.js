@@ -57,7 +57,7 @@ $ui.render({
         },
         layout: function(make) {
           make.size.equalTo($size(20, 20))
-          make.left.top.equalTo(20)
+          make.left.top.equalTo(16)
         }
       }, {
         type: "label",
@@ -81,8 +81,8 @@ $ui.render({
         layout: function(make) {
           var view = $("icon-view")
           make.left.equalTo(view)
-          make.right.inset(20)
-          make.top.equalTo(view.bottom).offset(20)
+          make.right.inset(16)
+          make.top.equalTo(view.bottom).offset(16)
         }
       }]
     },
