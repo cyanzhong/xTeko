@@ -104,6 +104,7 @@ function showResult(data) {
   if (paragraph_num > 0) {
     for (var i = 0; i < paragraph_num; i++) {
       paragraph += data.words_result[i].words
+      paragraph += '\n'
     }
     $ui.render({
       views: [
@@ -113,9 +114,7 @@ function showResult(data) {
             text: paragraph,
             editable: false
           },
-          layout: function(make, view) {
-          },
-          events: {}
+          layout: $layout.fill
         }
       ]
     })
