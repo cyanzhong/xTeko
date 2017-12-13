@@ -81,7 +81,7 @@ function requestBaiduOcrApi() {
       handler: function(resp) {
         $ui.loading(false)
         resultData = resp.data
-        $ui.alert(resultData)
+        showResult(resultData)
       }
     })   
   } else {
@@ -121,12 +121,16 @@ function showResult(data) {
   }
 }
 
-// var inputData = $context.data
-// var inputLink = $context.link
+var inputData = $context.data
+var inputLink = $context.link
 var clipData = $clipboard.image
 var clipLink = $clipboard.link
 
-if (clipLink) {
+if (inputData) {
+  requestBaiduOcr(inputData, false)  
+} else if (inputLink) {
+  requestBaiduOcr(inputLink, true)
+} else if (clipLink) {
   $ui.menu({
     items: [$l10n('search-clip-url'), $l10n('choose-pic-from-album')],
     handler: function(title, idx) {
