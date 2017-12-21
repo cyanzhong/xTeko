@@ -1,3 +1,5 @@
+//---- Install script easily ----//
+
 $app.strings = {
   "en": {
     "MAIN_TITLE": "Installer",
