@@ -173,7 +173,7 @@ function installAddin(addin) {
       $ui.loading(false)
       var data = resp.data
       if (data) {
-        $addin.save({name: addin.name, data: data})
+        $addin.save({name: addin.name, icon: addin.icon, data: data})
       }
       $ui.toast(data ? $l10n("INSTALLED") : $l10n("FAILED"))
     }
