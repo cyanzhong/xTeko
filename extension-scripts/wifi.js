@@ -7,6 +7,7 @@ $app.strings = {
         "save": "Save to Photo",
         "save_successful": "Save successful",
         "save_failed": "Save failed",
+        "feedback": "Not Work?",
     },
     "zh-Hans": {
         "not_wifi": "当前网络不是 WiFi",
@@ -14,6 +15,7 @@ $app.strings = {
         "save": "保存到照片",
         "save_successful": "保存成功",
         "save_failed": "保存失败",
+        "feedback": "功能不正常？",
     },
 }
 
@@ -138,6 +140,25 @@ function main() {
                     make.bottom.equalTo($("password").top).offset(-32);
                     make.centerX.equalTo(view.super);
                     make.height.equalTo(64);
+                },
+            },
+            {
+                type: "button",
+                props: {
+                    title: $l10n("feedback"),
+                    font: $font(16),
+                    textColor: $color("#0000FF"),
+                },
+                layout: function(make, view) {
+                    make.right.equalTo(view.super).offset(-12);
+                    make.top.equalTo(view.super).offset(24);
+                    make.width.equalTo(128);
+                },
+                events: {
+                    tapped: function(sender) {
+                        let issueUrl = "https://github.com/wr1241/xTeko/issues/new";
+                        $app.openURL(issueUrl);
+                    },
                 },
             },
         ],
