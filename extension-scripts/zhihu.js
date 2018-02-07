@@ -73,7 +73,7 @@ function render(stories) {
   for (var idx in stories) {
     var story = stories[idx]
     data.push({
-      url: "http://daily.zhihu.com/story/" + story.id,
+      url: "http://news-at.zhihu.com/story/" + story.id,
       image: {
         src: story.images[0]
       },
