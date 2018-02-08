@@ -71,7 +71,6 @@ function pickGif() {
                                         progressBar.remove();
                                         imgView.hidden = false;
                                         imgView.data = fig.rawValue();
-                                        imgView.scale = 2;
                                     },
                                 });
                             },
@@ -124,6 +123,7 @@ $ui.render({
             type: "image",
             props: {
                 id: "imgView",  // actually this is YYAnimatedImageView
+                bgcolor: $color("black"),
                 hidden: true,
             },
             layout: function(make, view) {
@@ -152,6 +152,7 @@ $ui.render({
 
 let imgView = $("imgView");
 let yyImgView = imgView.runtimeValue();
+yyImgView.invoke("setContentMode", 1); // 1 -> UIViewContentModeScaleAspectFit
 let progressBar = $("progressBar");
 
 pickGif();
