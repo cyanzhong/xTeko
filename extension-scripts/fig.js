@@ -30,7 +30,7 @@ function isGif(info) {
 // decode a gif data to frames, reverse the frames,
 // then encode it to a new data.
 // TODO: do I need free decoder & encoder? I was spoiled by gc...
-function reverseGif(data) {
+function reverseGif(data, cb) {
     let decoder = $objc("YYImageDecoder").invoke("decoderWithData:scale", data, 1);
 
     let encoder = $objc("YYImageEncoder").invoke("alloc.initWithType", 7);  // 7 -> YYImageTypeGIF
@@ -41,6 +41,9 @@ function reverseGif(data) {
         let duration = decoder.invoke("frameDurationAtIndex", i);
         let frame = decoder.invoke("frameAtIndex:decodeForDisplay", i, 0);
         encoder.invoke("addImage:duration", frame.invoke("image"), duration);
+        if (cb) {
+            cb(frameCount - i, frameCount);
+        }
     }
 
     return encoder.invoke("encode");
@@ -54,8 +57,25 @@ function pickGif() {
             if (resp.status == '1') {
                 if (isGif(resp.data.info)) {
                     try {
-                        let fig = reverseGif(resp.data);
-                        imgView.data = fig.rawValue();
+                        $thread.background({
+                            handler: function() {
+                                let fig = reverseGif(resp.data, function(value, total) {
+                                    $thread.main({
+                                        handler: function() {
+                                            progressBar.value = value / total;
+                                        },
+                                    });
+                                });
+                                $thread.main({
+                                    handler: function() {
+                                        progressBar.remove();
+                                        imgView.hidden = false;
+                                        imgView.data = fig.rawValue();
+                                        imgView.scale = 2;
+                                    },
+                                });
+                            },
+                        });
                     } catch (e) {
                         $ui.alert({
                             title: $l10n("oops"),
@@ -104,6 +124,7 @@ $ui.render({
             type: "image",
             props: {
                 id: "imgView",  // actually this is YYAnimatedImageView
+                hidden: true,
             },
             layout: function(make, view) {
                 make.size.equalTo(view.super);
@@ -115,10 +136,22 @@ $ui.render({
                 },
             },
         },
+        {
+            type: "progress",
+            props: {
+                id: "progressBar",
+                value: 0,
+            },
+            layout: function(make, view) {
+                make.center.equalTo(view.super);
+                make.left.right.inset(32);
+            },
+        },
     ],
 });
 
 let imgView = $("imgView");
 let yyImgView = imgView.runtimeValue();
+let progressBar = $("progressBar");
 
 pickGif();
