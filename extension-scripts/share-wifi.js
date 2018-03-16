@@ -4,7 +4,6 @@ $app.strings = {
     "en": {
         "not_wifi": "Not WiFi Network",
         "password": "Password",
-        "save": "Save to Photo",
         "save_successful": "Save successful",
         "save_failed": "Save failed",
         "feedback": "Not Work?",
@@ -12,7 +11,6 @@ $app.strings = {
     "zh-Hans": {
         "not_wifi": "当前网络不是 WiFi",
         "password": "请输入密码",
-        "save": "保存到照片",
         "save_successful": "保存成功",
         "save_failed": "保存失败",
         "feedback": "功能不正常？",
@@ -39,6 +37,11 @@ function generateWiFiQR(ssid, password, noPass=false) {
 }
 
 
+function getShorterEdgeOfParentView(view) {
+    return Math.min(view.super.frame.width, view.super.frame.height);
+}
+
+
 function displayQR(ssid, qrImage) {
     $ui.push({
         props: {
@@ -50,11 +53,13 @@ function displayQR(ssid, qrImage) {
                 props: {
                     id: "ssid",
                     text: ssid,
-                    font: $font(32),
+                    autoFontSize: true,
+                    lines: 1,
                 },
                 layout: function(make, view) {
+                    const shorterEdge = getShorterEdgeOfParentView(view);
+                    make.height.equalTo(shorterEdge / 8);
                     make.centerX.equalTo(view.super);
-                    make.top.equalTo(view.super).offset(32);
                 },
             },
             {
@@ -64,24 +69,19 @@ function displayQR(ssid, qrImage) {
                     image: qrImage
                 },
                 layout: function(make, view) {
-                    make.top.equalTo($("ssid").bottom).offset(32);
-                    make.width.equalTo(view.super);
-                    make.centerX.equalTo(view.super);
-                }
-            },
-            {
-                type: "button",
-                props: {
-                    title: $l10n("save"),
-                },
-                layout: function(make, view) {
-                    make.top.equalTo($("qrImage").bottom).offset(32);
-                    make.width.equalTo(view.super).offset(-32);
-                    make.height.equalTo(48);
+                    const shorterEdge = getShorterEdgeOfParentView(view);
+                    let edge = shorterEdge / 8 * 7;
+
+                    if ($app.env === $env.today) {
+                        edge *= 0.7;
+                    }
+
+                    make.top.equalTo($("ssid").bottom);
+                    make.width.height.equalTo(edge);
                     make.centerX.equalTo(view.super);
                 },
                 events: {
-                    tapped: function(sender) {
+                    longPressed: function(sender) {
                         $photo.save({
                             image: qrImage,
                             handler: function(success) {
@@ -92,7 +92,7 @@ function displayQR(ssid, qrImage) {
                                 }
                             },
                         });
-                    },
+                    }
                 },
             },
         ],
