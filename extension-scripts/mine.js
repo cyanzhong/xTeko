@@ -1,8 +1,8 @@
 "use strict";
 
 // please feel free to modify these values
-let mapWidth = 15;
-let mapHeight = 15;
+let mapWidth = 20;
+let mapHeight = 20;
 let mineCount = 20;
 
 // modify anything below this line at your own risk
@@ -10,10 +10,12 @@ const Mine = "💥";
 const Mark = "🚩";
 const Unknown = "";
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
 function getFontColor(x) {
@@ -205,12 +207,14 @@ class MineMap {
 
         mineCount = Math.min(Math.floor(width * height / 2), mineCount);
 
-        while (mineCount > 0) {
-            let offset = getRandomInt(0, width * height);
-            if (mineData[offset] !== Mine) {
-                mineData[offset] = Mine;
-                mineCount --;
-            }
+        let allCells = new Array(width * height);
+        for (let i = 0; i < width * height; i ++) {
+            allCells[i] = i;
+        }
+        shuffle(allCells);
+
+        for (let i = 0; i < mineCount; i ++) {
+            mineData[allCells.pop()] = Mine;
         }
 
         mineData.map((x, i, arr) => {
