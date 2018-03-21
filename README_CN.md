@@ -1,3 +1,5 @@
+[English](https://github.com/cyanzhong/xTeko/blob/master/README.md)
+
 # 什么是 JSBox？
 
 JSBox 是一个 JavaScript 的集成开发环境，你可以在这里学习如何编写 JavaScript，我们提供了一系列的工具来增强你的开发体验。
@@ -45,7 +47,7 @@ JSBox 对编程新手和有经验的工程师都是非常友好的，你不想�
 
 - 安全的 JavaScript 原生运行环境，提供了极致的性能
 - 漂亮的 JavaScript 编辑器，提供了诸如主题切换、自动补全、快速输入等一系列功能
-- 配套的 VSCode 插件，让你编写代码既快速又舒适
+- 配套的 [VSCode 插件](https://marketplace.visualstudio.com/items?itemName=Ying.jsbox)，让你编写代码既快速又舒适
 - 用于与 iOS 原生交互的一系列接口，并为此提供了详尽的文档和示例
 - 几乎所有 iOS 上最高效的功能：通知中心小部件、分享扩展、3D Touch、桌面快捷方式...
 
@@ -55,6 +57,7 @@ JSBox 对编程新手和有经验的工程师都是非常友好的，你不想�
 
 当你在使用中碰到任何问题，无论是作为用户还是开发者，请通过以下方式与我们取得联系，感谢！
 
+- [社区](https://jsboxbbs.com)
 - [邮件](mailto:log.e@qq.com)
 - [Telegram](https://t.me/PinTG)
 - [Twitter](https://twitter.com/cyanapps)
