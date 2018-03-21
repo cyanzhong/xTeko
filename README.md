@@ -47,7 +47,7 @@ JSBox is not only a full-fledged environment for standard JavaScript, we also pr
 
 - A safe environment to run JavaScript natively with incredible performance
 - A beautiful editor to write JavaScript, multiple themes, auto completions and snippets...
-- A VSCode extension to write code extremely fast and comfortable
+- A [VSCode extension](https://marketplace.visualstudio.com/items?itemName=Ying.jsbox) to write code extremely fast and comfortable
 - Several APIs to interact with iOS, detailed documents are provided as well
 - Almost all the cool tech in iOS: Today Widget, Action Extension, 3D Touch, Home Screen Shortcut...
 
@@ -57,6 +57,7 @@ We are still working on it, we will introduce more cooler stuff in the future.
 
 Please contact us with following ways. Don't be hesitated to report any issues, thank you!
 
+- [Community](https://jsboxbbs.com)
 - [Email](mailto:log.e@qq.com)
 - [Telegram](https://t.me/PinTG)
 - [Twitter](https://twitter.com/cyanapps)
