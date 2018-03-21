@@ -6,11 +6,11 @@ JSBox is actually an Integrated Development Environment for JavaScript, you can 
 
 JSBox is amazing for both greenhands and experienced engineers, don't you wanna try?
 
-Don't be hesitated to create cool stuff, do it now
+Don't hesitate to create cool stuff, do it now
 
 # Examples
 
-With these examples you can have a brief understanding for what can we do with JSBox, there are all made in JavaScript:
+With these examples you can have a brief understanding for what can we do with JSBox, they are all made in JavaScript:
 
 ## Get resource from app store
 
@@ -55,7 +55,7 @@ We are still working on it, we will introduce more cooler stuff in the future.
 
 # Contact us!
 
-Please contact us with following ways. Don't be hesitated to report any issues, thank you!
+Please contact us with following ways. Don't hesitate to report any issues, thank you!
 
 - [Community](https://jsboxbbs.com)
 - [Email](mailto:log.e@qq.com)
