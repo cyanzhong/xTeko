@@ -6,6 +6,28 @@ JSBox is amazing for both greenhands and experienced engineers, don't you wanna 
 
 Don't be hesitated to create cool stuff, do it now!
 
+[中文简介](https://github.com/cyanzhong/xTeko/blob/master/README_CN.md)
+
+# Examples
+
+With these examples you can have a brief understanding what can we do with JSBox, there are all made in JavaScript:
+
+## Get resource from app store
+
+![image](https://github.com/cyanzhong/xTeko/blob/master/assets/app-store.gif?raw=true)
+
+## Image searching
+
+![image](https://github.com/cyanzhong/xTeko/blob/master/assets/image-search.gif?raw=true)
+
+## Realtime currency calculator
+
+![image](https://github.com/cyanzhong/xTeko/blob/master/assets/currency.gif?raw=true)
+
+## Tip calculator
+
+![image](https://github.com/cyanzhong/xTeko/blob/master/assets/tip-calc.gif?raw=true)
+
 # What can JSBox do?
 
 Of course you can write JavaScript, but the most important is you can create native iOS utilities, such as:
