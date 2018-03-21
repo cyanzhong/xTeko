@@ -1,12 +1,12 @@
+[中文简介](https://github.com/cyanzhong/xTeko/blob/master/README_CN.md)
+
 # What's JSBox?
 
 JSBox is actually an Integrated Development Environment for JavaScript, you can learn to code JavaScript here, we provided tons of utilities to enhance the develop experience.
 
 JSBox is amazing for both greenhands and experienced engineers, don't you wanna try?
 
-Don't be hesitated to create cool stuff, do it now!
-
-[中文简介](https://github.com/cyanzhong/xTeko/blob/master/README_CN.md)
+Don't be hesitated to create cool stuff, do it now
 
 # Examples
 
