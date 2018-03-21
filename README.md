@@ -35,7 +35,7 @@ Of course you can write JavaScript, but the most important thing is that you can
 - Upload photos you have just taken to the server
 - Create a widget to check bus information
 - Schedule tasks by leveraging date-based or location-based notifications
-- Design an extension for a Photos app to search photos directly
+- Design an extension for the Photos app to search photos directly
 - Make a real-time tool to query the exchange rate
 - Collect your most important contacts and handle it on the widget
 
