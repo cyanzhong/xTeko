@@ -10,7 +10,7 @@ Don't be hesitated to create cool stuff, do it now
 
 # Examples
 
-With these examples you can have a brief understanding what can we do with JSBox, there are all made in JavaScript:
+With these examples you can have a brief understanding for what can we do with JSBox, there are all made in JavaScript:
 
 ## Get resource from app store
 
