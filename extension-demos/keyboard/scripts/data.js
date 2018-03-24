@@ -10,6 +10,13 @@ function getCategories() {
 
 function setCategories(categories) {
   $cache.set(Keys.Categories, categories)
+  var items = getAllItems()
+  for (key in items) {
+    if (categories.indexOf(key) < 0) {
+      items[key] = []
+    }
+  }
+  setAllItems(items)
 }
 
 function getItems(category) {
