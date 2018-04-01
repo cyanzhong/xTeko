@@ -1,25 +1,24 @@
-// 可以按照自己喜好修改 $system.volume 的数值
 var items = [
   {
-    title: "音量设为100%",
+    title: "音量设为 100%",
     action: function() {
       $system.volume = 1.0
     }
   },
   {
-    title: "音量设为60%",
+    title: "音量设为 60%",
     action: function() {
       $system.volume = 0.6
     }
   },
   {
-    title: "音量设为40%",
+    title: "音量设为 40%",
     action: function() {
       $system.volume = 0.4
     }
   },
   {
-    title: "音量设为10%",
+    title: "音量设为 10%",
     action: function() {
       $system.volume = 0.1
     }
@@ -32,6 +31,5 @@ $ui.menu({
   }),
   handler: function(title,idx) {
     items[idx].action()
-    }
-  
+  }
 })
