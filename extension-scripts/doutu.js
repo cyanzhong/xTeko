@@ -56,11 +56,29 @@ $ui.render({
       },
       events: {
         didSelect: function(sender, indexPath, object) {
-          $http.download({
-            url: object.image.src,
-            handler: function(resp) {
-              $share.universal(resp.data)
-            }
+          $ui.push({
+            props: {
+              title: "image"
+            },
+            views: [{
+              type: "image",
+              props: {
+                src: object.image.src
+              },
+              layout: function(make, view) {
+                make.center.equalTo(view.super)
+              },
+              events: {
+                tapped: function(sender) {
+                  $http.download({
+                    url: object.image.src,
+                    handler: function(resp) {
+                      $share.universal(resp.data)
+                    }
+                  })
+                }
+              }
+            }]
           })
         }
       }
