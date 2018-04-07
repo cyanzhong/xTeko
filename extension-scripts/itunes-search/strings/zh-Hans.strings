@@ -1,0 +1,16 @@
+"ITUNES_SEARCH" = "iTunes 搜索";
+"SOFTWARE" = "应用";
+"MUSIC" = "音乐";
+"MOVIE" = "电影";
+"PODCAST" = "播客";
+"SEARCH" = "搜索";
+"GET_ICON" = "获取图标";
+"GET_SCREENSHOTS" = "获取截图";
+"GET_IPAD_SCREENSHOTS" = "获取 iPad 截图";
+"SHOW_DETAILS" = "查看详情";
+"OPEN_APP_STORE" = "打开 App Store";
+"OPEN_COLLECTION" = "打开专辑页面";
+"OPEN_ARTIST_VIEW" = "打开歌手页面";
+"OPEN_TRACK_VIEW" = "打开歌曲页面";
+"OPEN_PREVIEW" = "打开预览页面";
+"DOWNLOADING" = "获取中...";
