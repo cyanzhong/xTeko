@@ -49,7 +49,7 @@ function convert(item) {
       text: item.trackCensoredName
     },
     "desc-label": {
-      text: item.description
+      text: item.description || ""
     }
   }
 }
