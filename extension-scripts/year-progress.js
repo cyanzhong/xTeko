@@ -40,7 +40,7 @@ $ui.render({
           type: "view",
           props: {
             bgcolor: $rgba(21, 126, 251, 0.2),
-            radius: 8
+            smoothRadius: 8
           },
           layout: function(make, view) {
             make.left.equalTo(0)
