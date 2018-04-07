@@ -15,7 +15,7 @@ $ssh.connect({
     console.log("port: " + session.port)
     session.channel.upload({
       path: "resources/notes.md",
-      dest: "~/notes.md",
+      dest: "/home/user/notes.md",
       handler: function(success) {
         console.log("success: " + success)
       }
