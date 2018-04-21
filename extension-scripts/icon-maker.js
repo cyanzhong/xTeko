@@ -1,5 +1,4 @@
-var options = { "edit": true };
-$photo.pick(options).then(function(resp) {
+$photo.pick().then(function(resp) {
   var image = resp.image;
   if (image) {
     make(image);
