@@ -1,0 +1,23 @@
+{
+  "settings" : {
+    "minOSVer" : "10.0.0",
+    "minSDKVer" : "1.0.0",
+    "idleTimerDisabled" : false,
+    "autoKeyboardEnabled" : false,
+    "keyboardToolbarEnabled" : false,
+    "rotateDisabled" : false
+  },
+  "info" : {
+    "version" : "1.0.0",
+    "author" : "",
+    "types" : 15,
+    "url" : "",
+    "website" : "",
+    "name" : ""
+  },
+  "widget" : {
+    "tintColor" : "",
+    "iconColor" : "",
+    "height" : 0
+  }
+}
