@@ -53,12 +53,15 @@ function showEngines(url) {
 }
 
 var inputData = $context.data
+var inputImage = $context.image
 var inputLink = $context.link
 var clipData = $clipboard.image
 var clipLink = $clipboard.link
 
 if (inputData) {
   searchImage(inputData)
+} else if (inputImage) {
+  searchImage(inputImage.jpg(1.0))
 } else if (inputLink) {
   showEngines(inputLink)
 } else if (clipData) {
