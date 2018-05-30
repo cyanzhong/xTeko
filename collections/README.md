@@ -6,8 +6,8 @@
 
 # 合集目录
 
-[JSBox 脚本推荐第一期](https://github.com/cyanzhong/xTeko/blob/master/collections/0000.md)
-[JSBox 脚本推荐第二期](https://github.com/cyanzhong/xTeko/blob/master/collections/0001.md)
+- [JSBox 脚本推荐第一期](https://github.com/cyanzhong/xTeko/blob/master/collections/0000.md)
+- [JSBox 脚本推荐第二期](https://github.com/cyanzhong/xTeko/blob/master/collections/0001.md)
 
 # JSBox 相关介绍
 
