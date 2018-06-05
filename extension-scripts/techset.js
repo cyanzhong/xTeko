@@ -132,7 +132,6 @@ const about_us_label = {
   },
   events: {
     tapped: function(sender) {
-      console.log("about us");
       $ui.push({
         props: {
           title: "关于我们"
@@ -169,7 +168,6 @@ $ui.render({
     
 //   获取数据
 function fetchListData(p) {
-  console.log(p)
     $http.post({
       url: "https://app.kangzubin.com/iostips/api/feed/list?page=" + p,
       header: {
@@ -195,7 +193,6 @@ function fetchListData(p) {
            }
 
            for (var i in tips){
-             console.log(i)
             var atip = tips[i]
             var icon = icon_map[atip.author]
             if (icon.length == 0 || icon == "undefine") {
