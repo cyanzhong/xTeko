@@ -185,21 +185,15 @@ function fetchListData(p) {
         }
         if (data['code'] == 0) {
           var tip_list = p == 1 ? [] : $("techset").data
-          console.log(tip_list)
 
            var tips = data.data.feeds
            if (tips.length > 0) {
-            console.log('> 1')
              p += 1;
            } else {
             p += 1;
-            console.log('error')
-            console.log(tips)
              return;
            }
 
-           console.log("tips")
-           console.log(tips)
            for (var i in tips){
              console.log(i)
             var atip = tips[i]
@@ -225,8 +219,6 @@ function fetchListData(p) {
              }
              tip_list.push(d)
            }
-           console.log("======= last")
-           console.log(tip_list)
            $("techset").data = tip_list
            
         } 
