@@ -1,0 +1,8 @@
+"MAIN_TITLE" = "JSON 查看器";
+"FROM_CLIPBOARD" = "查看剪贴板内容";
+"RUN_API" = "查看 API 返回数据";
+"PRO_TIP" = "也可以在分享面板使用这个脚本";
+"STRUCTURED_VIEW" = "结构化视图";
+"THEME" = "主题设置";
+"PLEASE_ENTER_THE_API" = "请输入 API";
+"FORMAT_ERROR" = "不是一个合法的 JSON";
