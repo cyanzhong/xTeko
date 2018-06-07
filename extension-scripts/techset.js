@@ -1,6 +1,5 @@
 var page = 1;
 
-// 昵称头像 map
 const icon_map = {
   "KANGZUBIN" : "https://tva3.sinaimg.cn/crop.0.0.440.440.180/621b53aejw8ekybg28hxzj20c80c83z0.jpg",
   "halohily" : "https://tva4.sinaimg.cn/crop.9.0.493.493.180/d9ec7ffcjw8f8a753z961j20e80dp0t3.jpg",
@@ -11,61 +10,66 @@ const icon_map = {
   "高老师很忙" : "https://tva4.sinaimg.cn/crop.0.0.1242.1242.180/5fe18d75jw8evft9qcjh5j20yi0yigo5.jpg"
 }
 
-// 关于我们的内容
+// about us content
 const about_us_content = "知识小集是一个团队公众号，主要定位在移动开发领域，分享移动开发技术，包括 iOS、Android、小程序、移动前端、React Native、weex 等。每周都会有 **原创** 文章分享，我们的文章都会在公众号首发。欢迎关注查看更多内容。<center><img src=\"https://user-gold-cdn.xitu.io/2018/5/8/1633d1278e68b61a?w=430&h=430&f=jpeg&s=38777\" title=\"知识小集\" width=\"250\"/></center>";
 
-// 列表 cell 布局
-const list_templete = [{
-  type: "image",
-  props: {
-    id: 'cover',
-    radius: 8,
+// list cell layout
+const list_templete = [
+  {
+    type: "image",
+    props: {
+      id: 'cover',
+      radius: 8,
+    },
+    layout: function(make, view) {
+      make.left.equalTo(8)
+      make.size.equalTo($size(44, 44))
+      make.top.equalTo(15)
+    }
   },
-  layout: function(make, view) {
-    make.left.equalTo(8)
-    make.size.equalTo($size(44, 44))
-    make.top.equalTo(15)
-  }
-},{
-  type: "label",
-  props: {
-    id: "title",
-    lines: 2,
-    font: $font(16)
+  {
+    type: "label",
+    props: {
+      id: "title",
+      lines: 2,
+      font: $font(16)
+    },
+    layout: function(make) {
+      make.left.equalTo($("cover").right).offset(8)
+      make.top.equalTo(8)
+      make.right.equalTo(-8);
+      make.height.equalTo(24)
+    }
   },
-  layout: function(make) {
-    make.left.equalTo($("cover").right).offset(8)
-    make.top.equalTo(8)
-    make.right.equalTo(-8);
-    make.height.equalTo(24)
-  }
-},{
-  type: "label",
-  props: {
-    id: "author",
-    textColor: $color("#888888"),
-    font: $font(12)
+  {
+    type: "label",
+    props: {
+      id: "author",
+      textColor: $color("#888888"),
+      font: $font(12)
+    },
+    layout: function(make) {
+      make.left.equalTo($("title"))
+      make.top.equalTo($("title").bottom)
+      make.bottom.equalTo(0)
+    }
   },
-  layout: function(make) {
-    make.left.equalTo($("title"))
-    make.top.equalTo($("title").bottom)
-    make.bottom.equalTo(0)
+  {
+    type: "label",
+    props: {
+      id: 'postdate',
+      textColor: $color("#888888"),
+      font: $font(12)
+    },
+    layout: function(make) {
+      make.left.equalTo($("author").right).offset(8)
+      make.top.equalTo($("title").bottom)
+      make.bottom.equalTo(0)
+    }
   }
-},{
-  type: "label",
-  props: {
-    id: 'postdate',
-    textColor: $color("#888888"),
-    font: $font(12)
-  },
-  layout: function(make) {
-    make.left.equalTo($("author").right).offset(8)
-    make.top.equalTo($("title").bottom)
-    make.bottom.equalTo(0)
-  }
-}]
+]
 
-// 列表属性
+// list props
 const list_props = {
   id: "techset",
   rowHeight: 74.0,
@@ -78,7 +82,7 @@ const list_props = {
   template: list_templete
 }
 
-// 列表点击的详情事件
+// list detail
 const list_detail_action = {
   didSelect: function(tableView, indexPath) {
     $ui.loading(true)
@@ -92,13 +96,15 @@ const list_detail_action = {
             props: {
               title: tableView.object(indexPath).title.text,
             },
-            views: [{
-              type: "markdown",
-              props: {
-                content: data.data.feed.content
-              },
-              layout: $layout.fill
-            }]
+            views: [
+              {
+                type: "markdown",
+                props: {
+                  content: data.data.feed.content
+                },
+                layout: $layout.fill
+              }
+            ]
           })
        } else {
          $ui.toast("网络异常")
@@ -106,16 +112,17 @@ const list_detail_action = {
       }
     });
   },
+
   pulled: function(sender) {
       page = 1;
       fetchListData(page);
   },
+
   didReachBottom: function(sender) {
     // fetchListData(page+1);
   }
 }
 
-// 关于我们按钮
 const about_us_label = {
   type: "label",
   props: {
@@ -136,19 +143,21 @@ const about_us_label = {
         props: {
           title: "关于我们"
         },
-        views: [{
-          type: "markdown",
-          props: {
-            content: about_us_content
-          },
-          layout: $layout.fill
-        }]
+        views: [
+          {
+            type: "markdown",
+            props: {
+              content: about_us_content
+            },
+            layout: $layout.fill
+          }
+        ]
       })
     }
   }
 }
 
-// 主列表
+// main list
 const main_list_view = {
   type: "list",
   props: list_props,
@@ -164,9 +173,9 @@ $ui.render({
       title: "知识小集"
     },
     views: [about_us_label, main_list_view]
-  })
+})
     
-//   获取数据
+// fetch list data
 function fetchListData(p) {
     $http.post({
       url: "https://app.kangzubin.com/iostips/api/feed/list?page=" + p,
@@ -184,40 +193,38 @@ function fetchListData(p) {
         if (data['code'] == 0) {
           var tip_list = p == 1 ? [] : $("techset").data
 
-           var tips = data.data.feeds
-           if (tips.length > 0) {
-             p += 1;
-           } else {
-            p += 1;
-             return;
-           }
+          var tips = data.data.feeds
+          if (tips.length == 0) {
+            return
+          }
 
-           for (var i in tips){
+          p += 1;
+
+          for (var i in tips) {
             var atip = tips[i]
             var icon = icon_map[atip.author]
             if (icon.length == 0 || icon == "undefine") {
               icon = "https://avatars3.githubusercontent.com/u/36131172?s=200&v=4"
             }
-             var d = {
-               title: {
-                 text: atip.title
-               },
-               author: {
-                 text: "作者：" +  atip.author
-               },
-               cover: {
+            var d = {
+              title: {
+                text: atip.title
+              },
+              author: {
+                text: "作者：" +  atip.author
+              },
+              cover: {
                 src: icon
-               },
-               url: atip.url,
-               fid: atip.fid,
-               postdate: {
-                 text: atip.postdate
-               }
-             }
-             tip_list.push(d)
+              },
+              url: atip.url,
+              fid: atip.fid,
+              postdate: {
+                text: atip.postdate
+              }
+            }
+            tip_list.push(d)
            }
            $("techset").data = tip_list
-           
         } 
       }
     })
