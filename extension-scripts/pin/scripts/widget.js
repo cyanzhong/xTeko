@@ -72,12 +72,13 @@ function createActionView() {
       type: "button",
       props: {
         bgcolor: $color("clear"),
-        icon: $icon(action.icon, $color("tint")),
+        icon: $icon(action.icon, $color("darkText"), $size(24, 24)),
         frame: $rect(leftPosition, 0, itemHeight, itemHeight),
         info: { pattern: action.pattern }
       },
       events: {
         tapped: function(sender) {
+          $device.taptic(2);
           helper.openURL(sender.info.pattern);
         }
       }
