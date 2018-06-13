@@ -94,6 +94,7 @@ function createActionView() {
       radius: 5,
       alwaysBounceVertical: false,
       alwaysBounceHorizontal: true,
+      showsHorizontalIndicator: false,
       contentSize: $size(leftPosition, itemHeight)
     },
     layout: function(make, view) {

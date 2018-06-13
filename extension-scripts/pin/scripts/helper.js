@@ -38,11 +38,30 @@ function openURL(pattern) {
   }
 
   if (_hasPrefix(pattern, "compose://")) {
+
     var identifier = pattern.substring("compose://?id=".length);
-    var extension = $objc("NSExtension").invoke("extensionWithIdentifier:error:", identifier, null)
-    var composer = $objc("SLComposeViewController").invoke("composeViewControllerForExtension", extension)
+    var extension = $objc("NSExtension").invoke("extensionWithIdentifier:error:", identifier, null);
+    var composer = $objc("SLComposeViewController").invoke("composeViewControllerForExtension", extension);
+    
+    var text = $clipboard.text;
+    if (text) {
+      composer.invoke("setInitialText", text);
+    }
+
+    var image = $clipboard.image;
+    if (image) {
+      composer.invoke("addImage", image);
+    }
+
+    var link = $clipboard.link;
+    if (link) {
+      var url = $objc("NSURL").invoke("URLWithString", link);
+      composer.invoke("addURL", url);
+    }
+
     var fromVC = $ui.vc.runtimeValue();
-    fromVC.invoke("presentViewController:animated:completion:", composer, true, null)
+    fromVC.invoke("presentViewController:animated:completion:", composer, true, null);
+
     return;
   }
 
