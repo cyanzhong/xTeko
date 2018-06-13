@@ -89,6 +89,10 @@
         "pattern": "open-url://%@"
       },
       {
+        "name": "AO_SHARESHEET",
+        "pattern": "share-sheet://"
+      },
+      {
         "name": "AO_MAILTO",
         "pattern": "mailto:%@"
       },

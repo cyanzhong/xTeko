@@ -98,24 +98,31 @@ function setName() {
 }
 
 function showActionMenu() {
-  var options = [$l10n("ACTION_JSBOX"), $l10n("ACTION_LIST"), $l10n("ACTION_CUSTOM")];
+
+  var options = [$l10n("ACTION_JSBOX"), $l10n("ACTION_LIST"), $l10n("ACTION_SHARE"), $l10n("ACTION_CUSTOM")];
+
   $ui.menu(options).then(function(selected) {
+
     if (selected == undefined) {
       return;
     }
+
     var title = selected.title;
+
+    function showPicker(path) {
+      var picker = require(path);
+      picker.show(function(name, scheme) {
+        nameLabel().text = name;
+        patternLabel().text = scheme;
+      });
+    }
+
     if (title === $l10n("ACTION_JSBOX")) {
-      var picker = require("./addin-picker");
-      picker.show(function(name, scheme) {
-        nameLabel().text = name;
-        patternLabel().text = scheme;
-      });
+      showPicker("./addin-picker");
     } else if (title === $l10n("ACTION_LIST")) {
-      var picker = require("./action-picker");
-      picker.show(function(name, scheme) {
-        nameLabel().text = name;
-        patternLabel().text = scheme;
-      });
+      showPicker("./action-picker");
+    } else if (title === $l10n("ACTION_SHARE")) {
+      showPicker("./extension-picker.js");
     } else if (title === $l10n("ACTION_CUSTOM")) {
       $input.text({
         type: $kbType.url

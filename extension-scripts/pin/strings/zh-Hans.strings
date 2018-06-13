@@ -14,6 +14,7 @@
 
 "ACTION_JSBOX" = "JSBox 脚本";
 "ACTION_LIST" = "动作列表";
+"ACTION_SHARE" = "分享扩展";
 "ACTION_CUSTOM" = "自定义动作";
 "ACTION_NAME" = "动作名称";
 "ACTION_PATTERN" = "动作模式";
@@ -53,6 +54,7 @@
 "AC_DAYONE" = "Day One";
 
 "AO_URL" = "链接";
+"AO_SHARESHEET" = "分享面板";
 "AO_MAILTO" = "邮件";
 "AO_TEL" = "电话";
 "AO_SMS" = "短信";

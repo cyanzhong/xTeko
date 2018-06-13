@@ -14,6 +14,7 @@
 
 "ACTION_JSBOX" = "JSBox Script";
 "ACTION_LIST" = "Action List";
+"ACTION_SHARE" = "Share Extension";
 "ACTION_CUSTOM" = "Custom Action";
 "ACTION_NAME" = "Action Name";
 "ACTION_PATTERN" = "Action Pattern";
@@ -53,6 +54,7 @@
 "AC_DAYONE" = "Day One";
 
 "AO_URL" = "Link";
+"AO_SHARESHEET" = "Share Sheet";
 "AO_MAILTO" = "Mail";
 "AO_TEL" = "Telephone";
 "AO_SMS" = "Text Message";

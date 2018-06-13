@@ -10,6 +10,7 @@ function createClipboardView() {
       id: "clipboard-list",
       reorder: true,
       rowHeight: $app.env == $env.today ? 36 : 44,
+      separatorColor: $app.env == $env.today ? $rgba(100, 100, 100, 0.25) : $color("separator"),
       data: textItems,
       actions: [
         {

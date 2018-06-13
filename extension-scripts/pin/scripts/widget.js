@@ -72,7 +72,7 @@ function createActionView() {
       type: "button",
       props: {
         bgcolor: $color("clear"),
-        icon: $icon(action.icon, $color("darkText"), $size(24, 24)),
+        icon: $icon(action.icon, $color("darkText"), $size(20, 20)),
         frame: $rect(leftPosition, 0, itemHeight, itemHeight),
         info: { pattern: action.pattern }
       },

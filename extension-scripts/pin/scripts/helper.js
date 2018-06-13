@@ -26,6 +26,17 @@ function openURL(pattern) {
     return;
   }
 
+  if (_hasPrefix(pattern, "share-sheet://")) {
+    var text = $clipboard.text;
+    var image = $clipboard.image;
+    if (text) {
+      $share.sheet(text);
+    } else if (image) {
+      $share.sheet(image);
+    }
+    return;
+  }
+
   if (_hasPrefix(pattern, "compose://")) {
     var identifier = pattern.substring("compose://?id=".length);
     var extension = $objc("NSExtension").invoke("extensionWithIdentifier:error:", identifier, null)
