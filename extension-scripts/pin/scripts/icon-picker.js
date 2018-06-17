@@ -6,6 +6,12 @@ for (var idx=0; idx<192; ++idx) {
 }
 
 function show(completionHandler) {
+
+  if (typeof $ui.selectIcon === "function") {
+    $ui.selectIcon().then(completionHandler);
+    return;
+  }
+
   $ui.push({
     props: {
       title: $l10n("ACTION_ICON")
