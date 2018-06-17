@@ -38,6 +38,7 @@ var views = [
 
 function init() {
   $ui.render({ views: views });
+  initActionButtons();
 }
 
 function createButton(title, layout, handler) {
@@ -46,7 +47,7 @@ function createButton(title, layout, handler) {
     props: {
       title: title,
       titleColor: $color("tint"),
-      font: $font(15),
+      font: $font("bold", 16),
       bgcolor: $rgba(200, 200, 200, 0.25)
     },
     layout: layout,
@@ -60,11 +61,36 @@ function createClipboardView() {
 
 function createActionView() {
 
+  var container = {
+    type: "scroll",
+    props: {
+      id: "action-view",
+      bgcolor: $rgba(200, 200, 200, 0.25),
+      radius: 5,
+      alwaysBounceVertical: false,
+      alwaysBounceHorizontal: true,
+      showsHorizontalIndicator: false
+    },
+    layout: function(make, view) {
+      make.left.bottom.right.inset(6);
+      make.height.equalTo(36);
+    },
+    views: views
+  };
+
+  return container;
+}
+
+function initActionButtons() {
+  
+  var actionView = $("action-view");
+  actionView.relayout();
+
   var actions = dataManager.getActionItems();
-  var views = [];
-  var margin = 15;
   var itemHeight = 36;
-  var leftPosition = margin;
+  var leftView;
+  var multiplyRatio = 1.0 / Math.min(actions.length, 6);
+  var contentWidth = 0;
 
   for (var idx=0; idx<actions.length; ++idx) {
     var action = actions[idx];
@@ -73,38 +99,31 @@ function createActionView() {
       props: {
         bgcolor: $color("clear"),
         icon: $icon(action.icon, $color("darkText"), $size(20, 20)),
-        frame: $rect(leftPosition, 0, itemHeight, itemHeight),
         info: { pattern: action.pattern }
+      },
+      layout: function(make, view) {
+        if (leftView) {
+          make.left.equalTo(leftView.right);
+        } else {
+          make.left.equalTo(0);
+        }
+        make.top.equalTo(0);
+        make.height.equalTo(itemHeight);
+        make.width.equalTo(view.super).multipliedBy(multiplyRatio);
+        contentWidth = (actionView.frame.width - 12) * multiplyRatio * actions.length;
+        leftView = view;
       },
       events: {
         tapped: function(sender) {
-          $device.taptic(2);
+          $device.taptic(1);
           helper.openURL(sender.info.pattern);
         }
       }
     }
-    views.push(button);
-    leftPosition += itemHeight + margin;
+    actionView.add(button);
   }
 
-  var container = {
-    type: "scroll",
-    props: {
-      bgcolor: $rgba(200, 200, 200, 0.25),
-      radius: 5,
-      alwaysBounceVertical: false,
-      alwaysBounceHorizontal: true,
-      showsHorizontalIndicator: false,
-      contentSize: $size(leftPosition, itemHeight)
-    },
-    layout: function(make, view) {
-      make.left.bottom.right.inset(6);
-      make.height.equalTo(itemHeight);
-    },
-    views: views
-  };
-
-  return container;
+  actionView.contentSize = $size(contentWidth, itemHeight);
 }
 
 module.exports = {
