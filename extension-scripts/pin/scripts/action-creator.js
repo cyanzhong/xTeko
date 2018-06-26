@@ -124,7 +124,7 @@ function showActionMenu() {
     } else if (title === $l10n("ACTION_LIST")) {
       showPicker("./action-picker");
     } else if (title === $l10n("ACTION_SHARE")) {
-      showPicker("./extension-picker.js");
+      showPicker("./extension-picker");
     } else if (title === $l10n("ACTION_CUSTOM")) {
       $input.text({
         type: $kbType.url
