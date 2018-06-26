@@ -1,0 +1,23 @@
+{
+  "widget" : {
+    "height" : 0,
+    "tintColor" : "",
+    "iconColor" : ""
+  },
+  "info" : {
+    "url" : "",
+    "author" : "ZiGma",
+    "types" : 15,
+    "website" : "www.zigma.cc",
+    "name" : "Palette",
+    "version" : "1.0.2"
+  },
+  "settings" : {
+    "minOSVer" : "10.0.0",
+    "minSDKVer" : "1.0.0",
+    "rotateDisabled" : false,
+    "autoKeyboardEnabled" : false,
+    "keyboardToolbarEnabled" : false,
+    "idleTimerDisabled" : false
+  }
+}
