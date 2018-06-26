@@ -117,7 +117,7 @@ function init() {
   })
 }
 
-async function selectIcon() {
+function selectIcon() {
   var options = [$l10n("BUILTIN_ICONS"), $l10n("PHOTO_LIBRARY")];
   $ui.menu(options).then(function(selected) {
     if (selected == null) {
