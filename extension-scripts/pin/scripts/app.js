@@ -1,5 +1,6 @@
 var builder = require("./builder");
 var dataManager = require("./data-manager");
+var layoutUtility = require("./layout-utility");
 var LIST_TYPE = { CLIPBOARD: 0, ACTION: 1 };
 var listType = LIST_TYPE.CLIPBOARD;
 
@@ -30,7 +31,8 @@ var createButton = {
     title: $l10n("CREATE")
   },
   layout: function(make, view) {
-    make.left.bottom.right.inset(8);
+    make.left.right.inset(8);
+    make.bottom.inset(8 + layoutUtility.dynamicInsets().bottom);
     make.height.equalTo(36);
   },
   events: {

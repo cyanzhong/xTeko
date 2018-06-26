@@ -20,7 +20,7 @@ for (var idx=0; idx<count; ++idx) {
   var category = activity.invoke("class").invoke("activityCategory");
   var name = activity.invoke("activityTitle").rawValue();
   var type = activity.invoke("activityType").rawValue();
-  var image = activity.invoke("_activitySettingsImage").rawValue();
+  var image = activity.invoke("_activityImage").rawValue();
   items.push({
     name: name,
     type: type,

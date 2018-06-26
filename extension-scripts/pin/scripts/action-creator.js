@@ -1,4 +1,5 @@
 var helper = require("./helper");
+var layoutUtility = require("./layout-utility");
 var nameCell = createLabelCell($l10n("ACTION_NAME"), "name-label");
 var patternCell = createLabelCell($l10n("ACTION_PATTERN"), "pattern-label");
 
@@ -67,7 +68,8 @@ function show(completionHandler) {
           title: $l10n("DONE")
         },
         layout: function(make, view) {
-          make.left.bottom.right.inset(8);
+          make.left.right.inset(8);
+          make.bottom.inset(8 + layoutUtility.dynamicInsets().bottom);
           make.height.equalTo(36);
         },
         events: {
