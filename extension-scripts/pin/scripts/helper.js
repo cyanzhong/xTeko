@@ -106,6 +106,34 @@ function blinkView(view) {
   });
 }
 
+function makeIcon(iconName, color) {
+
+  var length = 180;
+  var canvas = $ui.create({ type: "view" });
+  canvas.bgcolor = color;
+  canvas.frame = $rect(0, 0, length, length);
+
+  canvas.add({
+    type: "view",
+    props: {
+      bgcolor: $color("white"),
+      radius: 72,
+      frame: $rect(18, 18, 144, 144)
+    }
+  });
+
+  canvas.add({
+    type: "image",
+    props: {
+      icon: $icon(iconName, color, 72),
+      bgcolor: $color("clear"),
+      frame: $rect(54, 54, 72, 72)
+    }
+  })
+
+  return canvas.snapshot;
+}
+
 function _hasPrefix(string, prefix) {
   return string.lastIndexOf(prefix, 0) === 0;
 }
@@ -116,4 +144,5 @@ module.exports = {
   searchText: searchText,
   openURL: openURL,
   blinkView: blinkView,
+  makeIcon: makeIcon,
 }

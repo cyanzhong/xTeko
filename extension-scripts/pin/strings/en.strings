@@ -11,6 +11,9 @@
 "SEARCH_ENGINE" = "Search Engine";
 "CLEAR_CLIPBOARD" = "Clear Clipboard";
 "LAUNCH" = "Launch";
+"MAKE_ICON" = "Make Icon";
+"USE_DEFAULT_ICON" = "Use Default Icon";
+"PHOTO_LIBRARY" = "Photo Library";
 
 "ACTION_JSBOX" = "JSBox Script";
 "ACTION_LIST" = "Action List";

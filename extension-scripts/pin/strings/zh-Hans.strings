@@ -11,6 +11,9 @@
 "SEARCH_ENGINE" = "搜索引擎";
 "CLEAR_CLIPBOARD" = "清除剪贴板项目";
 "LAUNCH" = "启动";
+"MAKE_ICON" = "制作图标";
+"USE_DEFAULT_ICON" = "使用默认图标";
+"PHOTO_LIBRARY" = "从照片中选取";
 
 "ACTION_JSBOX" = "JSBox 脚本";
 "ACTION_LIST" = "动作列表";

@@ -100,6 +100,12 @@ function createActionView() {
             var pattern = actionItems[indexPath.row].pattern;
             helper.openURL(pattern);
           }
+        },
+        {
+          title: $l10n("MAKE_ICON"),
+          handler: function(sender, indexPath) {
+            makeHomeIcon(actionItems[indexPath.row]);
+          }
         }
       ],
       template: {
@@ -175,6 +181,33 @@ function listViewLayout() {
     make.top.inset(44);
     make.bottom.inset($app.env == $env.today ? 44 : 52);
   }
+}
+
+function makeHomeIcon(action) {
+  var options = [$l10n("USE_DEFAULT_ICON"), $l10n("PHOTO_LIBRARY")];
+  $ui.menu(options).then(function(selected) {
+    if (selected == null) {
+      return;
+    }
+    if (selected.index == 0) {
+      var icon = helper.makeIcon(action.icon, $color("tint"));
+      createHomeShortcut(action, icon);
+    } else {
+      $photo.pick().then(function(result) {
+        if (result && result.image) {
+          createHomeShortcut(action, result.image);
+        }
+      });
+    }
+  });
+}
+
+function createHomeShortcut(action, icon) {
+  $system.makeIcon({
+    title: action.name,
+    url: action.pattern.replace("%@", ""),
+    icon: icon
+  });
 }
 
 module.exports = {
