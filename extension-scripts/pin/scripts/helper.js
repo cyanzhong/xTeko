@@ -19,6 +19,7 @@ function searchText(text) {
 
 function openURL(pattern) {
 
+  var hasPlaceholder = pattern.indexOf("%@") != -1;
   pattern = pattern.replace("%@", encodeURIComponent($clipboard.text || ""));
 
   if (_hasPrefix(pattern, "open-url:")) {
@@ -65,23 +66,23 @@ function openURL(pattern) {
     return;
   }
 
-  if (_hasPrefix(pattern, "tel:")) {
-    $app.openURL("tel:" + $clipboard.phoneNumber);
+  if (hasPlaceholder && _hasPrefix(pattern, "tel:")) {
+    $app.openURL("tel:" + $clipboard.phoneNumber || "");
     return;
   }
 
-  if (_hasPrefix(pattern, "sms:")) {
-    $app.openURL("sms:" + $clipboard.phoneNumber);
+  if (hasPlaceholder && _hasPrefix(pattern, "sms:")) {
+    $app.openURL("sms:" + $clipboard.phoneNumber || "");
     return;
   }
 
-  if (_hasPrefix(pattern, "facetime:")) {
-    $app.openURL("facetime:" + $clipboard.phoneNumber);
+  if (hasPlaceholder && _hasPrefix(pattern, "facetime:")) {
+    $app.openURL("facetime:" + $clipboard.phoneNumber || "");
     return;
   }
 
-  if (_hasPrefix(pattern, "mailto:")) {
-    $app.openURL("mailto:" + $clipboard.email);
+  if (hasPlaceholder && _hasPrefix(pattern, "mailto:")) {
+    $app.openURL("mailto:" + $clipboard.email || "");
     return;
   }
 
