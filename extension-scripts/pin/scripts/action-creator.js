@@ -34,7 +34,16 @@ var iconCell = {
 
 var iconName = "";
 
-function show(completionHandler) {
+function create(completionHandler) {
+  show(completionHandler, {});
+}
+
+function edit(action, completionHandler) {
+  show(completionHandler, action);
+}
+
+function show(completionHandler, action) {
+
   $ui.push({
     props: { title: $l10n("CREATE_ACTION") },
     views: [
@@ -89,11 +98,21 @@ function show(completionHandler) {
       }
     ]
   })
+
+  nameLabel().text = action["name"] || "";
+  patternLabel().text = action["pattern"] || "";
+  iconName = action["icon"] || "";
+  
+  if (iconName.length > 0) {
+    iconImage().icon = $icon(iconName);
+  }
 }
 
 function setName() {
-  $input.text().then(function(text) {
-    if (text.length > 0) {
+  $input.text({
+    text: nameLabel().text || ""
+  }).then(function(text) {
+    if (text && text.length > 0) {
       nameLabel().text = text;
     }
   });
@@ -127,9 +146,10 @@ function showActionMenu() {
       showPicker("./extension-picker");
     } else if (title === $l10n("ACTION_CUSTOM")) {
       $input.text({
-        type: $kbType.url
+        type: $kbType.url,
+        text: patternLabel().text || ""
       }).then(function(text) {
-        if (text.length > 0) {
+        if (text && text.length > 0) {
           patternLabel().text = text;
         }
       })
@@ -189,5 +209,6 @@ function iconImage() {
 }
 
 module.exports = {
-  show: show
+  create: create,
+  edit: edit,
 }

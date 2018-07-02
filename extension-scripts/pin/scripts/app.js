@@ -102,7 +102,7 @@ function createNewTextItem() {
 
 function createNewActionItem() {
   var creator = require("./action-creator");
-  creator.show(function(action) {
+  creator.create(function(action) {
     var items = dataManager.getActionItems();
     items.unshift(action);
     $("action-list").insert({

@@ -71,6 +71,15 @@ function reloadTextItems() {
   textItems = dataManager.getTextItems();
 }
 
+function editAction(action, indexPath) {
+  var creator = require("./action-creator");
+  creator.edit(action, function(action) {
+    actionItems[indexPath.row] = action;
+    $("action-list").data = mapActionItems();
+    saveActionItems();
+  });
+}
+
 function saveActionItems() {
   dataManager.setActionItems(actionItems);
 }
@@ -145,12 +154,14 @@ function createActionView() {
           }
         ]
       },
-      data: actionItems.map(function(item) {
-        return createActionItem(item);
-      })
+      data: mapActionItems()
     },
     layout: listViewLayout(),
     events: {
+      didSelect: function(sender, indexPath) {
+        var action = actionItems[indexPath.row];
+        editAction(action, indexPath);
+      },
       reorderMoved: function(fromIndexPath, toIndexPath) {
         helper.arrayMove(actionItems, fromIndexPath.row, toIndexPath.row);
       },
@@ -173,6 +184,12 @@ function createActionItem(item) {
       "icon": $icon(item.icon)
     }
   };
+}
+
+function mapActionItems() {
+  return actionItems.map(function(item) {
+    return createActionItem(item);
+  });
 }
 
 function listViewLayout() {
