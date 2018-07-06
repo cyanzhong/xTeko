@@ -164,7 +164,7 @@ if (typeof(file) == "undefined") {
 }
 var FAVORITE_FILE = FAVORITE ? JSON.parse(file.string) : [{ title: "Favorite", rows: [] }, { title: "Checked", rows: [] }]
 
-Array.prototype.move = function(from, to) {
+Array.prototype.moveObject = function(from, to) {
   var fromSec = from.section,
     fromRow = from.row,
     toSec = to.section,
@@ -378,7 +378,7 @@ function generateMainViewObjects() {
         })
       },
       reorderMoved: function(from, to) {
-        FAVORITE_FILE.move(from, to)
+        FAVORITE_FILE.moveObject(from, to)
       },
       reorderFinished: function() {
         saveFavorite(FAVORITE_FILE)

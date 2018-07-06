@@ -53,7 +53,7 @@ $ui.render({
           $app.openExtension(title)
         },
         reorderMoved: function(from, to) {
-          extensions.move(from.row, to.row)
+          extensions.moveObject(from.row, to.row)
         },
         reorderFinished: function() {
           saveItems()
@@ -111,7 +111,7 @@ function saveItems() {
   $cache.set("extensions", extensions)
 }
 
-Array.prototype.move = function(from, to) {
+Array.prototype.moveObject = function(from, to) {
   var object = this[from]
   this.splice(from, 1)
   this.splice(to, 0, object)
