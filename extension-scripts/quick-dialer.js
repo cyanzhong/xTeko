@@ -55,7 +55,7 @@ function showContactsPicker() {
             call(contacts[indexPath.row])
           },
           reorderMoved: function(from, to) {
-            contacts.moveObject(from.row, to.row)
+            moveObject(contacts, from.row, to.row)
           },
           reorderFinished: function() {
             $cache.set("contacts", contacts)
@@ -118,8 +118,8 @@ if ($app.env == $env.app) {
   showAllContacts()
 }
 
-Array.prototype.moveObject = function(from, to) {
-  var object = this[from]
-  this.splice(from, 1)
-  this.splice(to, 0, object)
+function moveObject(array, from, to) {
+  var object = array[from]
+  array.splice(from, 1)
+  array.splice(to, 0, object)
 }

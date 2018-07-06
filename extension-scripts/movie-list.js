@@ -164,14 +164,14 @@ if (typeof(file) == "undefined") {
 }
 var FAVORITE_FILE = FAVORITE ? JSON.parse(file.string) : [{ title: "Favorite", rows: [] }, { title: "Checked", rows: [] }]
 
-Array.prototype.moveObject = function(from, to) {
+function moveObject(array, from, to) {
   var fromSec = from.section,
     fromRow = from.row,
     toSec = to.section,
     toRow = to.row
-  var cellData = this[fromSec].rows[fromRow]
-  this[fromSec].rows.splice(fromRow, 1)
-  this[toSec].rows.splice(toRow, 0, cellData)
+  var cellData = array[fromSec].rows[fromRow]
+  array[fromSec].rows.splice(fromRow, 1)
+  array[toSec].rows.splice(toRow, 0, cellData)
 }
 
 /* Function */
@@ -378,7 +378,7 @@ function generateMainViewObjects() {
         })
       },
       reorderMoved: function(from, to) {
-        FAVORITE_FILE.moveObject(from, to)
+        moveObject(FAVORITE_FILE, from, to)
       },
       reorderFinished: function() {
         saveFavorite(FAVORITE_FILE)
