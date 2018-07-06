@@ -32,6 +32,49 @@ var iconCell = {
   ]
 }
 
+var encodeCell = {
+  type: "view",
+  layout: $layout.fill,
+  views: [
+    {
+      type: "label",
+      props: {
+        text: $l10n("DONT_ENCODE_URL")
+      },
+      layout: function(make, view) {
+        make.centerY.equalTo(view.super);
+        make.left.equalTo(15);
+      }
+    },
+    {
+      type: "switch",
+      props: {
+        id: "encode-switch"
+      },
+      layout: function(make, view) {
+        make.centerY.equalTo(view.super);
+        make.right.inset(15);
+      }
+    },
+    {
+      type: "button",
+      props: {
+        icon: $icon("008", $color("tint")),
+        bgcolor: $color("clear")
+      },
+      layout: function(make, view) {
+        make.centerY.equalTo(view.super);
+        make.right.equalTo(-80);
+      },
+      events: {
+        tapped: function() {
+          $ui.alert($l10n("ENCODE_TIPS"));
+        }
+      }
+    }
+  ]
+}
+
 var iconName = "";
 
 function create(completionHandler) {
@@ -53,7 +96,7 @@ function show(completionHandler, action) {
           data: [
             {
               "title": " ",
-              "rows": [nameCell, patternCell, iconCell]
+              "rows": [nameCell, patternCell, iconCell, encodeCell]
             }
           ]
         },
@@ -65,7 +108,7 @@ function show(completionHandler, action) {
               setName();
             } else if (indexPath.row == 1) {
               showActionMenu();
-            } else {
+            } else if (indexPath.row == 2) {
               showIconMenu();
             }
           }
@@ -85,11 +128,13 @@ function show(completionHandler, action) {
           tapped: function() {
             var name = nameLabel().text;
             var pattern = patternLabel().text;
+            var noenc = encodeSwitch().on;
             if (name.length > 0 && pattern.length > 0 && iconName.length > 0) {
               completionHandler({
                 "name": name,
                 "pattern": pattern,
-                "icon": iconName
+                "icon": iconName,
+                "noenc": noenc,
               });
               $ui.pop();
             }
@@ -102,6 +147,7 @@ function show(completionHandler, action) {
   nameLabel().text = action["name"] || "";
   patternLabel().text = action["pattern"] || "";
   iconName = action["icon"] || "";
+  encodeSwitch().on = action["noenc"];
   
   if (iconName.length > 0) {
     iconImage().icon = $icon(iconName);
@@ -206,6 +252,10 @@ function patternLabel() {
 
 function iconImage() {
   return $("icon-image");
+}
+
+function encodeSwitch() {
+  return $("encode-switch");
 }
 
 module.exports = {

@@ -14,13 +14,18 @@ function arrayRemove(array, index) {
 
 function searchText(text) {
   var engine = require("./data-manager").getSearchEngine();
-  openURL(engine + encodeURIComponent(text));
+  var pattern = engine + encodeURIComponent(text);
+  runAction({ "pattern": pattern });
 }
 
-function openURL(pattern) {
+function runAction(action) {
 
+  var pattern = action.pattern;
   var hasPlaceholder = pattern.indexOf("%@") != -1;
-  pattern = pattern.replace("%@", encodeURIComponent($clipboard.text || ""));
+  var clipText = $clipboard.text || "";
+  var replacement = action.noenc ? clipText : encodeURIComponent(clipText);
+
+  pattern = pattern.replace("%@", replacement);
 
   if (_hasPrefix(pattern, "open-url:")) {
     $app.openURL($clipboard.link);
@@ -142,7 +147,7 @@ module.exports = {
   arrayMove: arrayMove,
   arrayRemove: arrayRemove,
   searchText: searchText,
-  openURL: openURL,
+  runAction: runAction,
   blinkView: blinkView,
   makeIcon: makeIcon,
 }

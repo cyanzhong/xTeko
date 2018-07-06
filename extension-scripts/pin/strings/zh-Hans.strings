@@ -22,6 +22,8 @@
 "ACTION_NAME" = "动作名称";
 "ACTION_PATTERN" = "动作模式";
 "ACTION_ICON" = "动作图标";
+"DONT_ENCODE_URL" = "不进行 URL 编码";
+"ENCODE_TIPS" = "在大多数时候我们需要对链接里面的参数进行 URL 编码，但有些应用在解析参数的时候不会进行解码，所以会出现错误，在这种情况下你可以打开这个选项。";
 
 "ACTION_QUICK" = "快捷动作";
 "ACTION_SEARCH" = "搜索";

@@ -116,7 +116,7 @@ function initActionButtons() {
       events: {
         tapped: function(sender) {
           $device.taptic(1);
-          helper.openURL(sender.info.pattern);
+          helper.runAction(sender.info);
         }
       }
     }

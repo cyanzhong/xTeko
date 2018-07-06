@@ -106,8 +106,7 @@ function createActionView() {
         {
           title: $l10n("LAUNCH"),
           handler: function(sender, indexPath) {
-            var pattern = actionItems[indexPath.row].pattern;
-            helper.openURL(pattern);
+            helper.runAction(actionItems[indexPath.row]);
           }
         },
         {
