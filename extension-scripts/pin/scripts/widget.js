@@ -99,7 +99,7 @@ function initActionButtons() {
       props: {
         bgcolor: $color("clear"),
         icon: $icon(action.icon, $color("darkText"), $size(20, 20)),
-        info: { pattern: action.pattern }
+        info: { pattern: action.pattern, noenc: action.noenc }
       },
       layout: function(make, view) {
         if (leftView) {
