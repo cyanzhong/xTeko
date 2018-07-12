@@ -1,3 +1,5 @@
+> [Download link](https://xteko.com/redir?url=https://github.com/cyanzhong/xTeko/raw/master/extension-scripts/json-viewer.box)
+
 # JSON 查看器
 
 一个简单的 JSON 格式查看工具：

@@ -1,3 +1,5 @@
+> [Download link](https://xteko.com/redir?url=https://github.com/cyanzhong/xTeko/raw/master/extension-scripts/safari-extensions.box)
+
 # 简介
 
 本扩展通过 [$safari.inject()](https://docs.xteko.com/#/sdk/safari?id=safariinjectscript) 方法在 Safari 上面运行 JavaScript 脚本，利用这个功能可以实现很多有趣的功能，例如本扩展目前包含的 3 个插件：

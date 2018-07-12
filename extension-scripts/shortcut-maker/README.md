@@ -1,3 +1,5 @@
+> [Download link](https://xteko.com/redir?url=https://github.com/cyanzhong/xTeko/raw/master/extension-scripts/shortcut-maker.box)
+
 # 功能
 
 - 将网页或 URL Scheme 制作成桌面快捷方式

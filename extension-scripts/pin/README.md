@@ -1,3 +1,5 @@
+> [Download link](https://xteko.com/redir?url=https://github.com/cyanzhong/xTeko/raw/master/extension-scripts/pin.box)
+
 # Pin
 
 实现了 Pin 的核心功能：

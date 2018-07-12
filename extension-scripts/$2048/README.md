@@ -1,3 +1,5 @@
+> [Download link](https://xteko.com/redir?url=https://github.com/cyanzhong/xTeko/raw/master/extension-scripts/%242048.box)
+
 # What's this?
 
 Is this a game based on SpriteKit?
