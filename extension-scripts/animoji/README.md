@@ -1,12 +1,10 @@
 # Animoji
 
-Use Animoji without iMessage app! This project is a demo to show you how to implement feature dynamically, leverage frameworks that JSBox doesn't support.
-
-> Note: This project is iPhone X only.
+This is a playground that gives you Animoji outside iMessage. Note: This project is iPhone X only.
 
 # Features
 
-- Play with Animoji outside iMessage app
+- Play with Animoji without iMessage app
 - Record & Share video with share sheet
 
 # TODO

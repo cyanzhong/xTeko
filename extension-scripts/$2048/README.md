@@ -4,18 +4,17 @@
 
 Is this a game based on SpriteKit?
 
-Yes and No, JSBox doesn't support SpriteKit yet, but we can use it in a hacky way: [Runtime](https://docs.xteko.com/#/en/runtime/intro).
+Yes and No, this is an example that shows you how to use Objective-C [Runtime](https://docs.xteko.com/#/en/runtime/intro).
 
-Runtime system provided by JSBox is very powerful, we can do many things even JSBox doesn't support.
+Runtime system provided by JSBox is very powerful, we can do many things.
 
 In this project, we want to show you how to:
 
-- Load frameworks dynamically
 - Create/inherit native classes dynamically
 - Call functions dynamically (reflection)
 - Override existing functions dynamically (hook)
 
-Yes, everything in this project is dynamic, it works like magic, you shouldn't always use Runtime unless you have to do it.
+Yes, it works like magic, you shouldn't always use Runtime unless you have to do it.
 
 It helps you understand Runtime better, have fun!
 
