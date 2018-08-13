@@ -1,11 +1,11 @@
 $app.strings = {
   "en": {
     "WRONG_ENV": "Please use this script from main app or action extension",
-    "WRONG_FILE_TYPE": "This is not a shortcut file",
+    "WRONG_FILE_TYPE": " is not a shortcut file",
   },
   "zh-Hans": {
     "WRONG_ENV": "请在主应用或分享面板使用这个脚本",
-    "WRONG_FILE_TYPE": "非 shortcut 文件！",
+    "WRONG_FILE_TYPE": " 不是 shortcut 文件！",
   }
 };
 
