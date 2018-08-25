@@ -53,7 +53,7 @@ var rate = 0.0
 
 $ui.loading(true)
 $http.get({
-  url: "https://exchangeratesapi.io/api/latest?base=USD&symbols=CNY",
+  url: "https://api.exchangeratesapi.io/latest?base=USD&symbols=CNY",
   handler: function(resp) {
     $ui.loading(false)
     rate = resp.data.rates.CNY

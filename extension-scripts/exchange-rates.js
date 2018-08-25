@@ -217,7 +217,7 @@ function calculate() {
 function fetch(pulled) {
   $ui.loading(!pulled)
   $http.get({
-    url: "https://exchangeratesapi.io/api/latest",
+    url: "https://api.exchangeratesapi.io/latest",
     handler: function(resp) {
       $ui.loading(false)
       $("list").endRefreshing()
