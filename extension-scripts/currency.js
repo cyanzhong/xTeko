@@ -2,22 +2,23 @@ $ui.render({
   props: {
     title: "Currency"
   },
-  views: [{
+  views: [
+    {
       type: "input",
       props: {
         type: $kbType.decimal,
         text: "1",
         font: $font("bold", 20),
         align: $align.center,
-        clearButtonMode: 0,
+        clearButtonMode: 0
       },
       layout: function(make) {
-        make.left.top.equalTo(10)
-        make.size.equalTo($size(120, 32))
+        make.left.top.equalTo(10);
+        make.size.equalTo($size(120, 32));
       },
       events: {
         changed: function(sender) {
-          calc(Number(sender.text))
+          calc(Number(sender.text));
         }
       }
     },
@@ -28,9 +29,9 @@ $ui.render({
         font: $font("bold", 20)
       },
       layout: function(make) {
-        var input = $("input")
-        make.left.equalTo(input.right).offset(10)
-        make.centerY.equalTo(input)
+        var input = $("input");
+        make.left.equalTo(input.right).offset(10);
+        make.centerY.equalTo(input);
       }
     },
     {
@@ -42,26 +43,26 @@ $ui.render({
         align: $align.right
       },
       layout: function(make) {
-        make.right.inset(10)
-        make.centerY.equalTo($("input"))
+        make.right.inset(10);
+        make.centerY.equalTo($("input"));
       }
     }
   ]
-})
+});
 
-var rate = 0.0
+var rate = 0.0;
 
-$ui.loading(true)
+$ui.loading(true);
 $http.get({
   url: "https://api.exchangeratesapi.io/latest?base=USD&symbols=CNY",
   handler: function(resp) {
-    $ui.loading(false)
-    rate = resp.data.rates.CNY
-    calc(1)
-    $("input").focus()
+    $ui.loading(false);
+    rate = resp.data.rates.CNY;
+    calc(1);
+    $("input").focus();
   }
-})
+});
 
 function calc(number) {
-  $("result").text = (number * rate).toFixed(4) + " CNY"
+  $("result").text = (number * rate).toFixed(4) + " CNY";
 }
