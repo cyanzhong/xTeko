@@ -14,7 +14,7 @@ function pointInRect(point, rect) {
 }
 
 module.exports = {
-  playAudio, playAudio,
+  playAudio: playAudio,
   sendAction: sendAction,
   pointInRect: pointInRect,
 }
