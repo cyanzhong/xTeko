@@ -10,6 +10,6 @@ var regions = [
 $ui.menu({
   items: regions.map(function(item) { return item.name }),
   handler: function(title, idx) {
-    $app.openURL("https://itunes.apple.com/" + regions[idx].code + "/app/dummy-app/id0123456789")
+    $app.openURL("https://itunes.apple.com/" + regions[idx].code + "/app/")
   }
 })
