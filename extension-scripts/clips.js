@@ -4,29 +4,13 @@ $ui.render({
   },
   views: [
     {
-      type: "button",
-      props: {
-        title: "选择"
-      },
-      layout: function(make) {
-        make.right.top.inset(10);
-        make.size.equalTo($size(64, 32));
-      },
-      events: {
-        tapped: function(sender) {
-          selectItem();
-        }
-      }
-    },
-    {
       type: "input",
       props: {
-        placeholder: "输入要收藏的内容"
+        placeholder: "Type text here..."
       },
       layout: function(make) {
-        make.top.left.inset(10);
-        make.right.equalTo($("button").left).offset(-10);
-        make.height.equalTo($("button"));
+        make.top.left.right.inset(10);
+        make.height.equalTo(32);
       },
       events: {
         returned: function(sender) {
@@ -57,7 +41,7 @@ $ui.render({
         didSelect: function(sender, indexPath, title) {
           $clipboard.text = title;
           $device.taptic();
-          $ui.toast("已复制");
+          $ui.toast("Copied");
         }
       }
     }
@@ -84,29 +68,6 @@ function deleteItem(indexPath) {
     clips.splice(index, 1);
     saveItems();
   }
-}
-
-function selectItem() {
-  $ui.push({
-    props: {
-      title: "历史记录"
-    },
-    views: [
-      {
-        type: "list",
-        props: {
-          data: $clipboard.list(50)
-        },
-        layout: $layout.fill,
-        events: {
-          didSelect: function(sender, indexPath, title) {
-            insertItem(title);
-            $ui.pop();
-          }
-        }
-      }
-    ]
-  });
 }
 
 function saveItems() {
