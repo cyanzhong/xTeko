@@ -1,4 +1,3 @@
-$app.open()
 $app.strings = {
   "en": {
     "main-title": "Exchange Rates",
@@ -111,11 +110,13 @@ $app.strings = {
 }
 
 var symbols = ["EUR", "CNY", "HKD", "USD", "GBP", "JPY", "INR", "AUD", "CAD", "SGD", "CHF", "MYR", "THB", "KRW", "BGN", "BRL", "CZK", "DKK", "HRK", "HUF", "IDR", "ILS", "MXN", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "TRY", "ZAR"]
+
 var names = symbols.map(function(item) {
-  return $l10n("name-" + item.toLowerCase())
-})
-var rates = {}
-var selectedIndex = $cache.get("selected-index") || 0
+  return $l10n("name-" + item.toLowerCase());
+});
+
+var rates = {};
+var selectedIndex = $cache.get("selected-index") || 0;
 
 $ui.render({
   props: { title: $l10n("main-title") },
@@ -127,34 +128,39 @@ $ui.render({
         text: "1"
       },
       layout: function(make, view) {
-        make.left.top.inset(10)
-        make.height.equalTo(32)
-        make.width.equalTo(view.super).multipliedBy(0.5).offset(-15)
+        make.left.top.inset(10);
+        make.height.equalTo(32);
+        make.width
+          .equalTo(view.super)
+          .multipliedBy(0.5)
+          .offset(-15);
       },
       events: {
-        changed: function(sender) { calculate() }
+        changed: function(sender) {
+          calculate();
+        }
       }
     },
     {
       type: "button",
       props: { title: names[selectedIndex] },
       layout: function(make) {
-        var input = $("input")
-        make.left.equalTo(input.right).offset(10)
-        make.top.height.equalTo(input)
-        make.right.inset(10)
+        var input = $("input");
+        make.left.equalTo(input.right).offset(10);
+        make.top.height.equalTo(input);
+        make.right.inset(10);
       },
       events: {
         tapped: function(sender) {
           $ui.menu({
             items: names,
             handler: function(title, idx) {
-              selectedIndex = idx
-              sender.title = names[idx]
-              calculate()
-              $cache.set("selected-index", idx)
+              selectedIndex = idx;
+              sender.title = names[idx];
+              calculate();
+              $cache.set("selected-index", idx);
             }
-          })
+          });
         }
       }
     },
@@ -168,8 +174,8 @@ $ui.render({
               id: "name-label"
             },
             layout: function(make, view) {
-              make.left.equalTo(15)
-              make.centerY.equalTo(view.super)
+              make.left.equalTo(15);
+              make.centerY.equalTo(view.super);
             }
           },
           {
@@ -179,52 +185,62 @@ $ui.render({
               align: $align.center
             },
             layout: function(make, view) {
-              make.centerY.equalTo(view.super)
-              make.right.inset(15)
+              make.centerY.equalTo(view.super);
+              make.right.inset(15);
             }
           }
         ],
-        data: names.map(function(item) { return { "name-label": { text: item } } })
+        data: names.map(function(item) {
+          return { "name-label": { text: item } };
+        })
       },
       layout: function(make) {
-        make.top.equalTo($("input").bottom).offset(10)
-        make.left.bottom.right.equalTo(0)
+        make.top.equalTo($("input").bottom).offset(10);
+        make.left.bottom.right.equalTo(0);
       },
       events: {
-        pulled: function() { fetch(true) },
+        pulled: function() {
+          fetch(true);
+        },
         didSelect: function(sender, indexPath) {
-          var base = rates[symbols[selectedIndex]] || 1.0
-          var number = Number($("input").text)
-          $clipboard.text = (number * (rates[symbols[indexPath.row]] || 1.0) / base).toFixed(4)
-          $ui.toast($l10n("copied"))
+          var base = rates[symbols[selectedIndex]] || 1.0;
+          var number = Number($("input").text);
+          $clipboard.text = (
+            (number * (rates[symbols[indexPath.row]] || 1.0)) /
+            base
+          ).toFixed(4);
+          $ui.toast($l10n("copied"));
         }
       }
     }
   ]
-})
+});
 
 function calculate() {
-  var base = rates[symbols[selectedIndex]] || 1.0
-  var number = Number($("input").text)
+  var base = rates[symbols[selectedIndex]] || 1.0;
+  var number = Number($("input").text);
   $("list").data = symbols.map(function(symbol, idx) {
     return {
       "name-label": { text: names[idx] },
-      "value-label": { text: (number * (rates[symbol] || 1.0) / base).toFixed(4) + " " + symbol }
-    }
-  })
+      "value-label": {
+        text:
+          ((number * (rates[symbol] || 1.0)) / base).toFixed(4) + " " + symbol
+      }
+    };
+  });
 }
 
 function fetch(pulled) {
-  $ui.loading(!pulled)
+  $ui.loading(!pulled);
   $http.get({
     url: "https://api.exchangeratesapi.io/latest",
     handler: function(resp) {
-      $ui.loading(false)
-      $("list").endRefreshing()
-      rates = resp.data.rates
-      calculate()
+      $ui.loading(false);
+      $("list").endRefreshing();
+      rates = resp.data.rates;
+      calculate();
     }
-  })
+  });
 }
 
-fetch(false)
+fetch(false);
