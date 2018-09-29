@@ -33,17 +33,26 @@ $define({
   }
 });
 
-let result = await $photo.pick();
-let image = result.image;
-
-if (!image) {
-  return;
+if ($app.env == $env.action) {
+  let image = $context.image;
+  if (image) {
+    showMarkupView(image);
+  }
+} else {
+  let result = await $photo.pick();
+  let image = result.image;
+  if (image) {
+    showMarkupView(image);
+  }
 }
 
-let markupVC = $objc("MarkupVC").$new();
-markupVC.$setImage(image.runtimeValue());
-markupVC.$setShowShareButtonInToolbar(true);
+function showMarkupView(image) {
 
-let navigator = $objc("UINavigationController").$alloc().$initWithRootViewController(markupVC);
-let rootVC = $ui.controller.runtimeValue();
-rootVC.$presentViewController_animated_completion(navigator, true, null);
+  let markupVC = $objc("MarkupVC").$new();
+  markupVC.$setImage(image.runtimeValue());
+  markupVC.$setShowShareButtonInToolbar(true);
+
+  let navigator = $objc("UINavigationController").$alloc().$initWithRootViewController(markupVC);
+  let rootVC = $ui.controller.runtimeValue();
+  rootVC.$presentViewController_animated_completion(navigator, true, null);
+}
