@@ -61,7 +61,7 @@ function renderItems(items) {
         src: extractImageURL(item)
       },
       url: item.url
-    }
+    };
   });
   list.endRefreshing();
 }
@@ -92,11 +92,11 @@ async function refresh() {
 }
 
 function extractImageURL(item) {
-  var matches = item["content_html"].match(/<img src="(.*)" alt="/)
+  var matches = item["content_html"].match(/<img src="(.*)" alt="/);
   if (matches && matches.length >= 2) {
     return matches[1];
   } else {
-    return ""
+    return "";
   }
 }
 
