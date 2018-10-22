@@ -63,6 +63,17 @@ async function selectImage() {
   }
 
   let image = selected.image;
+  let size = image.size;
+  let maxSize = 1500;
+
+  if (size.width > maxSize) {
+    image = image.resized($size(maxSize, size.height / (size.width / maxSize)));
+  }
+
+  if (size.height > maxSize) {
+    image = image.resized($size(size.width / (size.height / maxSize), maxSize));
+  }
+
   let jpeg = image.jpg(0.8);
   let dataURI = `data:image/jpeg;base64,${$text.base64Encode(jpeg)}`;
   let language = $cache.get("recognize-language") || "eng";
