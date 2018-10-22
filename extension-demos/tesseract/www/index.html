@@ -1,0 +1,36 @@
+<html>
+  <body>
+    <script src="http://localhost:6060/tesseract.js"></script>
+    <script>
+
+      window.Tesseract = Tesseract.create({
+        workerPath: "http://localhost:6060/worker.js",
+        langPath: "http://localhost:6060/data/",
+        corePath: "http://localhost:6060/index.js",
+      });
+
+      function recognize(URI, language) {
+        dataURIToImage(URI).then(file => {
+          Tesseract.recognize(file, {"lang": language}).then(data => {
+            $notify("didRecognize", data.text);
+          });
+        });
+      }
+
+      function dataURIToImage(URI) {
+        return new Promise((resolve, reject) => {
+          let canvas = document.createElement("canvas");
+          let context = canvas.getContext("2d");
+          let image = new Image();
+          image.addEventListener("load", () => {
+            canvas.width = image.width;
+            canvas.height = image.height;
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            resolve(context.getImageData(0, 0, canvas.width, canvas.height));
+          }, false);
+          image.src = URI;
+        });
+      }
+    </script>
+  </body>
+</html>
