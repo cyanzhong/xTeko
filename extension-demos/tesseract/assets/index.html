@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0">
+  </head>
+  <body>
+    <script src="tesseract.js"></script>
+    <script>
+      function recognize(file) {
+        let textarea = document.getElementById("result");
+        Tesseract.recognize(file).progress(data => {
+          textarea.value = JSON.stringify(data) + "\n\n" + textarea.value;
+        }).then(data => {
+          textarea.value = data.text;
+        });
+      }
+    </script>
+    <input type="file" onchange="recognize(this.files[0]);">
+    <br>
+    <br>
+    <textarea style="width: 300px; height: 300px;" id="result">
+    </textarea>
+  </body>
+</html>
