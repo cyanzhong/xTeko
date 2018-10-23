@@ -3,11 +3,6 @@ let port = 6060;
 let baseURI = `http://localhost:${port}/`;
 let server = $server.new();
 
-// Observe events
-server.listen({
-  didStart: server => $("webView").url = `${baseURI}index.html`
-});
-
 // Create a handler
 let handler = {};
 
@@ -29,6 +24,16 @@ handler.response = request => {
     return null;
   }
 
+  if (pathName === "image.jpeg") {
+    return {
+      type: "file",
+      props: {
+        path: filePath,
+        contentType: "image/jpeg"
+      }
+    }
+  }
+
   let isHtml = url.endsWith("html");
   let contentType = isHtml ? "text/html" : "application/javascript";
 
@@ -44,14 +49,8 @@ handler.response = request => {
 // Register handler
 server.addHandler(handler);
 
-// Options
-let options = {
-  port: port,
-  // bonjourName, bonjourType...
-};
-
 // Start the server
-server.start(options);
+server.start({"port": port});
 
 async function selectImage() {
 
@@ -66,6 +65,7 @@ async function selectImage() {
   let size = image.size;
   let maxSize = 1500;
 
+  // Resize
   if (size.width > maxSize) {
     image = image.resized($size(maxSize, size.height / (size.width / maxSize)));
   }
@@ -75,11 +75,10 @@ async function selectImage() {
   }
 
   let jpeg = image.jpg(0.8);
-  let dataURI = `data:image/jpeg;base64,${$text.base64Encode(jpeg)}`;
-  let language = $cache.get("recognize-language") || "eng";
+  $file.write({"data": jpeg, "path": "www/image.jpeg"});
 
   $ui.loading(true);
-  await $("webView").eval(`recognize('${dataURI}', '${language}')`);
+  $("webView").url = `${baseURI}index.html`;
 }
 
 $ui.render({
@@ -103,9 +102,14 @@ $ui.render({
         hidden: true
       },
       events: {
+        didFinish: async() => {
+          let language = $cache.get("recognize-language") || "eng";
+          await $("webView").eval(`recognize('${language}')`);
+        },
         didRecognize: text => {
           $("textView").text = text;
           $ui.loading(false);
+          $file.delete("www/image.jpeg");
         }
       }
     },
