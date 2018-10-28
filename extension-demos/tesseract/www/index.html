@@ -9,17 +9,9 @@
         corePath: "http://localhost:6060/index.js",
       });
       function recognize(language) {
-
-        let canvas = document.createElement("canvas");
-        let context = canvas.getContext("2d");
         let image = document.getElementById("image");
-        
-        canvas.width = image.width;
-        canvas.height = image.height;
-        context.drawImage(image, 0, 0 );
-        let file = context.getImageData(0, 0, image.width, image.height);
 
-        Tesseract.recognize(file, {"lang": language}).then(data => {
+        Tesseract.recognize(image, {"lang": language}).then(data => {
           $notify("didRecognize", data.text);
         });
       }
