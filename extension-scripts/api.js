@@ -93,12 +93,8 @@ var data = [
             data: [
               "items",
               "text",
-              "pins",
               "links",
-              "list",
-              "clear",
-              "save",
-              "remove"
+              "clear"
             ]
           },
           layout: $layout.fill,
@@ -109,21 +105,11 @@ var data = [
                 message = $clipboard.items;
               } else if (title === "text") {
                 message = $clipboard.text;
-              } else if (title === "pins") {
-                message = $clipboard.pins;
               } else if (title === "links") {
                 message = $clipboard.links;
-              } else if (title === "list") {
-                message = $clipboard.list(5);
               } else if (title === "clear") {
                 $clipboard.clear();
                 message = "Clipboard cleared";
-              } else if (title === "save") {
-                $clipboard.save("Hello, World!");
-                message = "Text saved";
-              } else if (title === "remove") {
-                $clipboard.remove("Hello, World!");
-                message = "Text removed";
               }
               $ui.alert({
                 title: "Clipboard",
