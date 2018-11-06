@@ -21,28 +21,27 @@ $safari.inject("window.location.href = 'https://apple.com';")
 但是如果想要引入远程的 JavaScript 文件，则需要变通一下（Safari 有些限制）：
 
 ```js
-(function() {
+(function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = 'https://xteko.blob.core.windows.net/neo/eruda-loader.js';
+  script.innerHTML = "var script = document.createElement('script');script.type = 'text/javascript';script.src = '//cdn.jsdelivr.net/npm/eruda';script.onload = function () { eruda.init() };document.body.appendChild(script);"
   document.body.appendChild(script);
 })();
 ```
 
-请注意上述例子中的 `eruda-loader.js` 并不是 Eruda 本身的内容，而是长这个样子：
+请注意上述例子中的 `script.innerHTML = '.....'` 中的语句为：
 
 ```js
-var script = document.createElement("script");
-script.type = "text/javascript";
-script.src = "https://xteko.blob.core.windows.net/neo/eruda.min.js";
-script.onload = function() {
-  eruda.init()
-}
-document.body.appendChild(script);
+var script = document.createElement('script');
+script.type = 'text/javascript'; 
+script.src = '//cdn.jsdelivr.net/npm/eruda'; 
+script.onload = function () { eruda.init() }; document.body.appendChild(script);
 ```
+也就是说对于远程的脚本，加载它的代码要包裹在另一段代码里面，才会在正确的时间触发 onload 事件。
 
-也就是说远程的脚本，需要通过另外一个脚本来加载，所以当你想要加载远程 JavaScript 的时候，要准备两份 JavaScript 文件。
 
 # 特别感谢
 
 $safari.inject() 这个接口上线之后我一直没有去探究清楚远程脚本加载不成功的办法，[简悦](http://ksria.com/simpread/) 的作者发现了能够成功加载远程脚本的方法，在此对他表示感谢。
+
+[jsdelivr](https://jsdelivr.com) 提供的 CDN 服务。

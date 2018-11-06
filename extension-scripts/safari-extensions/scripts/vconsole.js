@@ -1,6 +1,6 @@
-(function() {
+(function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = 'https://xteko.blob.core.windows.net/neo/vconsole-loader.js';
+  script.innerHTML = "var script = document.createElement('script');script.type = 'text/javascript';script.src = '//cdn.jsdelivr.net/npm/vconsole';script.onload = function () {var vConsole = new VConsole(); };document.body.appendChild(script);"
   document.body.appendChild(script);
 })();
