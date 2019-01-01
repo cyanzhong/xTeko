@@ -10,7 +10,9 @@ module.exports = function(name) {
         props: {
           options: options
         },
-        layout: $layout.fill,
+        layout: (make, view) => {
+          make.edges.equalTo(view.super.safeArea);
+        },
         events: {
           finished: () => {
             console.log("finished");
