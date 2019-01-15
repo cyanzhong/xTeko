@@ -83,12 +83,19 @@ function showDetail(title, url) {
   });
 }
 
-async function refresh() {
+function refresh() {
+
+  $ui.loading(true);
   var url = "https://macstories.net/feed/json";
-  var resp = await $http.get(url);
-  var items = resp.data.items;
-  renderItems(items);
-  $cache.set("items", items);
+  
+  var handler = function(resp) {
+    $ui.loading(false);
+    var items = resp.data.items;
+    renderItems(items);
+    $cache.set("items", items);
+  };
+
+  $http.get(url).then(handler);
 }
 
 function extractImageURL(item) {
