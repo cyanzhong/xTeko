@@ -231,17 +231,13 @@ function tapped(sender) {
     $clipboard.text = text;
   } else if (key === symbols.enter) {
     $keyboard.insert(text);
-  } else if (key === symbols.dot) {
-    if (!text.endsWith(key)) {
-      label.text = text + key;
-    }
   } else if (key === symbols.equals) {
     try {
       var formula = text;
-      formula = formula.replace(symbols.plus, "+");
-      formula = formula.replace(symbols.minus, "-");
-      formula = formula.replace(symbols.times, "*");
-      formula = formula.replace(symbols.obelus, "/");
+      formula = formula.replace(new RegExp(symbols.plus, "g"), "+");
+      formula = formula.replace(new RegExp(symbols.minus, "g"), "-");
+      formula = formula.replace(new RegExp(symbols.times, "g"), "*");
+      formula = formula.replace(new RegExp(symbols.obelus, "g"), "/");
       label.text = mexp.eval(formula);
     } catch(err) {
       label.text = "Error";
@@ -250,8 +246,11 @@ function tapped(sender) {
     key === symbols.plus ||
     key === symbols.minus ||
     key === symbols.times ||
-    key === symbols.obelus) {
-    label.text = text + key;
+    key === symbols.obelus ||
+    key === symbols.dot) {
+    if (!text.endsWith(key)) {
+      label.text = text + key;
+    }
   } else {
     if (isInvalid) {
       label.text = key;
