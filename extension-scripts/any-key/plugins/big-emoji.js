@@ -2,6 +2,7 @@ let types = [];
 let lists = [];
 let categoryClass = $objc("UIKeyboardEmojiCategory");
 let categories = categoryClass.$categories();
+let selectedIndex = 0;
 
 for (var type=0; type<categories.$count(); ++type) {
   let category = categoryClass.$categoryForType(type);
@@ -77,7 +78,7 @@ $ui.push({
       },
       events: {
         didSelect: async(sender, indexPath) => {
-          let image = createImage(list[indexPath.item]);
+          let image = createImage(lists[selectedIndex][indexPath.item]);
           let options = [$l10n("COPY"), $l10n("SHARE")];
           let {index} = await $ui.menu(options);
           if (index === 0) {
@@ -92,6 +93,7 @@ $ui.push({
 });
 
 function setIndex(index) {
+  selectedIndex = index;
   $("emoji-matrix").data = lists[index].map(item => {
     return {
       label: {
