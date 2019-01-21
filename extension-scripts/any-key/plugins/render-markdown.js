@@ -1,4 +1,5 @@
 let helper = require("scripts/helper");
+await helper.expand();
 let markdown = await helper.getAllText();
 
 $ui.push({

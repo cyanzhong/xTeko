@@ -1,4 +1,5 @@
 let helper = require("scripts/helper");
+await helper.expand();
 let html = await helper.getAllText();
 
 $ui.push({

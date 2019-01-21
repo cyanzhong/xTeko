@@ -9,7 +9,7 @@ $ui.push({
       type: "matrix",
       props: {
         id: "emoji-matrix",
-        columns: 5,
+        columns: 6,
         itemHeight: 50,
         spacing: 25,
         template: {
@@ -19,7 +19,8 @@ $ui.push({
               props: {
                 id: "label",
                 align: $align.center,
-                font: $font(42)
+                font: $font(32),
+                autoFontSize: true
               },
               layout: $layout.fill
             }
