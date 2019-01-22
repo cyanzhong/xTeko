@@ -5,3 +5,6 @@ if (majorVersion < 11) {
   let app = require("./scripts/app");
   app.render();
 }
+
+let updater = require("./scripts/updater");
+updater.check();

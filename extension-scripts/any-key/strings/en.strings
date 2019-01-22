@@ -1,3 +1,7 @@
+"UPDATE" = "Update";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+
 "UPGRADE_IOS" = "Sorry, please upgrade your iOS.";
 "OK" = "OK";
 "CANCEL" = "Cancel";

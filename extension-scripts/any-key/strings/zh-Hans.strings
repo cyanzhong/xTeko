@@ -1,3 +1,7 @@
+"UPDATE" = "更新";
+"FOUND_NEW_VERSION" = "发现新版本";
+"UPDATE_TO_NEW_VERSION" = "更新到最新版本？";
+
 "UPGRADE_IOS" = "抱歉，请升级你的 iOS 版本。";
 "OK" = "确定";
 "CANCEL" = "取消";
