@@ -11,6 +11,11 @@ $app.strings = {
         "please_feedback": "Please submit an issue",
         "not_now": "Not now",
         "open_github": "Open Github",
+        "title_save": "Save",
+        "save_success": "Gif Save Success!",
+        "save_failed": "Gif Save Failed!",
+        "not_finished": "Reverse haven't finished!",
+        "title": "Gif Reverse",
     },
     "zh-Hans": {
         "is_not_gif": "这不是GIF",
@@ -18,6 +23,11 @@ $app.strings = {
         "please_feedback": "请提交一个 issue",
         "not_now": "以后再说",
         "open_github": "打开 GitHub",
+        "title_save": "保存",
+        "save_success": "Gif 已保存到相册!",
+        "save_failed": "Gif 保存失败!",
+        "not_finished": "Gif 逆转还在进行!",
+        "title": "Gif 倒放",
     },
 };
 
@@ -71,6 +81,7 @@ function pickGif() {
                                         progressBar.remove();
                                         imgView.hidden = false;
                                         imgView.data = fig.rawValue();
+                                        imageData = fig.rawValue();
                                     },
                                 });
                             },
@@ -118,6 +129,30 @@ function pickGif() {
 }
 
 $ui.render({
+    props: {
+        title: $l10n('title'),
+        navButtons: [
+            {
+                title: $l10n("title_save"),
+                handler: function() {
+                    if (imageData) {
+                        $photo.save({
+                            data: imageData,
+                            handler: function(success) {
+                                if (success) {
+                                    $ui.alert($l10n("save_success"));
+                                } else {
+                                    $ui.alert($l10n("save_failed"));
+                                }
+                            },
+                        });
+                    } else {
+                        $ui.alert($l10n("not_finished"));
+                    }
+                }
+            },
+        ],
+    },
     views: [
         {
             type: "image",
@@ -154,5 +189,6 @@ let imgView = $("imgView");
 let yyImgView = imgView.runtimeValue();
 yyImgView.invoke("setContentMode", 1); // 1 -> UIViewContentModeScaleAspectFit
 let progressBar = $("progressBar");
+var imageData = undefined;
 
 pickGif();
