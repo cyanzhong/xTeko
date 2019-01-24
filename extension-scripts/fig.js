@@ -1,7 +1,6 @@
 'use strict';
 
-// TODO: Support Action Extension
-// TODO: Save reversed gif
+// TODO: Maybe support multiple gif 
 
 
 $app.strings = {
@@ -12,10 +11,10 @@ $app.strings = {
         "not_now": "Not now",
         "open_github": "Open Github",
         "title_save": "Save",
-        "save_success": "Gif Save Success!",
-        "save_failed": "Gif Save Failed!",
+        "save_success": "GIF Save Success!",
+        "save_failed": "GIF Save Failed!",
         "not_finished": "Reverse haven't finished!",
-        "title": "Gif Reverse",
+        "title": "GIF Reverse",
     },
     "zh-Hans": {
         "is_not_gif": "这不是GIF",
@@ -24,10 +23,10 @@ $app.strings = {
         "not_now": "以后再说",
         "open_github": "打开 GitHub",
         "title_save": "保存",
-        "save_success": "Gif 已保存到相册!",
-        "save_failed": "Gif 保存失败!",
-        "not_finished": "Gif 逆转还在进行!",
-        "title": "Gif 倒放",
+        "save_success": "GIF 已保存到相册!",
+        "save_failed": "GIF 保存失败!",
+        "not_finished": "GIF 逆转还在进行!",
+        "title": "GIF 倒放",
     },
 };
 
@@ -59,67 +58,71 @@ function reverseGif(data, cb) {
     return encoder.invoke("encode");
 }
 
+function beginReverseWithGifData(data) {
+    if (isGif(data.info)) {
+        try {
+            $thread.background({
+                handler: function() {
+                    let fig = reverseGif(data, function(value, total) {
+                        $thread.main({
+                            handler: function() {
+                                progressBar.value = value / total;
+                            },
+                        });
+                    });
+                    $thread.main({
+                        handler: function() {
+                            progressBar.remove();
+                            imgView.hidden = false;
+                            imgView.data = fig.rawValue();
+                            imageData = fig.rawValue();
+                        },
+                    });
+                },
+            });
+        } catch (e) {
+            $ui.alert({
+                title: $l10n("oops"),
+                message: `${$l10n("please_feedback")}\n${e}`,
+                actions: [
+                    {
+                        title: $l10n("not_now"),
+                        handler: function() {
+                            $app.close();
+                        },
+                    },
+                    {
+                        title: $l10n("open_github"),
+                        handler: function() {
+                            $app.openURL("https://github.com/wr1241/xTeko/issues/new");
+                            $app.close();
+                        },
+                    },
+                ]
+            })
+        }
+    } else {
+        $ui.alert({
+            message: $l10n("is_not_gif"),
+            actions: [
+                {
+                    title: "OK",
+                    handler: function() {
+                        $app.close();
+                    },
+                }
+            ],
+        });
+    }
+}
+
 
 function pickGif() {
     $photo.pick({
         format: 'data',
         handler: function(resp) {
             if (resp.status == '1') {
-                if (isGif(resp.data.info)) {
-                    try {
-                        $thread.background({
-                            handler: function() {
-                                let fig = reverseGif(resp.data, function(value, total) {
-                                    $thread.main({
-                                        handler: function() {
-                                            progressBar.value = value / total;
-                                        },
-                                    });
-                                });
-                                $thread.main({
-                                    handler: function() {
-                                        progressBar.remove();
-                                        imgView.hidden = false;
-                                        imgView.data = fig.rawValue();
-                                        imageData = fig.rawValue();
-                                    },
-                                });
-                            },
-                        });
-                    } catch (e) {
-                        $ui.alert({
-                            title: $l10n("oops"),
-                            message: `${$l10n("please_feedback")}\n${e}`,
-                            actions: [
-                                {
-                                    title: $l10n("not_now"),
-                                    handler: function() {
-                                        $app.close();
-                                    },
-                                },
-                                {
-                                    title: $l10n("open_github"),
-                                    handler: function() {
-                                        $app.openURL("https://github.com/wr1241/xTeko/issues/new");
-                                        $app.close();
-                                    },
-                                },
-                            ]
-                        })
-                    }
-                } else {
-                    $ui.alert({
-                        message: $l10n("is_not_gif"),
-                        actions: [
-                            {
-                                title: "OK",
-                                handler: function() {
-                                    $app.close();
-                                },
-                            }
-                        ],
-                    });
-                }
+                beginReverseWithGifData(resp.data);
             } else {
                 // maybe cancel
                 $app.close();
@@ -140,7 +143,17 @@ $ui.render({
                             data: imageData,
                             handler: function(success) {
                                 if (success) {
-                                    $ui.alert($l10n("save_success"));
+                                    $ui.alert({
+                                        title: $l10n("save_success"),
+                                        actions: [
+                                            {
+                                                title: "OK",
+                                                handler: function() {
+                                                    $app.close();
+                                                }
+                                            }
+                                        ]
+                                    });
                                 } else {
                                     $ui.alert($l10n("save_failed"));
                                 }
@@ -191,4 +204,24 @@ yyImgView.invoke("setContentMode", 1); // 1 -> UIViewContentModeScaleAspectFit
 let progressBar = $("progressBar");
 var imageData = undefined;
 
-pickGif();
+if ($app.env == $env.action) {
+    if ($context.dataItems && $context.dataItems[0]) {
+        beginReverseWithGifData($context.dataItems[0]);
+    } else if ($context.allItems) {
+        $ui.alert({
+            message: $l10n("is_not_gif"),
+            actions: [
+                {
+                    title: "OK",
+                    handler: function() {
+                        $app.close();
+                    },
+                }
+            ],
+        });
+    }
+} else {
+    pickGif();
+}
+
+
