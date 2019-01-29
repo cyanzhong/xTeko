@@ -7,10 +7,14 @@ $widget.height = 500;
 $app.strings = {
   "en": {
     "TITLE": "Painting",
+    "COPY": "Copy",
+    "SHARE": "Share",
     "COPIED": "Copied",
   },
   "zh-Hans": {
     "TITLE": "画图板",
+    "COPY": "复制",
+    "SHARE": "分享",
     "COPIED": "已复制",
   }
 };
@@ -154,15 +158,30 @@ $define({
 
       let drawing = canvas.$drawing();
       let block = $block("void, UIImage *", image => {
+        
         $thread.main({
-          handler: () => {
-            let rawImage = image.rawValue();
-            if (lowMemory) {
-              $clipboard.image = rawImage;
+
+          handler: async() => {
+
+            function copyImage() {
+              $clipboard.image = image.rawValue();
               $device.taptic(2);
               $ui.toast($l10n("COPIED"));
+            }
+
+            function shareImage() {
+              $share.sheet(image.rawValue());
+            }
+
+            if (lowMemory) {
+              copyImage();
             } else {
-              $share.sheet(rawImage);
+              let {index} = await $ui.menu([$l10n("COPY"), $l10n("SHARE")]);
+              if (index == 0) {
+                copyImage();
+              } else {
+                shareImage();
+              }
             }
           }
         });
