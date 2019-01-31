@@ -1,23 +1,33 @@
+$app.strings = {
+  "en": {
+    "UPGRADE_IOS": "Sorry, please upgrade your iOS.",
+    "TITLE": "Painting",
+    "COPY": "Copy",
+    "SHARE": "Share",
+    "CLEAR": "Clear",
+    "COPIED": "Copied",
+  },
+  "zh-Hans": {
+    "UPGRADE_IOS": "抱歉，请升级你的 iOS 版本。",
+    "TITLE": "画图板",
+    "COPY": "复制",
+    "SHARE": "分享",
+    "CLEAR": "清除",
+    "COPIED": "已复制",
+  }
+};
+
+let majorVersion = parseInt($device.info.version.split(".")[0]);
+if (majorVersion < 12) {
+  alert($l10n("UPGRADE_IOS"));
+  return;
+}
+
 $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/MarkupUI.framework").$load();
 
 let lowMemory = $app.env != $env.app;
 let widgetHeight = $widget.height;
 $widget.height = 500;
-
-$app.strings = {
-  "en": {
-    "TITLE": "Painting",
-    "COPY": "Copy",
-    "SHARE": "Share",
-    "COPIED": "Copied",
-  },
-  "zh-Hans": {
-    "TITLE": "画图板",
-    "COPY": "复制",
-    "SHARE": "分享",
-    "COPIED": "已复制",
-  }
-};
 
 $define({
   type: "AKToolbarView",
@@ -130,7 +140,11 @@ $define({
       });
 
       let doneButton = $objc("UIBarButtonItem").$alloc().$initWithBarButtonSystemItem_target_action(0, self, "closeButtonTapped");
-      self.$navigationItem().$setLeftBarButtonItem(doneButton);
+      let clearButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("CLEAR"), 0, self, "clearButtonTapped");
+      let navButtons = NSMutableArray.$new();
+      navButtons.$addObject(doneButton);
+      navButtons.$addObject(clearButton);
+      self.$navigationItem().$setLeftBarButtonItems(navButtons);
     },
     "viewDidLayoutSubviews": () => {
       self.$super().$viewDidLayoutSubviews();
@@ -147,6 +161,9 @@ $define({
     "closeButtonTapped": () => {
       self.$dismissViewControllerAnimated_completion(true, null);
       $widget.height = widgetHeight;
+    },
+    "clearButtonTapped": () => {
+      self.$canvas().$eraseAll();
     },
     "_toolbarShareButtonTapped:": () => {
 
