@@ -13,12 +13,6 @@ var exportURL = (() => {
 })();
 
 var puppetHeight = 320;
-var puppetView = (() => {
-  require("./puppet-view");
-  var view = $objc("PuppetView").$new();
-  view.$setFrame({ x: 0, y: 0, width: $device.info.screen.width, height: puppetHeight });
-  return view;
-})()
 
 function render() {
 
@@ -44,9 +38,15 @@ function render() {
         }
       },
       {
-        type: "view",
+        type: "runtime",
         props: {
-          id: "puppet-view"
+          id: "puppet-view",
+          view: (() => {
+            require("./puppet-view");
+            var view = $objc("PuppetView").$new();
+            view.$setFrame({ x: 0, y: 0, width: $device.info.screen.width, height: puppetHeight });
+            return view;
+          })()
         },
         layout: (make, view) => {
           make.top.equalTo($("duration-label").bottom);
@@ -160,9 +160,6 @@ function render() {
     ]
   });
 
-  // Add puppet view, this can be improved once v1.25.0 released
-  $("puppet-view").runtimeValue().$addSubview(puppetView);
-
   // Default button state
   setButtonEnabled("record-button", true);
   setButtonEnabled("delete-button", false);
@@ -189,7 +186,7 @@ function registerNotifications() {
       refreshTimer = $timer.schedule({
         interval: 1,
         handler: () => {
-          var duration = puppetView.$recordingDuration();
+          var duration = _puppetView().$recordingDuration();
           $("duration-label").text = helper.formatTime(duration);
         }
       });
@@ -228,15 +225,15 @@ function registerNotifications() {
 function selectPuppetAtIndex(index) {
   var name = puppetNames[index];
   var puppet = $objc("AVTPuppet").$puppetNamed_options(name, null);
-  puppetView.$setAvatarInstance(puppet);
+  _puppetView().$setAvatarInstance(puppet);
 }
 
 function removeRecording() {
 
   removeExistingMovie();
 
-  puppetView.$stopRecording();
-  puppetView.$stopPreviewing();
+  _puppetView().$stopRecording();
+  _puppetView().$stopPreviewing();
 
   setButtonEnabled("record-button", true);
   setButtonEnabled("delete-button", false);
@@ -249,22 +246,22 @@ function removeRecording() {
 
 function toggleRecording() {
   if (_isRecording()) {
-    puppetView.$stopRecording();
+    _puppetView().$stopRecording();
     setButtonIsActive("record-button", false);
   } else {
-    puppetView.$startRecording();
+    _puppetView().$startRecording();
     setButtonIsActive("record-button", true);
   }
 }
 
 function startPreview() {
-  puppetView.$stopPreviewing();
-  puppetView.$startPreviewing();
+  _puppetView().$stopPreviewing();
+  _puppetView().$startPreviewing();
   setButtonIsActive("play-button", true);
 }
 
 function stopPreview() {
-  puppetView.$stopPreviewing();
+  _puppetView().$stopPreviewing();
   setButtonIsActive("play-button", false);
 }
 
@@ -288,7 +285,7 @@ function exportMovie(completion) {
   setButtonEnabled("delete-button", false);
   setButtonEnabled("share-button", false);
 
-  puppetView.$exportMovieToURL_options_completionHandler(exportURL, options, handler);
+  _puppetView().$exportMovieToURL_options_completionHandler(exportURL, options, handler);
 }
 
 function removeExistingMovie() {
@@ -319,16 +316,20 @@ function setMatrixViewEnabled(enabled) {
   });
 }
 
+function _puppetView() {
+  return $("puppet-view").runtimeValue();
+}
+
 function _separatorView() {
   return $("separator");
 }
 
 function _isPreviewing() {
-  return puppetView.$isPreviewing();
+  return _puppetView().$isPreviewing();
 }
 
 function _isRecording() {
-  return puppetView.$isRecording();
+  return _puppetView().$isRecording();
 }
 
 module.exports = {
