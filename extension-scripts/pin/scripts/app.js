@@ -71,8 +71,17 @@ var settingButton = {
 function init() {
 
   $ui.render({
-    props: { title: "Pin" },
-    views: [tabView, clipboardView, actionView, createButton, settingButton]
+    props: {
+      title: "Pin",
+      clipsToSafeArea: true
+    },
+    views: [
+      tabView,
+      clipboardView,
+      actionView,
+      createButton,
+      settingButton
+    ]
   })
 
   setListViewType(0);
