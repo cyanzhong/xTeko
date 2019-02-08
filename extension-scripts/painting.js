@@ -1,4 +1,4 @@
-const __VERSION__ = 1.2;
+const __VERSION__ = "1.2";
 
 $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/MarkupUI.framework").$load();
 
