@@ -24,7 +24,7 @@ $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/MarkupUI.fr
 
   let pkgURL = data.extension.url;
   let pkgName = $addin.current.name;
-  let redirURL = `jsbox://import?url=${encodeURIComponent(pkgURL)}&name=${encodeURIComponent(pkgName)}`;
+  let redirURL = `jsbox://import?url=${encodeURIComponent(pkgURL)}&name=${encodeURIComponent(pkgName)}&icon=icon_151.png`;
 
   $app.openURL(redirURL);
   canvasVC.$closeButtonTapped();
