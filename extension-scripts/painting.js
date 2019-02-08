@@ -232,7 +232,7 @@ $define({
 
       let canvasWidth = maxBounds.width;
       let canvasHeight = (() => {
-        let pageSize = $cache.get("page-size");
+        let pageSize = $cache.get("page-size") || 0;
         switch (pageSize) {
           case 0: return pageHeight;
           case 1: return Math.min(pageHeight, maxBounds.width * 1.4142);
