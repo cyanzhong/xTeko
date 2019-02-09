@@ -1,5 +1,12 @@
-function loadJSON(path) {
-  return JSON.parse($file.read(path).string);
+function loadPuppets(path) {
+  var names = $objc("AVTPuppet").$puppetNames();
+  var puppets = [];
+
+  for (var idx=0; idx<names.$count(); ++idx) {
+    puppets.push(names.$objectAtIndex(idx).rawValue());
+  }
+
+  return puppets;
 }
 
 function deleteFile(url) {
@@ -21,7 +28,7 @@ function formatTime(duration) {
 }
 
 module.exports = {
-  loadJSON: loadJSON,
+  loadPuppets: loadPuppets,
   deleteFile: deleteFile,
   formatTime: formatTime,
 }

@@ -2,7 +2,7 @@ var factory = require("./factory");
 var templates = require("./templates");
 var helper = require("./helper");
 
-var puppetNames = helper.loadJSON("assets/puppets.json");
+var puppetNames = helper.loadPuppets();
 var movieExists = false;
 var isExporting = false;
 var refreshTimer = null;
