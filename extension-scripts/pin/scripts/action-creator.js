@@ -88,7 +88,10 @@ function edit(action, completionHandler) {
 function show(completionHandler, action) {
 
   $ui.push({
-    props: { title: $l10n("CREATE_ACTION") },
+    props: {
+      title: $l10n("CREATE_ACTION"),
+      clipsToSafeArea: true
+    },
     views: [
       {
         type: "list",
