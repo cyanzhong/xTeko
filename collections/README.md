@@ -8,11 +8,13 @@
 
 - [JSBox 脚本推荐第一期](https://github.com/cyanzhong/xTeko/blob/master/collections/0000.md)
 - [JSBox 脚本推荐第二期](https://github.com/cyanzhong/xTeko/blob/master/collections/0001.md)
+- [JSBox 脚本推荐第三期](https://github.com/cyanzhong/xTeko/blob/master/collections/0002.md)
 
 # JSBox 相关介绍
 
 - [JSBox: 一个创造工具的工具](https://sspai.com/post/42361)
 - [JSBox 有大更新，带来自定义小组件等功能](https://sspai.com/post/43935)
+- [JSBox 全新版本，界面编辑器上线](https://sspai.com/post/52120)
 
 # 其他资源渠道
 
