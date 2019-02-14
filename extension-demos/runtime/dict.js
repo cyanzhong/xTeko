@@ -30,7 +30,7 @@ $ui.render({
         icon: "002",
         handler: async() => {
           $("input").blur();
-          await $wait(0.2);
+          await $wait(0.1);
           let vc = $objc("_UIRemoteDictionaryViewController").$alloc().$initWithStyle(0);
           vc.$setTitle($l10n("MANAGEMENT"));
           let source = $ui.controller.runtimeValue();
@@ -109,7 +109,7 @@ $ui.render({
       events: {
         didSelect: async(sender, indexPath) => {
           $("input").blur();
-          await $wait(0.2);
+          await $wait(0.1);
           let index = indexPath.row;
           let definition = definitions[index];
           showDefinition(definition);
