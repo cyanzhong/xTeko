@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <style>
+      #qrcode {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -400px;
+        margin-left: -400px;
+      }
+    </style>
+    <script type="text/javascript" src="js/require.js"></script>
+  </head>
+  <body>
+    <img id="qrcode">
+    <script>
+      var __awesome_qr_base_path = "js"; 
+      require([__awesome_qr_base_path + "/awesome-qr"], AwesomeQR => {
+        {{code}}
+      });
+
+      function exportImage() {
+        let img = document.getElementById("qrcode");
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        return canvas.toDataURL();
+      }
+    </script>
+  </body>
+</html>
