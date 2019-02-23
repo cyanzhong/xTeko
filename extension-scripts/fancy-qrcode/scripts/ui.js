@@ -797,6 +797,7 @@ function generate() {
     backgroundImage: $file.read("www/img/background-image"),
     logoImage: $file.read("www/img/logo-image"),
     logoScale: logoScale,
+    logoMargin: logoMargin,
     logoCornerRadius: logoCornerRadius,
     whiteMargin: whiteMargin,
     binarize: binarize,

@@ -14,6 +14,7 @@ exports.process = async(options) => {
     colorDark: "${options.darkColor}",
     colorLight: "${options.lightColor}",
     logoScale: ${options.logoScale},
+    logoMargin: ${options.logoMargin},
     logoCornerRadius: ${options.logoCornerRadius},
     whiteMargin: ${options.whiteMargin},
     binarize: ${options.binarize},
