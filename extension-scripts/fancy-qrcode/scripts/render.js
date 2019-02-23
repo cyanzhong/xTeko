@@ -6,7 +6,7 @@ exports.process = async(options) => {
   var core =
   `
   AwesomeQR.create({
-    text: "${options.text}",
+    text: _decodeBase64("${$text.base64Encode(options.text)}"),
     size: ${options.size},
     margin: ${options.margin},
     dotScale: ${options.dotScale},

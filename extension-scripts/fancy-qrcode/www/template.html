@@ -18,6 +18,12 @@
       require([__awesome_qr_base_path + "/awesome-qr"], AwesomeQR => {
         {{code}}
       });
+      
+      function _decodeBase64(string) {
+        return decodeURIComponent(Array.prototype.map.call(atob(string), function(c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(""));
+      }
 
       function exportImage() {
         let img = document.getElementById("qrcode");
