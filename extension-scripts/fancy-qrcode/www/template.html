@@ -21,12 +21,7 @@
 
       function exportImage() {
         let img = document.getElementById("qrcode");
-        let canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        let ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        return canvas.toDataURL();
+        return img.src;
       }
     </script>
   </body>
