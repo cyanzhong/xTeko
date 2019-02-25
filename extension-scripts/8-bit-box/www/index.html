@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+		</style>
+		<script src="./js/jsnes.js"></script>
+		<script src="./js/ringbuffer.js"></script>
+		<script src="./js/embed.js"></script>
+		<script>
+			function initGame(url) {
+				this.url = url;
+			}
+			function loadGame() {
+				document.getElementById("container").style.display = "block";
+				document.getElementById("player").style.display = "none";
+				nes_load_url("canvas", this.url);
+			}
+		</script>
+	</head>
+	<body style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on" onselectstart="return false;" onmousedown="return false;">
+		<div id="player" style="width: 100%; height: 100vh; background: black; display: block; text-align: center;">
+			<img src="./img/btn.png" style="position: absolute; top: 50%; left: 50%; margin-top: -90px; margin-left: -90px;" onclick="loadGame()">
+		</div>
+		<div id="container" style="display: none">
+			<canvas id="canvas" width="256" height="240" style="width: 100%">
+		</div>
+	</body>
+</html>
