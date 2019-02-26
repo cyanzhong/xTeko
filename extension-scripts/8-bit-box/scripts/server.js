@@ -8,7 +8,7 @@ exports.init = cb => {
     response: request => {
       let url = request.url;
       let name = url.substring(url.indexOf(baseURI) + baseURI.length);
-      let path = `www/${name}`;
+      let path = `www/${decodeURIComponent(name)}`;
       return {
         type: "file",
         props: {

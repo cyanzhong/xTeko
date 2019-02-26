@@ -135,13 +135,13 @@ function nes_load_url(canvas_id, path) {
 }
 
 function onBufferUnderrun(actualSize, desiredSize) {
-  if (props.paused) {
+  if (!this.nes || props.paused) {
     return;
   }
 
-  nes.frame();
+  this.nes.frame();
   if (buffer.size() < desiredSize) {
-    nes.frame();
+    this.nes.frame();
   }
 }
 
