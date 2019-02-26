@@ -15,10 +15,11 @@ const KEY_MAP = {
   "RU": [jsnes.Controller.BUTTON_RIGHT, jsnes.Controller.BUTTON_UP],
   "LD": [jsnes.Controller.BUTTON_LEFT, jsnes.Controller.BUTTON_DOWN],
   "RD": [jsnes.Controller.BUTTON_RIGHT, jsnes.Controller.BUTTON_DOWN],
-  "select-btn": [jsnes.Controller.BUTTON_SELECT],
-  "start-btn": [jsnes.Controller.BUTTON_START],
-  "b-btn": [jsnes.Controller.BUTTON_B],
-  "a-btn": [jsnes.Controller.BUTTON_A],
+  "B": [jsnes.Controller.BUTTON_B],
+  "A": [jsnes.Controller.BUTTON_A],
+  "BA": [jsnes.Controller.BUTTON_A, jsnes.Controller.BUTTON_B],
+  "SELECT": [jsnes.Controller.BUTTON_SELECT],
+  "START": [jsnes.Controller.BUTTON_START],
 };
 
 var canvas_ctx;

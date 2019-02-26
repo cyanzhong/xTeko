@@ -26,12 +26,14 @@ exports.btnSize = (() => {
 })()
 
 exports.font = {
-  normal: $font(16),
-  large: $font(32),
+  normal: $font("AvenirNextCondensed-Bold", 20),
+  medium: $font(24),
+  large: $font("AvenirNextCondensed-Bold", 32),
 }
 
 exports.color = {
   clear: $color("clear"),
+  white: $color("white"),
   black: $color("#030303"),
   gray: $color("#525252"),
   lightGray: $color("#F0F0F0"),

@@ -1,35 +1,12 @@
+require("./base");
+
 const constants = require("./constants");
 const width = constants.btnSize.leftRight.width;
 const height = constants.btnSize.leftRight.height;
 
 $define({
-  type: "Joystick: UIView",
-  props: ["keyDownHandler", "keyUpHandler", "keyCode"],
+  type: "Joystick: BitBoxButton",
   events: {
-    "touchesBegan:withEvent:": (touches, event) => {
-      let keyCode = self.$getKeyCode(touches);
-      self.$keyDown(keyCode);
-      self.$setKeyCode(keyCode);
-    },
-    "touchesMoved:withEvent:": (touches, event) => {
-      let oldValue = self.$keyCode();
-      let keyCode = self.$getKeyCode(touches);
-      if (!keyCode.$isEqualToString(oldValue)) {
-        self.$keyUp(oldValue);
-        self.$keyDown(keyCode);
-      }
-      self.$setKeyCode(keyCode);
-    },
-    "touchesEnded:withEvent:": (touches, event) => {
-      let keyCode = self.$getKeyCode(touches);
-      self.$keyUp(keyCode);
-    },
-    "keyDown:": keyCode => {
-      self.$keyDownHandler()(keyCode);
-    },
-    "keyUp:": keyCode => {
-      self.$keyUpHandler()(keyCode);
-    },
     "getKeyCode:": touches => {
       let touch = touches.$anyObject();
       let pt = touch.$locationInView(self);

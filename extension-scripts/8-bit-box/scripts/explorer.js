@@ -35,9 +35,9 @@ exports.open = () => {
         layout: $layout.fill,
         events: {
           didSelect: (sender, indexPath) => {
-            const console = require("./console");
+            const ui = require("./ui");
             let path = files[indexPath.row];
-            console.loadGame(path);
+            ui.loadGame(path);
           }
         }
       }
@@ -50,7 +50,7 @@ exports.open = () => {
 function reloadData() {
   files = $file.list("www/roms").filter(item => {
     return item.toLowerCase().endsWith(".nes");
-  });
+  }).sort();
   $("rom-list").data = files;
 }
 
