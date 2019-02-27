@@ -20,6 +20,7 @@
 				document.getElementById("container").style.display = "block";
 				document.getElementById("player").style.display = "none";
 				nes_load_url("canvas", this.url);
+				this.started = true;
 			}
 
 			function keyDown(id) {
@@ -35,10 +36,23 @@
 			}
 
 			function dumpState() {
-				return nes_dump_state();
+				if (!this.started) {
+					return null;
+				}
+
+				let state = nes_dump_state();
+				let image = document.getElementById("canvas").toDataURL("image/jpeg", 0.8);
+				return {
+					"data": state,
+					"image": image
+				};
 			}
 
 			function loadState(path) {
+				if (!this.started) {
+					return;
+				}
+				
 				fetch(`./states/${path}`)
 				.then(response => response.json())
 				.then(state => nes_set_state(state));

@@ -3,25 +3,22 @@ const dispatcher = require("./dispatcher");
 const joystick = require("./joystick");
 const buttons = require("./buttons");
 const builder = require("./builder");
+const utility = require("./utility");
 const props = builder.props;
 
 exports.loadGame = path => {
   
   $ui.push({
     props: {
-      title: path.split(".").slice(0, -1).join("."),
+      title: utility.removeExtension(path),
       clipsToSafeArea: true,
       homeIndicatorHidden: true,
-      // navButtons: [
-      //   {
-      //     title: "LOAD",
-      //     handler: loadState
-      //   },
-      //   {
-      //     title: "SAVE",
-      //     handler: saveState
-      //   }
-      // ]
+      navButtons: [
+        {
+          title: $l10n("STATES"),
+          handler: () => stateBtnTapped(path)
+        }
+      ]
     },
     views: [
       {
@@ -239,21 +236,21 @@ exports.loadGame = path => {
   });
 }
 
-// function saveState() {
-//   $("console").eval({
-//     "script": "dumpState()",
-//     "handler": result => {
-//       $file.write({
-//         data: $data({"string": JSON.stringify(result)}),
-//         path: "www/states/test.json"
-//       });
-//     }
-//   });
-// }
-
-// function loadState() {
-//   $("console").eval({
-//     "script": "loadState('test.json')",
-//     "handler": result => {}
-//   });
-// }
+function stateBtnTapped(path) {
+  const loader = require("./state-loader");
+  loader.open({
+    path: path,
+    dumpHandler: handler => {
+      $("console").eval({
+        "script": "dumpState()",
+        "handler": handler
+      });
+    },
+    loadedHandler: path => {
+      $ui.pop();
+      $("console").eval({
+        "script": `loadState("${path}")`
+      });
+    }
+  });
+}

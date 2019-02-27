@@ -6,3 +6,8 @@
 "README_FILE" = "README.md";
 "SOUND_ENABLED" = "Sound Enabled";
 "TAPTIC_ENABLED" = "Taptic Enabled";
+
+"STATES" = "States";
+"LOAD" = "Load";
+"OVERWRITE" = "Overwrite";
+"DELETE" = "Delete";

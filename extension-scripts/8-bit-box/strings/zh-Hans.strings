@@ -6,3 +6,8 @@
 "README_FILE" = "README_CN.md";
 "SOUND_ENABLED" = "启用声音";
 "TAPTIC_ENABLED" = "启用震动反馈";
+
+"STATES" = "存档";
+"LOAD" = "加载";
+"OVERWRITE" = "覆盖";
+"DELETE" = "删除";
