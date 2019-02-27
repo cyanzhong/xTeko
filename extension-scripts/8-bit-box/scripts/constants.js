@@ -1,7 +1,6 @@
 const compactMode = !$device.isIphoneX && !$device.isIpad;
 
 exports.touchUpDelay = compactMode ? 0.05 : 0.0;
-exports.touchComboScale = compactMode ? 0.15 : 0.10;
 
 exports.btnRadius = 10;
 

@@ -2,8 +2,9 @@
 "CANCEL" = "Cancel";
 "FOUND_NEW_VERSION" = "Found new version";
 "UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
-
 "README_FILE" = "README.md";
+
+"SETTINGS" = "Settings";
 "SOUND_ENABLED" = "Sound Enabled";
 "TAPTIC_ENABLED" = "Taptic Enabled";
 
