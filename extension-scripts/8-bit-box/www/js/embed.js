@@ -89,6 +89,14 @@ function nes_reset_keys() {
   keys.forEach(key => nes.buttonUp(1, key));
 }
 
+function nes_dump_state() {
+  return nes.toJSON();
+}
+
+function nes_set_state(state) {
+  nes.fromJSON(state);
+}
+
 function nes_init(canvas_id) {
   let canvas = document.getElementById(canvas_id);
   canvas_ctx = canvas.getContext("2d");

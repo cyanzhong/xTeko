@@ -12,25 +12,33 @@ $define({
       let pt = touch.$locationInView(self);
       let x = pt.x;
       let y = pt.y;
-      let left = x < width;
-      let right = x > width + height;
-      let up = y < width;
-      let down = y > width + height;
-      if (left && up) {
+
+      let l = x < width;
+      let r = x > width + height;
+      let u = y < width;
+      let d = y > width + height;
+
+      let _s = constants.touchComboScale;
+      let _l = x < width * (1 - _s);
+      let _r = x > width * (1 + _s) + height;
+      let _u = y < width * (1 - _s);
+      let _d = y > width * (1 + _s) + height;
+
+      if (_l && _u) {
         return "LU";
-      } else if (left && down) {
+      } else if (_l && _d) {
         return "LD";
-      } else if (right && up) {
+      } else if (_r && _u) {
         return "RU";
-      } else if (right && down) {
+      } else if (_r && _d) {
         return "RD";
-      } else if (left) {
+      } else if (l) {
         return "L";
-      } else if (right) {
+      } else if (r) {
         return "R";
-      } else if (up) {
+      } else if (u) {
         return "U";
-      } else if (down) {
+      } else if (d) {
         return "D";
       } else {
         return "#";

@@ -11,7 +11,17 @@ exports.loadGame = path => {
     props: {
       title: path.split(".").slice(0, -1).join("."),
       clipsToSafeArea: true,
-      homeIndicatorHidden: true
+      homeIndicatorHidden: true,
+      // navButtons: [
+      //   {
+      //     title: "LOAD",
+      //     handler: loadState
+      //   },
+      //   {
+      //     title: "SAVE",
+      //     handler: saveState
+      //   }
+      // ]
     },
     views: [
       {
@@ -62,83 +72,93 @@ exports.loadGame = path => {
           })()
         },
         layout: (make, view) => {
-          make.left.equalTo(constants.btnMargin);
+          make.left.equalTo(0);
           make.bottom.inset(constants.bottomInset);
-          let width = (constants.btnSize.leftRight.width * 2 + constants.btnSize.upDown.width);
+          let width = constants.btnSize.leftRight.width * 2 + constants.btnSize.upDown.width + constants.btnMargin * 2;
           make.size.equalTo($size(width, width));
         },
         views: [
           {
-            type: "label",
-            props: props.blackBtn("L", "←"),
+            type: "view",
             layout: (make, view) => {
-              make.left.equalTo(0);
-              make.centerY.equalTo(view.super);
-              make.size.equalTo(constants.btnSize.leftRight);
-            }
-          },
-          {
-            type: "label",
-            props: props.blackBtn("R", "→"),
-            layout: (make, view) => {
-              make.right.equalTo(0);
-              make.centerY.equalTo(view.super);
-              make.size.equalTo(constants.btnSize.leftRight);
-            }
-          },
-          {
-            type: "label",
-            props: props.blackBtn("U", "↑"),
-            layout: (make, view) => {
-              make.top.equalTo(0);
-              make.centerX.equalTo(view.super);
-              make.size.equalTo(constants.btnSize.upDown);
-            }
-          },
-          {
-            type: "label",
-            props: props.blackBtn("D", "↓"),
-            layout: (make, view) => {
-              make.bottom.equalTo(0);
-              make.centerX.equalTo(view.super);
-              make.size.equalTo(constants.btnSize.upDown);
-            }
-          },
-          {
-            type: "label",
-            props: props.grayBtn("LU", "↖"),
-            layout: (make, view) => {
-              make.top.left.equalTo(0);
-              let width = constants.btnSize.leftRight.width;
-              make.size.equalTo($size(width, width));
-            }
-          },
-          {
-            type: "label",
-            props: props.grayBtn("RU", "↗"),
-            layout: (make, view) => {
-              make.top.right.equalTo(0);
-              let width = constants.btnSize.leftRight.width;
-              make.size.equalTo($size(width, width));
-            }
-          },
-          {
-            type: "label",
-            props: props.grayBtn("LD", "↙"),
-            layout: (make, view) => {
-              make.left.bottom.equalTo(0);
-              let width = constants.btnSize.leftRight.width;
-              make.size.equalTo($size(width, width));
-            }
-          },
-          {
-            type: "label",
-            props: props.grayBtn("RD", "↘"),
-            layout: (make, view) => {
-              make.right.bottom.equalTo(0);
-              let width = constants.btnSize.leftRight.width;
-              make.size.equalTo($size(width, width));
-            }
+              let margin = constants.btnMargin;
+              let insets = $insets(margin, margin, margin, margin);
+              make.edges.equalTo(view.super).insets(insets);
+            },
+            views: [
+              {
+                type: "label",
+                props: props.blackBtn("L", "←"),
+                layout: (make, view) => {
+                  make.left.equalTo(0);
+                  make.centerY.equalTo(view.super);
+                  make.size.equalTo(constants.btnSize.leftRight);
+                }
+              },
+              {
+                type: "label",
+                props: props.blackBtn("R", "→"),
+                layout: (make, view) => {
+                  make.right.equalTo(0);
+                  make.centerY.equalTo(view.super);
+                  make.size.equalTo(constants.btnSize.leftRight);
+                }
+              },
+              {
+                type: "label",
+                props: props.blackBtn("U", "↑"),
+                layout: (make, view) => {
+                  make.top.equalTo(0);
+                  make.centerX.equalTo(view.super);
+                  make.size.equalTo(constants.btnSize.upDown);
+                }
+              },
+              {
+                type: "label",
+                props: props.blackBtn("D", "↓"),
+                layout: (make, view) => {
+                  make.bottom.equalTo(0);
+                  make.centerX.equalTo(view.super);
+                  make.size.equalTo(constants.btnSize.upDown);
+                }
+              },
+              {
+                type: "label",
+                props: props.grayBtn("LU", "↖"),
+                layout: (make, view) => {
+                  make.top.left.equalTo(0);
+                  let width = constants.btnSize.leftRight.width;
+                  make.size.equalTo($size(width, width));
+                }
+              },
+              {
+                type: "label",
+                props: props.grayBtn("RU", "↗"),
+                layout: (make, view) => {
+                  make.top.right.equalTo(0);
+                  let width = constants.btnSize.leftRight.width;
+                  make.size.equalTo($size(width, width));
+                }
+              },
+              {
+                type: "label",
+                props: props.grayBtn("LD", "↙"),
+                layout: (make, view) => {
+                  make.left.bottom.equalTo(0);
+                  let width = constants.btnSize.leftRight.width;
+                  make.size.equalTo($size(width, width));
+                }
+              },
+              {
+                type: "label",
+                props: props.grayBtn("RD", "↘"),
+                layout: (make, view) => {
+                  make.right.bottom.equalTo(0);
+                  let width = constants.btnSize.leftRight.width;
+                  make.size.equalTo($size(width, width));
+                }
+              }
+            ]
           }
         ]
       },
@@ -218,3 +238,22 @@ exports.loadGame = path => {
     btn.$addTarget_action_forControlEvents(dispatcher, "touchUp:", (1 << 6) | (1 << 7) | (1 << 3) | (1 << 5) | 1 << 8);
   });
 }
+
+// function saveState() {
+//   $("console").eval({
+//     "script": "dumpState()",
+//     "handler": result => {
+//       $file.write({
+//         data: $data({"string": JSON.stringify(result)}),
+//         path: "www/states/test.json"
+//       });
+//     }
+//   });
+// }
+
+// function loadState() {
+//   $("console").eval({
+//     "script": "loadState('test.json')",
+//     "handler": result => {}
+//   });
+// }

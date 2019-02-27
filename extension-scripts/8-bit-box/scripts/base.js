@@ -1,3 +1,4 @@
+const constants = require("./constants");
 const dispatcher = require("./dispatcher");
 
 $define({
@@ -49,20 +50,28 @@ $define({
     "touchesEnded:withEvent:": (touches, event) => {
       let keyCode = self.$getKeyCode(touches);
       if (keyCode) {
-        self.$keyUp(keyCode);
+        let that = self;
+        $delay(constants.touchUpDelay, () => {
+          that.$keyUp(keyCode);
+        });
       }
+
+      self.$setKeyCode(null);
     },
-    "touchesCancelled:withEvent:": () => {
-      let keyCode = self.$getKeyCode(touches);
-      if (keyCode) {
-        self.$keyUp(keyCode);
-      }
+    "touchesCancelled:withEvent:": (touches, event) => {
+      self.$touchesEnded_withEvent(touches, event);
     },
     "keyDown:": keyCode => {
-      self.$keyDownHandler()(keyCode);
+      let handler = self.$keyDownHandler();
+      if (handler) {
+        handler(keyCode);
+      }
     },
     "keyUp:": keyCode => {
-      self.$keyUpHandler()(keyCode);
+      let handler = self.$keyUpHandler();
+      if (handler) {
+        handler(keyCode);
+      }
     },
     "getKeyCode:": touches => {
       return null;

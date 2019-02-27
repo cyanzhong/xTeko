@@ -15,10 +15,33 @@
 			function initGame(url) {
 				this.url = url;
 			}
+
 			function loadGame() {
 				document.getElementById("container").style.display = "block";
 				document.getElementById("player").style.display = "none";
 				nes_load_url("canvas", this.url);
+			}
+
+			function keyDown(id) {
+				nes_keydown(id);
+			}
+
+			function keyUp(id) {
+				nes_keyup(id);
+			}
+
+			function resetKeys() {
+				nes_reset_keys();
+			}
+
+			function dumpState() {
+				return nes_dump_state();
+			}
+
+			function loadState(path) {
+				fetch(`./states/${path}`)
+				.then(response => response.json())
+				.then(state => nes_set_state(state));
 			}
 		</script>
 	</head>

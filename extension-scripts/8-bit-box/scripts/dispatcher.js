@@ -13,13 +13,16 @@ $define({
       if (settings.tapticEnabled) {
         $device.taptic(0);
       }
-      $("console").eval({"script": `nes_keydown('${keyCode.rawValue()}')`});
+      self.$evaluate(`keyDown('${keyCode.rawValue()}')`);
     },
     "keyUp:": keyCode => {
-      $("console").eval({"script": `nes_keyup('${keyCode.rawValue()}')`});
+      self.$evaluate(`keyUp('${keyCode.rawValue()}')`);
     },
     "resetKeys": () => {
-      $("console").eval({"script": `nes_reset_keys()`});
+      self.$evaluate("resetKeys()");
+    },
+    "evaluate": script => {
+      $("console").eval({"script": script});
     }
   }
 });

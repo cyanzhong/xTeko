@@ -1,5 +1,8 @@
 const compactMode = !$device.isIphoneX && !$device.isIpad;
 
+exports.touchUpDelay = compactMode ? 0.05 : 0.0;
+exports.touchComboScale = compactMode ? 0.15 : 0.10;
+
 exports.btnRadius = 10;
 
 exports.btnMargin = (() => {
@@ -10,7 +13,7 @@ exports.btnMargin = (() => {
 
 exports.bottomInset = (() => {
   let vec = compactMode ? 10 : 0;
-  let inset = 40 - vec;
+  let inset = 40 - exports.btnMargin - vec;
   return inset;
 })();
 
@@ -19,7 +22,7 @@ exports.btnSize = (() => {
   let size = {
     leftRight: $size(60 - vec, 50 - vec),
     upDown: $size(50 - vec, 60 - vec),
-    startSelect: $size(80 - vec, 40 - vec),
+    startSelect: $size(70, 30),
     ab: $size(70 - vec, 70 - vec),
   }
   return size;
