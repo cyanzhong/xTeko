@@ -38,7 +38,9 @@ exports.loadGame = path => {
             },
             events: {
               didFinish: sender => {
-                sender.eval({"script": `initGame('./roms/${path}')`});
+                const settings = require("./settings");
+                let script = `initGame('./roms/${path}', ${settings.soundEnabled()})`;
+                sender.eval({"script": script});
               }
             }
           }

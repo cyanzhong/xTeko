@@ -1,7 +1,7 @@
 exports.show = () => {
   $ui.push({
     props: {
-      title: "8BitBox"
+      title: $l10n("ABOUT")
     },
     views: [
       {

@@ -12,14 +12,15 @@
 		<script src="./js/ringbuffer.js"></script>
 		<script src="./js/embed.js"></script>
 		<script>
-			function initGame(url) {
+			function initGame(url, soundEnabled) {
 				this.url = url;
+				this.soundEnabled = soundEnabled;
 			}
 
 			function loadGame() {
 				document.getElementById("container").style.display = "block";
 				document.getElementById("player").style.display = "none";
-				nes_load_url("canvas", this.url);
+				nes_load_url("canvas", this.url, this.soundEnabled);
 				this.started = true;
 			}
 

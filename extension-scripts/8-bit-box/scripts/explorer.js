@@ -7,12 +7,12 @@ exports.open = () => {
       title: "8BitBox",
       navButtons: [
         {
-          icon: "104",
-          handler: importFile
+          icon: "002",
+          handler: openSettings
         },
         {
-          icon: "008",
-          handler: showReadme
+          icon: "104",
+          handler: importFile
         }
       ]
     },
@@ -59,11 +59,6 @@ function reloadData() {
   $("rom-list").data = files;
 }
 
-function showReadme() {
-  let readme = require("./readme") ;
-  readme.show();
-}
-
 async function importFile() {
   let data = await $drive.open();
   $file.write({
@@ -71,4 +66,9 @@ async function importFile() {
     path: `www/roms/${data.fileName}`
   });
   reloadData();
+}
+
+function openSettings() {
+  const settings = require("./settings");
+  settings.open();
 }

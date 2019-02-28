@@ -5,6 +5,7 @@
 "README_FILE" = "README_CN.md";
 
 "SETTINGS" = "设置";
+"ABOUT" = "关于";
 "SOUND_ENABLED" = "启用声音";
 "TAPTIC_ENABLED" = "启用震动反馈";
 
@@ -12,3 +13,5 @@
 "LOAD" = "加载";
 "OVERWRITE" = "覆盖";
 "DELETE" = "删除";
+
+"KEYBOARD_SETTINGS" = "键盘设置";

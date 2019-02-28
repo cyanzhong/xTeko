@@ -116,8 +116,9 @@ function nes_boot(rom_data) {
   window.requestAnimationFrame(onAnimationFrame);
 }
 
-function nes_load_url(canvas_id, path) {
+function nes_load_url(canvas_id, path, soundEnabled) {
   nes_init(canvas_id);
+  nes.opts.emulateSound = soundEnabled;
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", path);

@@ -10,7 +10,7 @@ $define({
       self.$keyUp(sender.rawValue().id);
     },
     "keyDown:": keyCode => {
-      if (settings.tapticEnabled) {
+      if (settings.tapticEnabled()) {
         $device.taptic(0);
       }
       self.$evaluate(`keyDown('${keyCode.rawValue()}')`);
