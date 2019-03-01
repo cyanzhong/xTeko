@@ -5,19 +5,19 @@ $define({
   type: "EventDispatcher",
   events: {
     "touchDown:": sender => {
-      self.$keyDown(sender.rawValue().id);
+      self.$keyDown_taptic(sender.rawValue().id, true);
     },
     "touchUp:": sender => {
       self.$keyUp(sender.rawValue().id);
     },
-    "keyDown:": keyCode => {
+    "keyDown:taptic:": (keyCode, taptic) => {
       let key = keyCode.rawValue();
       
       if (downKeys[key] || false) {
         return;
       }
 
-      if (settings.tapticEnabled()) {
+      if (taptic && settings.tapticEnabled()) {
         $device.taptic(0);
       }
 

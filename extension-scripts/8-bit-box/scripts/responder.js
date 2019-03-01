@@ -10,7 +10,7 @@ $define({
       let key = getKey(code);
 
       if (key) {
-        isKeyDown ? dispatcher.$keyDown(key) : dispatcher.$keyUp(key);
+        isKeyDown ? dispatcher.$keyDown_taptic(key, false) : dispatcher.$keyUp(key);
       }
 
       if ($app.notify) {

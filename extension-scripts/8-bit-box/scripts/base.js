@@ -11,7 +11,7 @@ $define({
         let btn = $(keyCode.rawValue());
         if (btn) {
           btn.alpha = 0.4;
-          dispatcher.$keyDown(keyCode);
+          dispatcher.$keyDown_taptic(keyCode, true);
         } else {
           resetKeys();
         }
