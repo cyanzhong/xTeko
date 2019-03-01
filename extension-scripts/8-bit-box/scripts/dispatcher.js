@@ -1,4 +1,5 @@
 const settings = require("./settings");
+const downKeys = {};
 
 $define({
   type: "EventDispatcher",
@@ -10,19 +11,32 @@ $define({
       self.$keyUp(sender.rawValue().id);
     },
     "keyDown:": keyCode => {
+      let key = keyCode.rawValue();
+      
+      if (downKeys[key] || false) {
+        return;
+      }
+
       if (settings.tapticEnabled()) {
         $device.taptic(0);
       }
-      self.$evaluate(`keyDown('${keyCode.rawValue()}')`);
+
+      self.$evaluate(`keyDown('${key}')`);
+      downKeys[key] = true;
     },
     "keyUp:": keyCode => {
-      self.$evaluate(`keyUp('${keyCode.rawValue()}')`);
+      let key = keyCode.rawValue();
+      self.$evaluate(`keyUp('${key}')`);
+      downKeys[key] = false;
     },
     "resetKeys": () => {
       self.$evaluate("resetKeys()");
     },
     "evaluate": script => {
-      $("console").eval({"script": script});
+      let nes = $("nes");
+      if (nes) {
+        nes.eval({"script": script});
+      }
     }
   }
 });

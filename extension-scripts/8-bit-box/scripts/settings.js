@@ -17,60 +17,72 @@ exports.tapticEnabled = () => {
 exports.open = () => {
 
   function switchCell(title, on, handler) {
-    return [
-      {
-        type: "label",
-        props: {
-          text: title
-        },
-        layout: (make, view) => {
-          make.left.equalTo(0);
-          make.centerY.equalTo(view.super);
-        }
+    return {
+      type: "view",
+      layout: (make, view) => {
+        make.left.right.inset(15);
+        make.top.bottom.equalTo(0);
       },
-      {
-        type: "switch",
-        props: {
-          on: on
+      views: [
+        {
+          type: "label",
+          props: {
+            text: title
+          },
+          layout: (make, view) => {
+            make.left.equalTo(0);
+            make.centerY.equalTo(view.super);
+          }
         },
-        layout: (make, view) => {
-          make.right.equalTo(0);
-          make.centerY.equalTo(view.super);
-        },
-        events: {
-          changed: sender => handler(sender.on)
+        {
+          type: "switch",
+          props: {
+            on: on
+          },
+          layout: (make, view) => {
+            make.right.equalTo(0);
+            make.centerY.equalTo(view.super);
+          },
+          events: {
+            changed: sender => handler(sender.on)
+          }
         }
-      }
-    ];
+      ]
+    }
   }
 
   let cells = [
     {
       "title": " ",
       "rows": [
+        switchCell($l10n("SOUND_ENABLED"), _soundEnabled, on => {
+          _soundEnabled = on;
+          _options["sound"] = on;
+          saveOptions();
+        }),
+        switchCell($l10n("TAPTIC_ENABLED"), _tapticEnabled, on => {
+          _tapticEnabled = on;
+          _options["taptic"] = on;
+          saveOptions();
+        }),
         {
           type: "view",
           layout: (make, view) => {
             make.left.right.inset(15);
             make.top.bottom.equalTo(0);
           },
-          views: switchCell($l10n("SOUND_ENABLED"), _soundEnabled, on => {
-            _soundEnabled = on;
-            _options["sound"] = on;
-            saveOptions();
-          })
-        },
-        {
-          type: "view",
-          layout: (make, view) => {
-            make.left.right.inset(15);
-            make.top.bottom.equalTo(0);
-          },
-          views: switchCell($l10n("TAPTIC_ENABLED"), _tapticEnabled, on => {
-            _tapticEnabled = on;
-            _options["taptic"] = on;
-            saveOptions();
-          })
+          views: [
+            {
+              type: "label",
+              props: {
+                text: $l10n("KEYBOARD_SETTINGS")
+              },
+              layout: (make, view) => {
+                make.left.equalTo(0);
+                make.centerY.equalTo(view.super);
+              }
+            }
+          ]
         }
       ]
     }
@@ -92,7 +104,19 @@ exports.open = () => {
         props: {
           data: cells
         },
-        layout: $layout.fill
+        layout: $layout.fill,
+        events: {
+          didSelect: (sender, indexPath) => {
+            if (indexPath.row == 2) {
+              const utility = require("./utility");
+              let cell = sender.cell(indexPath);
+              utility.showBlinkEffect(cell);
+
+              const settings = require("./key-settings");
+              settings.open();
+            }
+          }
+        }
       }
     ]
   });

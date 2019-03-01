@@ -1,5 +1,7 @@
+const constants = require("./constants");
+
 exports.init = cb => {
-  const port = 1010;
+  const port = constants.port;
   const options = {"port": port};
   const baseURI = `http://localhost:${port}/`;
   const server = $server.new();
@@ -19,4 +21,12 @@ exports.init = cb => {
   });
   
   server.start(options);
+
+  $app.listen({
+    "resume": () => {
+      if (!server.running) {
+        server.start(options);
+      }
+    }
+  });
 }

@@ -2,16 +2,55 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 		<style>
 			* {
 				margin: 0px;
 				padding: 0px;
+			}
+
+			body {
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				-o-user-select: none;
+			}
+
+			canvas {
+				width: 100%;
+			}
+
+			#player {
+				width: 100%;
+				height: 100vh;
+				background: black;
+				display: block;
+				text-align: center;
+			}
+
+			#btn {
+				position: absolute;
+				width: 80px;
+				height: 80px;
+				top: 50%;
+				left: 50%;
+				margin-top: -40px;
+				margin-left: -40px;
+			}
+
+			#container {
+				display: none;
 			}
 		</style>
 		<script src="./js/jsnes.js"></script>
 		<script src="./js/ringbuffer.js"></script>
 		<script src="./js/embed.js"></script>
 		<script>
+			window.onerror = msg => {
+				console.log(`Error: ${msg}`);
+			}
+
 			function initGame(url, soundEnabled) {
 				this.url = url;
 				this.soundEnabled = soundEnabled;
@@ -60,12 +99,12 @@
 			}
 		</script>
 	</head>
-	<body style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on" onselectstart="return false;" onmousedown="return false;">
-		<div id="player" style="width: 100%; height: 100vh; background: black; display: block; text-align: center;">
-			<img src="./img/btn.png" style="position: absolute; top: 50%; left: 50%; margin-top: -90px; margin-left: -90px;" onclick="loadGame()">
+	<body unselectable="on" onselectstart="return false;" onmousedown="return false;">
+		<div id="player">
+			<img id="btn" src="./img/btn.png" onclick="loadGame()">
 		</div>
-		<div id="container" style="display: none">
-			<canvas id="canvas" width="256" height="240" style="width: 100%">
+		<div id="container">
+			<canvas id="canvas" width="256" height="240">
 		</div>
 	</body>
 </html>

@@ -1,3 +1,5 @@
+require("./scripts/responder");
+
 const explorer = require("./scripts/explorer");
 explorer.open();
 

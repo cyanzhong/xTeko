@@ -31,8 +31,8 @@ exports.loadGame = path => {
           {
             type: "web",
             props: {
-              id: "console",
-              url: "http://localhost:1010/index.html",
+              id: "nes",
+              url: `http://localhost:${constants.port}/index.html`,
               scrollEnabled: false,
               showsProgress: false
             },
@@ -47,7 +47,7 @@ exports.loadGame = path => {
         ],
         events: {
           layoutSubviews: sender => {
-            let view = $("console");
+            let view = $("nes");
             let frame = sender.frame;
             if (frame.width > frame.height) {
               let height = frame.height;
@@ -72,7 +72,7 @@ exports.loadGame = path => {
         },
         layout: (make, view) => {
           make.left.equalTo(0);
-          make.bottom.inset(constants.bottomInset);
+          make.bottom.inset(constants.btnInset - constants.btnMargin);
           let width = constants.btnSize.leftRight.width * 2 + constants.btnSize.upDown.width + constants.btnMargin * 2;
           make.size.equalTo($size(width, width));
         },
@@ -171,35 +171,45 @@ exports.loadGame = path => {
           })()
         },
         layout: (make, view) => {
-          make.right.inset(constants.btnMargin);
-          make.bottom.inset(constants.bottomInset);
-          let width = constants.btnSize.ab.width * 2 + constants.btnMargin;
+          make.right.inset(0);
+          make.bottom.inset(constants.btnInset - constants.btnMargin);
+          let width = constants.btnSize.ab.width * 2 + constants.btnMargin * 3;
           make.size.equalTo($size(width, width));
         },
         views: [
           {
-            type: "label",
-            props: props.redButton("B", "B"),
+            type: "view",
             layout: (make, view) => {
-              make.left.bottom.equalTo(0);
-              make.size.equalTo(constants.btnSize.ab.height);
-            }
-          },
-          {
-            type: "label",
-            props: props.redButton("A", "A"),
-            layout: (make, view) => {
-              make.right.bottom.equalTo(0);
-              make.size.equalTo(constants.btnSize.ab.height);
-            }
-          },
-          {
-            type: "label",
-            props: props.redButton("BA", "B + A"),
-            layout: (make, view) => {
-              make.left.top.right.equalTo(0);
-              make.height.equalTo(constants.btnSize.ab.height);
-            }
+              let margin = constants.btnMargin;
+              let insets = $insets(margin, margin, margin, margin);
+              make.edges.equalTo(view.super).insets(insets);
+            },
+            views: [
+              {
+                type: "label",
+                props: props.redButton("B", "B"),
+                layout: (make, view) => {
+                  make.left.bottom.equalTo(0);
+                  make.size.equalTo(constants.btnSize.ab.height);
+                }
+              },
+              {
+                type: "label",
+                props: props.redButton("A", "A"),
+                layout: (make, view) => {
+                  make.right.bottom.equalTo(0);
+                  make.size.equalTo(constants.btnSize.ab.height);
+                }
+              },
+              {
+                type: "label",
+                props: props.redButton("BA", "B + A"),
+                layout: (make, view) => {
+                  make.left.top.right.equalTo(0);
+                  make.height.equalTo(constants.btnSize.ab.height);
+                }
+              }
+            ]
           }
         ]
       },
@@ -243,14 +253,14 @@ function stateBtnTapped(path) {
   loader.open({
     path: path,
     dumpHandler: handler => {
-      $("console").eval({
+      $("nes").eval({
         "script": "dumpState()",
         "handler": handler
       });
     },
     loadedHandler: path => {
       $ui.pop();
-      $("console").eval({
+      $("nes").eval({
         "script": `loadState("${path}")`
       });
     }
