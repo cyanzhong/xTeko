@@ -118,7 +118,7 @@ exports.open = () => {
         layout: $layout.fill,
         events: {
           didSelect: (sender, indexPath) => {
-            if (indexPath.row == 2) {
+            if (indexPath.row == 3) {
               const utility = require("./utility");
               let cell = sender.cell(indexPath);
               utility.showBlinkEffect(cell);
