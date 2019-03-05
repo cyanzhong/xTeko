@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+
+			body {
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				-o-user-select: none;
+			}
+
+			#player {
+				width: 100%;
+				height: 100vh;
+				background: black;
+				display: block;
+				text-align: center;
+			}
+
+			#btn {
+				position: absolute;
+				width: 80px;
+				height: 80px;
+				top: 50%;
+				left: 50%;
+				margin-top: -40px;
+				margin-left: -40px;
+			}
+
+			#container {
+				width: 100%;
+				height: 100%;
+				text-align: center;
+			}
+		</style>
+		<script src="./js/windowStack.js"></script>
+    <script src="./js/terminal.js"></script>
+    <script src="./js/gui.js"></script>
+    <script src="./js/base64.js"></script>
+    <script src="./js/json2.js"></script>
+    <script src="./js/swfobject.js"></script>
+    <script src="./js/resampler.js"></script>
+    <script src="./js/XAudioServer.js"></script>
+    <script src="./js/resize.js"></script>
+    <script src="./js/GameBoyCore.js"></script>
+		<script src="./js/GameBoyIO.js"></script>
+		<script src="./js/embed.js"></script>
+		<script>
+			var DEBUG_MESSAGES = false;
+			var DEBUG_WINDOWING = false;
+			
+      window.onload = () => {
+				windowingInitialize();
+
+				initGame("./roms/demo.gbc", true);
+			}
+
+			window.onerror = msg => {
+				console.log(`Error: ${msg}`);
+			}
+
+			function initGame(url, soundEnabled) {
+				this.url = url;
+				this.soundEnabled = soundEnabled;
+				gbc_load_url(this.url);
+			}
+
+			function loadGame() {
+				document.getElementById("container").style.display = "block";
+				document.getElementById("player").style.display = "none";
+				gbc_load_game();
+				this.started = true;
+			}
+			
+			function keyDown(id) {
+				gbc_key_down(id);
+			}
+
+			function keyUp(id) {
+				gbc_key_up(id);
+			}
+
+			function resetKeys() {
+				gbc_reset_keys();
+			}
+
+			function dumpState() {
+				if (!this.started) {
+					return null;
+				}
+
+				let state = gbc_dump_state();
+				let image = document.getElementById("mainCanvas").toDataURL("image/jpeg", 0.8);
+				return {
+					"data": state,
+					"image": image
+				};
+			}
+
+			function loadState(path) {
+				if (!this.started) {
+					return;
+				}
+				
+				fetch(`./states/${path}`)
+				.then(response => response.json())
+				.then(state => gbc_set_state(state));
+			}
+
+			function resizeCanvas() {
+				let height = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName("body")[0].clientHeight;
+				let width = Math.ceil(height * 10 / 9);
+				setSize(width, height);
+			}
+
+			function setSize(width, height) {
+				let canvas = document.getElementById("mainCanvas");
+				canvas.setAttribute("width", width);
+				canvas.setAttribute("height", height);
+			}
+		</script>
+	</head>
+	<body unselectable="on" onselectstart="return false;" onmousedown="return false;">
+		<div id="player">
+			<img id="btn" src="./img/btn.png" onclick="loadGame()">
+		</div>
+		<div id="container">
+			<div id="GameBoy">
+				<div class="menubar" style="display: none;">
+					<span id="GameBoy_file_menu">File</span>
+					<span id="GameBoy_settings_menu">Settings</span>
+					<span id="GameBoy_view_menu">View</span>
+					<span id="GameBoy_about_menu">About</span>
+				</div>
+				<div id="gfx">
+					<canvas id="mainCanvas" width="360" height="324"/>
+					<span id="title">GameBoy</span>
+					<span id="port_title">Online</span>
+				</div>
+			</div>
+			<div style="display: none;">
+				<div id="terminal" class="window">
+					<div id="terminal_output"/>
+					<div class="button_rack">
+						<button id="terminal_clear_button" class="left">Clear Messages</button>
+						<button id="terminal_close_button" class="right">Close Terminal</button>
+					</div>
+				</div>
+				<div id="about" class="window">
+					<div id="about_message">
+						<h1>GameBoy Online</h1>
+						<p>This is a GameBoy Color emulator written purely in JavaScript by Grant Galitz.</p>
+						<p>The graphics blitting is done through HTML5 canvas, with the putImageData and drawImage functions.</p>
+						<p>Save states are implemented through the window.localStorage object, and are serialized/deserialized through JSON. SRAM saving is also implemented through the window.localStorage object, and are serialized/deserialized through JSON. In order for save states to work properly on most browsers, you need set the maximum size limit for DOM storage higher, to meet the needs of the emulator's save data size.</p>
+						<p>For more information about this emulator and its source code, visit the GIT repository at: <a href="https://github.com/taisel/GameBoy-Online" target="_blank">https://github.com/taisel/GameBoy-Online</a>.
+						</p>
+					</div>
+					<div class="button_rack">
+						<button id="about_close_button" class="center">Close Popup</button>
+					</div>
+				</div>
+				<div class="window" id="settings">
+					<div id="toggle_settings">
+						<div class="setting">
+							<span>Enable Sound:</span>
+							<input type="checkbox" checked="checked" id="enable_sound"/>
+						</div>
+						<div class="setting">
+							<span>GB mode has priority over GBC mode:</span>
+							<input type="checkbox" id="disable_colors"/>
+						</div>
+						<div class="setting">
+							<span>Use the BIOS ROM:</span>
+							<input type="checkbox" checked="checked" id="enable_gbc_bios"/>
+						</div>
+						<div class="setting">
+							<span>Override ROM only cartridge typing to MBC1:</span>
+							<input type="checkbox" checked="checked" id="rom_only_override"/>
+						</div>
+						<div class="setting">
+							<span>Always allow reading and writing to the MBC banks:</span>
+							<input type="checkbox" checked="checked" id="mbc_enable_override"/>
+						</div>
+						<div class="setting">
+							<span>Colorize Classic GameBoy Palettes:</span>
+							<input type="checkbox" checked="checked" id="enable_colorization"/>
+						</div>
+						<div class="setting">
+							<span>Minimal view on fullscreen:</span>
+							<input type="checkbox" checked="checked" id="do_minimal"/>
+						</div>
+						<div class="setting">
+							<span>Resize canvas directly in JavaScript:</span>
+							<input type="checkbox" id="software_resizing"/>
+						</div>
+						<div class="setting">
+							<span>Disallow typed arrays to be used:</span>
+							<input type="checkbox" id="typed_arrays_disallow"/>
+						</div>
+						<div class="setting">
+							<span>Use the DMG boot ROM instead of CGB:</span>
+							<input type="checkbox" id="gb_boot_rom_utilized"/>
+						</div>
+						<div class="setting">
+							<span>Smooth upon resizing canvas:</span>
+							<input type="checkbox" checked="checked" id="resize_smoothing"/>
+						</div>
+						<div class="setting">
+							<span>Enable Channel 1 Audio:</span>
+							<input type="checkbox" checked="checked" id="channel1"/>
+						</div>
+						<div class="setting">
+							<span>Enable Channel 2 Audio:</span>
+							<input type="checkbox" checked="checked" id="channel2"/>
+						</div>
+						<div class="setting">
+							<span>Enable Channel 3 Audio:</span>
+							<input type="checkbox" checked="checked" id="channel3"/>
+						</div>
+						<div class="setting">
+							<span>Enable Channel 4 Audio:</span>
+							<input type="checkbox" checked="checked" id="channel4"/>
+						</div>
+					</div>
+					<div class="button_rack">
+						<button id="settings_close_button" class="center">Close Settings</button>
+					</div>
+				</div>
+				<div id="instructions" class="window">
+					<div id="keycodes">
+						<h1>Keyboard Controls:</h1>
+						<ul>
+							<li>X/J are A.</li>
+							<li>Z/Y/Q are B.</li>
+							<li>Shift is Select.</li>
+							<li>Enter is Start.</li>
+							<li>The d-pad is the control pad.</li>
+							<li>The escape key (esc) allows you to get in and out of fullscreen mode.</li>
+						</ul>
+					</div>
+					<div class="button_rack">
+						<button id="instructions_close_button" class="center">Close Instructions</button>
+					</div>
+				</div>
+				<div id="input_select" class="window">
+					<form>
+						<input type="file" id="local_file_open"/>
+					</form>
+					<div class="button_rack">
+						<button id="input_select_close_button" class="center">Close File Input</button>
+					</div>
+				</div>
+				<div id="save_importer" class="window">
+					<form>
+						<input type="file" id="save_open"/>
+					</form>
+					<div class="button_rack">
+						<button id="save_importer_close_button" class="center">Close Save Importer</button>
+					</div>
+				</div>
+				<div class="window" id="local_storage_listing">
+				<div id="storageListingMasterContainer" class="storageList">
+					<div id="storageListingMasterContainerSub"/>
+					</div>
+					<div id="download_all_storage">
+						<a href="about:blank" id="download_local_storage_dba">Export all saved data.</a>
+					</div>
+					<div class="button_rack">
+						<button id="local_storage_list_refresh_button" class="left">Refresh List</button>
+						<button id="local_storage_list_close_button" class="right">Close Storage List</button>
+					</div>
+				</div>
+				<div class="window" id="local_storage_popup">
+				<div id="storagePopupMasterParent" class="storageList">
+					<div id="storagePopupMasterContainer"/>
+					</div>
+					<div class="button_rack">
+						<button id="local_storage_popup_close_button" class="center">Close Storage Popup</button>
+					</div>
+				</div>
+				<div class="window" id="freeze_listing">
+				<div id="freezeListingMasterContainer" class="storageList">
+					<div id="freezeListingMasterContainerSub"/>
+					</div>
+					<div class="button_rack">
+						<button id="freeze_list_refresh_button" class="left">Refresh List</button>
+						<button id="freeze_list_close_button" class="right">Close Freeze State List</button>
+					</div>
+				</div>
+				<ul class="menu" id="GameBoy_file_popup">
+					<li>
+						Open As
+						<ul class="menu">
+							<li id="data_uri_clicker">Base 64 Encoding</li>
+							<li id="internal_file_clicker">Local File</li>
+						</ul>
+					</li>
+					<li id="save_SRAM_state_clicker">Save Game Memory</li>
+					<li id="save_state_clicker">Save Freeze State</li>
+					<li id="set_volume">Set Volume</li>
+					<li id="set_speed">Set Speed</li>
+					<li id="restart_cpu_clicker">Restart</li>
+					<li id="run_cpu_clicker">Resume</li>
+					<li id="kill_cpu_clicker">Pause</li>
+				</ul>
+				<ul class="menu" id="GameBoy_view_popup">
+					<li id="view_terminal">Terminal</li>
+					<li id="view_instructions">Instructions</li>
+					<li id="view_importer">Save Importer</li>
+					<li id="local_storage_list_menu">Save Manager</li>
+					<li id="freeze_list_menu">Freeze State Manager</li>
+					<li id="view_fullscreen">Fullscreen Mode</li>
+				</ul>
+				<div id="fullscreenContainer">
+					<canvas id="fullscreen" class="maximum"/>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

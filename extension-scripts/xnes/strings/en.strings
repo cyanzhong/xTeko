@@ -1,0 +1,20 @@
+"UPDATE" = "Update";
+"CANCEL" = "Cancel";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+"README_FILE" = "README.md";
+
+"SETTINGS" = "Settings";
+"ABOUT" = "About";
+"SOUND_ENABLED" = "Sound Enabled";
+"TAPTIC_ENABLED" = "Taptic Enabled";
+"HIDE_KEYPAD" = "Hide Keypad";
+
+"STATES" = "States";
+"LOAD" = "Load";
+"OVERWRITE" = "Overwrite";
+"DELETE" = "Delete";
+
+"KEYBOARD_SETTINGS" = "Keyboard Settings";
+"PLEASE_PRESS" = "Please press a key";
+"PRESET" = "PRESET";
