@@ -1,5 +1,6 @@
 const utility = require("./utility");
-const compactMode = !$device.isIphoneX && !$device.isIpad;
+const nativeHeight = $objc("UIScreen").$mainScreen().$nativeBounds().height;
+const compactMode = !(nativeHeight == 2688 || $device.isIpad);
 
 exports.compactMode = compactMode;
 

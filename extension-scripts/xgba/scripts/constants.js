@@ -1,5 +1,6 @@
 const utility = require("./utility");
-const compactMode = !$device.isIphoneX && !$device.isIpad;
+const nativeHeight = $objc("UIScreen").$mainScreen().$nativeBounds().height;
+const compactMode = !(nativeHeight == 2688 || $device.isIpad);
 
 exports.compactMode = compactMode;
 
@@ -47,7 +48,7 @@ exports.canvasTopInset = (() => {
 })();
 
 exports.canvasBottomInset = (() => {
-  let vec = $device.isIphoneX ? exports.btnMargin * 2 : exports.btnMargin * 3;
+  let vec = compactMode ? exports.btnMargin * 3 : exports.btnMargin * 2;
   let inset = exports.btnSize.startSelect.height + exports.extendedEdgeInset + vec;
   return inset;
 })();
