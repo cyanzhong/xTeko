@@ -74,8 +74,8 @@ exports.loadGame = path => {
               selectStart.frame = (() => {
                 let size = $size(constants.btnSize.startSelect.width * 2 + 10, constants.btnSize.startSelect.height);
                 return $rect(
-                  (frame.width - size.width) / 2,
-                  frame.height - (constants.compactMode ? constants.btnMargin : 0) - size.height,
+                  frame.width - size.width - constants.btnMargin,
+                  constants.btnMargin,
                   size.width,
                   size.height
                 );

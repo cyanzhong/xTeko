@@ -40,12 +40,7 @@ exports.btnSize = (() => {
 })();
 
 exports.canvasTopInset = compactMode ? 0 : 60;
-
-exports.canvasBottomInset = (() => {
-  let vec = $device.isIphoneX ? exports.btnMargin : exports.btnMargin * 2;
-  let inset = exports.btnSize.startSelect.height + exports.extendedEdgeInset + vec;
-  return inset;
-})();
+exports.canvasBottomInset = exports.extendedEdgeInset;
 
 exports.magicTouchHeight = (() => {
   return compactMode ? 60 : 0;
