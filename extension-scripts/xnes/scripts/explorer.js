@@ -45,11 +45,6 @@ exports.open = () => {
   });
 
   reloadData();
-
-  // Disable swipe back
-  let navigationVC = $ui.controller.runtimeValue().$navigationController();
-  let recognizer = navigationVC.$interactivePopGestureRecognizer();
-  recognizer.$setEnabled(false);
 }
 
 function reloadData() {

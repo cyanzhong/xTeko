@@ -24,9 +24,8 @@ exports.init = cb => {
 
   $app.listen({
     "resume": () => {
-      if (!server.running) {
-        server.start(options);
-      }
+      server.stop();
+      server.start(options);
     }
   });
 }

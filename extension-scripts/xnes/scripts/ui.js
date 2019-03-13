@@ -293,7 +293,15 @@ exports.loadGame = path => {
           }
         ]
       }
-    ]
+    ],
+    events: {
+      appeared: () => {
+        utility.setSwipeBackEnabled(false);
+      },
+      disappeared: () => {
+        utility.setSwipeBackEnabled(true);
+      }
+    }
   });
   
   ["SELECT", "START"].forEach(id => {

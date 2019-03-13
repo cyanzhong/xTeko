@@ -26,3 +26,9 @@ exports.showBlinkEffect = view => {
     }
   });
 }
+
+exports.setSwipeBackEnabled = enabled => {
+  let navigationVC = $ui.controller.runtimeValue().$navigationController();
+  let recognizer = navigationVC.$interactivePopGestureRecognizer();
+  recognizer.$setEnabled(enabled);
+}
