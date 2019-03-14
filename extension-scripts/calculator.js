@@ -250,10 +250,14 @@ function tapped(sender) {
     key === symbols.obelus ||
     key === symbols.dot) {
     if (!text.endsWith(key)) {
-      label.text = text + key;
+      if (text === "0" && key === symbols.minus) {
+        label.text = key;
+      } else {
+        label.text = text + key;
+      }
     }
   } else {
-    if (isInvalid || lastKey === symbols.equals) {
+    if (text !== symbols.minus && (isInvalid || lastKey === symbols.equals)) {
       label.text = key;
     } else {
       label.text = text + key;
