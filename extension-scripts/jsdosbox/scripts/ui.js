@@ -368,6 +368,11 @@ exports.loadFile = (path, command) => {
       },
       disappeared: () => {
         utility.setSwipeBackEnabled(true);
+        let navigator = $ui.controller.runtimeValue().$navigationController();
+        let count = navigator.$viewControllers().$count();
+        if (count <= 1) {
+          utility.destroyDosBox();
+        }
       }
     }
   });

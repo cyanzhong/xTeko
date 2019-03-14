@@ -1,4 +1,5 @@
 const constants = require("./constants");
+const utility = require("./utility");
 
 exports.init = () => {
   const port = constants.port;
@@ -23,9 +24,15 @@ exports.init = () => {
   server.start(options);
 
   $app.listen({
+    "pause": () => {
+
+    },
     "resume": () => {
       server.stop();
       server.start(options);
+    },
+    "exit": () => {
+      utility.destroyDosBox();
     }
   });
 }

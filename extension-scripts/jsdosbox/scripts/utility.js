@@ -19,3 +19,11 @@ exports.setSwipeBackEnabled = enabled => {
   let recognizer = navigationVC.$interactivePopGestureRecognizer();
   recognizer.$setEnabled(enabled);
 }
+
+exports.destroyDosBox = () => {
+  let canvas = $("canvas");
+  if (canvas) {
+    canvas.html = "<html></html>";
+    canvas.remove();
+  }
+}
