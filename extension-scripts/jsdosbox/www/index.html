@@ -25,6 +25,16 @@
         left: 280px;
       }
     </style>
+    <script>
+      var _webkitAudioContext = webkitAudioContext;
+      var _audioHandles = [];
+
+      webkitAudioContext = function() {
+        var audioHandle = new _webkitAudioContext;
+        _audioHandles.push(audioHandle);
+        return audioHandle;
+      }
+    </script>
     <script src="./js-dos.js"></script>
     <script src="./js/main.js"></script>
   </head>
@@ -44,8 +54,20 @@
           Dos(canvas, options).ready((fs, main) => {
             fs.extract(`./roms/${name}`, `/${folder}`).then(() => {
               main(["-c", `cd ${folder}`, "-c", command || ""]);
-              $notify("didMount");
+              setTimeout(() => {
+                $notify("didMount");
+              }, 200);
             });
+          });
+        }
+
+        function setAudioEnabled(enabled) {
+          _audioHandles.forEach(handle => {
+            if (enabled) {
+              handle.resume();
+            } else {
+              handle.suspend();
+            }
           });
         }
       </script>

@@ -20,6 +20,13 @@ exports.setSwipeBackEnabled = enabled => {
   recognizer.$setEnabled(enabled);
 }
 
+exports.setAudioEnabled = enabled => {
+  let canvas = $("canvas");
+  if (canvas) {
+    canvas.eval({"script": `setAudioEnabled(${enabled})`});
+  }
+}
+
 exports.destroyDosBox = () => {
   let canvas = $("canvas");
   if (canvas) {

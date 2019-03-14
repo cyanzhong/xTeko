@@ -25,9 +25,10 @@ exports.init = () => {
 
   $app.listen({
     "pause": () => {
-
+      utility.setAudioEnabled(false);
     },
     "resume": () => {
+      utility.setAudioEnabled(true);
       server.stop();
       server.start(options);
     },

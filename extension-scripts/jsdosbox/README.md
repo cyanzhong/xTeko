@@ -14,7 +14,6 @@
 # Known Issues
 
 - You may here noise when audio starts, be careful
-- Audio might be abnormal when the app is in background
 - Virtual keyboard is unavailable for landscape mode (we may not going to fix this)
 
 # TODO
