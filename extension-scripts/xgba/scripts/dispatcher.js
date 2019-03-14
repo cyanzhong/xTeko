@@ -37,9 +37,9 @@ $define({
       self.$evaluate("resetKeys()");
     },
     "evaluate": script => {
-      let gba = $("canvas");
-      if (gba) {
-        gba.eval({"script": script});
+      let canvas = $("canvas");
+      if (canvas) {
+        canvas.eval({"script": script});
       }
     }
   }

@@ -97,6 +97,10 @@
 				.then(response => response.json())
 				.then(state => nes_set_state(state));
 			}
+
+			function setAudioEnabled(enabled) {
+				nes_set_audio_enabled(enabled);
+			}
 		</script>
 	</head>
 	<body unselectable="on" onselectstart="return false;" onmousedown="return false;">

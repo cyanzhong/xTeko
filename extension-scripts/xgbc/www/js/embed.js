@@ -73,6 +73,16 @@ function gbc_set_state(state) {
   gameboy.returnFromState(state);
 }
 
+function gbc_set_audio_enabled(enabled) {
+  if (XAudioJSWebAudioContextHandle) {
+    if (enabled) {
+      XAudioJSWebAudioContextHandle.resume();
+    } else {
+      XAudioJSWebAudioContextHandle.suspend();
+    }
+  }
+}
+
 document.addEventListener("mousedown", () => {
   if (XAudioJSWebAudioContextHandle) {
     XAudioJSWebAudioContextHandle.resume();

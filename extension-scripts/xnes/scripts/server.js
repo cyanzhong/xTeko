@@ -1,4 +1,5 @@
 const constants = require("./constants");
+const dispatcher = require("./dispatcher");
 
 exports.init = cb => {
   const port = constants.port;
@@ -23,9 +24,13 @@ exports.init = cb => {
   server.start(options);
 
   $app.listen({
+    "pause": () => {
+      dispatcher.$evaluate("setAudioEnabled(false)");
+    },
     "resume": () => {
       server.stop();
       server.start(options);
+      dispatcher.$evaluate("setAudioEnabled(true)");
     }
   });
 }

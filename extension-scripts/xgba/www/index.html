@@ -123,6 +123,14 @@
 				canvas.setAttribute("width", width);
 				canvas.setAttribute("height", height);
 			}
+
+			function setAudioEnabled(enabled) {
+				if (enabled) {
+					resumeAudio();
+				} else {
+					suspendAudio();
+				}
+			}
     </script>
   </head>
 	<body unselectable="on" onselectstart="return false;" onmousedown="return false;">

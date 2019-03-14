@@ -144,6 +144,16 @@ function nes_load_url(canvas_id, path, soundEnabled) {
   xhr.send();
 }
 
+function nes_set_audio_enabled(enabled) {
+  if (this.audioCtx) {
+    if (enabled) {
+      this.audioCtx.resume();
+    } else {
+      this.audioCtx.suspend();
+    }
+  }
+}
+
 function onBufferUnderrun(actualSize, desiredSize) {
   if (!this.nes || props.paused) {
     return;

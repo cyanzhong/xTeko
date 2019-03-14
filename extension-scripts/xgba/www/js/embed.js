@@ -111,6 +111,12 @@ function loadFile(path) {
   xhr.send();
 }
 
+function suspendAudio() {
+  if (gba.audio.context) {
+    gba.audio.context.suspend();
+  }
+}
+
 function resumeAudio() {
   if (gba.audio.context) {
     gba.audio.context.resume();
