@@ -1,3 +1,8 @@
+"UPDATE" = "Update";
+"CANCEL" = "Cancel";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+
 "README" = "README";
 "README_FILE" = "README.md";
 "SETTINGS" = "Settings";
