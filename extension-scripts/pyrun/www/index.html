@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <script type="text/javascript" src="./js/brython.js"></script>
+    <script type="text/javascript" src="./js/stdlib.js"></script>
+    <script>
+      function notify(event) {
+        $notify(event);
+      }
+
+      function runCode(encoded) {
+        const code = _decodeBase64(encoded);
+        return run_code(code);
+      }
+
+      function _decodeBase64(string) {
+        return decodeURIComponent(Array.prototype.map.call(atob(string), c => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(""));
+      }
+    </script>
+    <body onload="brython()">
+      <textarea id="console" autocomplete="off"></textarea>
+      <script type="text/python3" src="./__runner__.py" id="__main__"></script>
+    </body>
+  </head>
+</html>

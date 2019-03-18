@@ -19,7 +19,7 @@ const KEY_MAP = {
   "-": {"code": 189},
   "_": {"code": 189, "shift": true},
   "=": {"code": 187},
-  "+": {"code": 182, "shift": true},
+  "+": {"code": 187, "shift": true},
   "[": {"code": 219},
   "{": {"code": 219, "shift": true},
   "]": {"code": 221},
