@@ -1,0 +1,11 @@
+"UPDATE" = "更新";
+"CANCEL" = "取消";
+"FOUND_NEW_VERSION" = "发现新版本";
+"UPDATE_TO_NEW_VERSION" = "更新到最新版本？";
+
+"NEW_FOLDER" = "新建目录";
+"IMPORT_FILE" = "导入文件";
+"SCAN_QRCODE" = "扫描二维码";
+
+"FOLDER_NAME" = "目录名";
+"INVALID_NAME" = "名称无效";
