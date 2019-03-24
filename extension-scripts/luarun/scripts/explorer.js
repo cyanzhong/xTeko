@@ -4,8 +4,8 @@ const templates = require("./templates");
 
 exports.open = open;
 
-function open(path="", root=true) {
-  const folder = `files/${path}`;
+function open(path="files", root=true) {
+  const folder = path;
 
   const views = {
     props: {
@@ -47,7 +47,7 @@ function open(path="", root=true) {
             const files = util.listFolder(folder);
             const file = files[indexPath.row];
             if (file.isDirectory) {
-              openFolder(file.name);
+              openFolder(`${folder}/${file.name}`);
             } else {
               openFile(util.filePath(folder, file.name));
             }
