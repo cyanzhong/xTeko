@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <script src="./js/opal.js" onload="Opal.load('opal')"></script>
+    <script src="./js/opal-parser.js" onload="Opal.load('opal-parser')"></script>
+    <script>
+      function runCode(encoded) {
+        const code = _decodeBase64(encoded);
+        output = "";
+
+        try {
+          eval(Opal.compile(code));
+        } catch (error) {
+          print(error.message);
+        }
+
+        return output;
+      }
+
+      function _decodeBase64(string) {
+        return decodeURIComponent(Array.prototype.map.call(atob(string), c => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(""));
+      }
+    </script>
+  </head>
+  <body>
+    <script>
+      let output = "";
+      console.log = print;
+
+      function print(text) {
+        output += text;
+      }
+
+      $notify("onload");
+    </script>
+  </body>
+</html>
