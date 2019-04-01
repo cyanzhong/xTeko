@@ -4,12 +4,10 @@ $define({
   type: "MMTextObserver: NSObject<UITextViewDelegate>",
   events: {
     "textViewDidBeginEditing": sender => {
-      util.enableBackGesture(false);
       sender.$setEditingModeEnabled(true);
       sender.$setEdited(true);
     },
     "textViewDidEndEditing": sender => {
-      util.enableBackGesture(true);
       sender.$setEditingModeEnabled(false);
     }
   }

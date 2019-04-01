@@ -52,7 +52,11 @@ exports.open = path => {
       }
     ],
     events: {
+      appeared: () => {
+        util.enableBackGesture(false);
+      },
       disappeared: () => {
+        util.enableBackGesture(true);
         if (storage.autoSave()) {
           save(textView, path);
         }
