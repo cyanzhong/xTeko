@@ -1,6 +1,6 @@
 exports.check = async() => {
 
-  let url = "https://xteko.com/store/fetch?id=140";
+  let url = "https://xteko.com/store/fetch?id=139";
   let {data} = await $http.get(url);
   let latestVersion = data.extension.version;
   let currentVersion = $file.read("version.conf").string;
