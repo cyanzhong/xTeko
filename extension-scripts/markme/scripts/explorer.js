@@ -35,7 +35,7 @@ function open(path=constants.localFolder, root=true, title) {
       {
         type: "list",
         props: {
-          id: "explorer",
+          id: `explorer/${folder}`,
           bgcolor: colors.white,
           template: template,
           header: root ? headers.cloudFolder(() => {
@@ -129,7 +129,7 @@ function reloadFolder(folder, throttle=false) {
   }
 
   const files = util.listFolder(folder);
-  const list = $("explorer");
+  const list = $(`explorer/${folder}`);
 
   if (list) {
     list.data = files.map(file => {
