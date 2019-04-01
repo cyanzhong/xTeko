@@ -1,0 +1,38 @@
+"UPDATE" = "更新";
+"CANCEL" = "取消";
+"FOUND_NEW_VERSION" = "发现新版本";
+"UPDATE_TO_NEW_VERSION" = "更新到最新版本？";
+
+"ICLOUD_DRIVE" = "iCloud 云盘";
+"EXAMPLE_FILE" = "README_CN.md";
+
+"EDIT" = "编辑";
+"PREVIEW" = "预览";
+
+"NEW_FOLDER" = "新建目录";
+"NEW_FILE" = "新建文件";
+"IMPORT_FILE" = "导入文件";
+"FOLDER_NAME" = "目录名";
+"FILE_NAME" = "文件名";
+"INVALID_NAME" = "名称无效";
+
+"RENAME" = "重命名";
+"SHARE" = "分享";
+
+"SHARE_FILE" = "分享源文件";
+"SHARE_IMAGE" = "分享图片";
+"SHARE_PDF" = "分享 PDF";
+"SHARE_HTML" = "分享 HTML";
+"COPY_HTML" = "复制 HTML";
+
+"SETTINGS" = "设置";
+"THEME" = "主题";
+"APPLY_THEME" = "应用主题";
+"FONT" = "字体";
+"FONT_SIZE" = "字号";
+"LINE_PADDING" = "行间距";
+"CUSTOM_CSS" = "自定义样式";
+"CUSTOM_CSS_HINT" = "将自定义 css 粘贴到这里";
+
+"AUTO_SAVE" = "自动保存文档";
+"EXPORT_LOCAL_FILES" = "导出本地文件";

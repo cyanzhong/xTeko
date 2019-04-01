@@ -1,0 +1,38 @@
+"UPDATE" = "Update";
+"CANCEL" = "Cancel";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+
+"ICLOUD_DRIVE" = "iCloud Drive";
+"EXAMPLE_FILE" = "README.md";
+
+"EDIT" = "Edit";
+"PREVIEW" = "Preview";
+
+"NEW_FOLDER" = "New Folder";
+"NEW_FILE" = "New File";
+"IMPORT_FILE" = "Import File";
+"FOLDER_NAME" = "Folder Name";
+"FILE_NAME" = "File Name";
+"INVALID_NAME" = "Invalid Name";
+
+"RENAME" = "Rename";
+"SHARE" = "Share";
+
+"SHARE_FILE" = "Share Source File";
+"SHARE_IMAGE" = "Share Image";
+"SHARE_PDF" = "Share PDF";
+"SHARE_HTML" = "Share HTML";
+"COPY_HTML" = "Copy HTML";
+
+"SETTINGS" = "Settings";
+"THEME" = "Theme";
+"APPLY_THEME" = "Apply Theme";
+"FONT" = "Font";
+"FONT_SIZE" = "Font Size";
+"LINE_PADDING" = "Line Padding";
+"CUSTOM_CSS" = "Custom Style Sheet";
+"CUSTOM_CSS_HINT" = "Paste your style sheet (css) here";
+
+"AUTO_SAVE" = "Auto Save";
+"EXPORT_LOCAL_FILES" = "Export Local Files";
