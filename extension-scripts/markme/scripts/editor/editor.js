@@ -5,11 +5,8 @@ const storage = require("../settings/storage");
 let _openedPath = null;
 let _openedTextView = null;
 $app.listen({
-  pause: () => {
-    if (_openedTextView && _openedPath) {
-      save(_openedTextView, _openedPath);
-    }
-  }
+  pause: saveOpenedFile,
+  exit: saveOpenedFile,
 });
 
 exports.open = path => {
@@ -93,6 +90,15 @@ function save(textView, path, userInitiated=false) {
 
   if (userInitiated) {
     taptic.success();
+
+    $ui.loading(true);
+    $delay(0.8, () => $ui.loading(false));
+  }
+}
+
+function saveOpenedFile() {
+  if (storage.autoSave() && _openedTextView && _openedPath) {
+    save(_openedTextView, _openedPath);
   }
 }
 
