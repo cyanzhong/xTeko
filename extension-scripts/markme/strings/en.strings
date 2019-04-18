@@ -36,3 +36,11 @@
 
 "AUTO_SAVE" = "Auto Save";
 "EXPORT_LOCAL_FILES" = "Export Local Files";
+
+"LOCAL_IMAGES" = "Local Images";
+"CLEAR" = "Clear";
+"ADD" = "Add";
+"DELETE" = "Delete";
+
+"PHOTO_LIBRARY" = "Photo Library";
+"CAMERA" = "Camera";

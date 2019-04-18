@@ -13,6 +13,39 @@ exports.toMarkdownFile = name => {
   }
 }
 
+exports.toHTML = (text, withStyle) => {
+  const regex = new RegExp(`(!\\[.*\\]\\()(.+)(\.png|\.jpg)`, "g");
+  const markdown = text.replace(regex, ($0, $1, $2, $3) => {
+    if ($2.indexOf("http") === 0) {
+      return $0;
+    } else {
+      const file = $file.read(`images/${$2}${$3}`);
+      const base64 = $text.base64Encode(file);
+      return `${$1}data:image/${$3};base64,${base64}`;
+    }
+  });
+
+  const content = $text.markdownToHtml(markdown);
+  if (withStyle) {
+    const renderer = $file.read("assets/template.html");
+    let html = renderer.string;
+    html = html.replace("{{content}}", content);
+    html = html.replace("{{style}}", (() => {
+      const file = $file.read("assets/style.css");
+      return file ? `<style>${file.string}</style>` : "";
+    })());
+    return html;
+  } else {
+    return content;
+  }
+}
+
+exports.buildNumber = () => {
+  const bundle = $objc("NSBundle").$mainBundle();
+  const version = bundle.$objectForInfoDictionaryKey("CFBundleVersion");
+  return parseInt(version.rawValue());
+}
+
 exports.listFolder = folder => {
   const files = $file.list(folder).map(name => {
     return {
@@ -100,5 +133,7 @@ exports.imageWithInsets = (image, insets) => {
 exports.enableBackGesture = enabled => {
   let navigationVC = $ui.controller.runtimeValue().$navigationController();
   let recognizer = navigationVC.$interactivePopGestureRecognizer();
-  recognizer.$setEnabled(enabled);
+  if (recognizer) {
+    recognizer.$setEnabled(enabled);
+  }
 }

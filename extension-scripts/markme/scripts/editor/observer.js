@@ -6,9 +6,11 @@ $define({
     "textViewDidBeginEditing": sender => {
       sender.$setEditingModeEnabled(true);
       sender.$setEdited(true);
+      util.enableBackGesture(false);
     },
     "textViewDidEndEditing": sender => {
       sender.$setEditingModeEnabled(false);
+      util.enableBackGesture(true);
     }
   }
 });

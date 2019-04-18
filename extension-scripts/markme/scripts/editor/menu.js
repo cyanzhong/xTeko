@@ -20,7 +20,7 @@ $define({
         editor.blur();
         editorAlpha = 0;
         rendererAlpha = 1;
-        renderer.content = editor.text;
+        renderer.runtimeValue().$render(editor.text);
         injectStyleSheet(renderer);
       }
 

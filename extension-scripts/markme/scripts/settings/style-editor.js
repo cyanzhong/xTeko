@@ -2,6 +2,14 @@ const util = require("../common/util");
 const path = "assets/style.css";
 
 exports.open = () => {
+  const textView = require("../editor/text-view").new("css");
+  textView.$setKeyboardType(1);
+  textView.$setPlaceholder($l10n("CUSTOM_CSS_HINT"));
+  textView.$setText((() => {
+    const file = $file.read(path);
+    return file ? file.string : "";
+  })());
+  
   $ui.push({
     props: {
       title: $l10n("CUSTOM_CSS"),
@@ -14,14 +22,10 @@ exports.open = () => {
     },
     views: [
       {
-        type: "text",
+        type: "runtime",
         props: {
           id: "style-editor",
-          placeholder: $l10n("CUSTOM_CSS_HINT"),
-          text: (() => {
-            const file = $file.read(path);
-            return file ? file.string : "";
-          })()
+          view: textView
         },
         layout: (make, view) => {
           make.edges.equalTo(view.super.safeArea);

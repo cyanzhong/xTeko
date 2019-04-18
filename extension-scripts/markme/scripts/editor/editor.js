@@ -11,6 +11,7 @@ $app.listen({
 
 exports.open = path => {
   const textView = require("./text-view").new();
+  const renderer = require("./renderer").new();
   _openedTextView = textView;
   _openedPath = path;
 
@@ -40,20 +41,17 @@ exports.open = path => {
         }
       },
       {
-        type: "markdown",
+        type: "runtime",
         props: {
           id: "renderer",
+          view: renderer,
           alpha: 0
         },
         layout: $layout.fill
       }
     ],
     events: {
-      appeared: () => {
-        util.enableBackGesture(false);
-      },
       disappeared: () => {
-        util.enableBackGesture(true);
         if (storage.autoSave()) {
           save(textView, path);
         }
@@ -146,20 +144,38 @@ function shareFile(textView, path) {
   $share.sheet([util.lastPathComponent(path), file]);
 }
 
-function shareImage(textView, path) {
-  $ui.loading(true);
+async function shareImage(textView, path) {
   const html = getHTML(textView);
-  const webView = $objc("WKWebView").$alloc().$initWithFrame(textView.$frame());
-  const handler = require("./handler").connect(webView);
+  const fastRender = util.buildNumber() < 430 || html.indexOf("<img") < 0;
 
-  webView.$setHidden(true);
-  webView.$loadHTMLString_baseURL(html, null);
+  if (fastRender) {
+    $ui.loading(true);
+    const webView = $objc("WKWebView").$alloc().$initWithFrame(textView.$frame());
+    const handler = require("./handler").connect(webView);
 
-  const configuration = webView.$configuration();
-  configuration.$userContentController().$addScriptMessageHandler_name(handler, "render");
+    webView.$setHidden(true);
+    webView.$loadHTMLString_baseURL(html, null);
 
-  const window = $objc("UIApplication").$sharedApplication().$keyWindow();
-  window.$addSubview(webView);
+    const configuration = webView.$configuration();
+    configuration.$userContentController().$addScriptMessageHandler_name(handler, "render");
+
+    const window = $objc("UIApplication").$sharedApplication().$keyWindow();
+    window.$addSubview(webView);
+  } else {
+    const webView = $objc("UIWebView").$alloc().$initWithFrame(textView.$frame());
+    webView.$setHidden(true);
+    textView.$superview().$addSubview(webView);
+    webView.$loadHTMLString_baseURL(html, null);
+
+    $ui.loading(true);
+    $delay(2, () => {
+      $ui.loading(false);
+      const scrollView = webView.$scrollView();
+      const image = scrollView.$snapshotForEntireView();
+      $share.sheet(image.rawValue());
+      webView.$removeFromSuperview();
+    });
+  }
 }
 
 async function sharePDF(textView, path) {
@@ -188,19 +204,7 @@ function copyHTML(textView, path) {
 
 function getHTML(textView, withStyle=true) {
   const text = textView.$text().rawValue();
-  const content = $text.markdownToHtml(text);
-  if (withStyle) {
-    const renderer = $file.read("assets/template.html");
-    let html = renderer.string;
-    html = html.replace("{{content}}", content);
-    html = html.replace("{{style}}", (() => {
-      const file = $file.read("assets/style.css");
-      return file ? `<style>${file.string}</style>` : "";
-    })());
-    return html;
-  } else {
-    return content;
-  }
+  return util.toHTML(text, withStyle);
 }
 
 function getFileName(path) {

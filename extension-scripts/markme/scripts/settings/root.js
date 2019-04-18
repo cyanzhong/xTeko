@@ -29,8 +29,9 @@ exports.open = () => {
           didSelect: (sender, indexPath) => {
             const SECTIONS = {
               THEME: 0,
-              AUTO_SAVE: 1,
-              EXPORT: 2,
+              IMAGES: 1,
+              AUTO_SAVE: 2,
+              EXPORT: 3,
             }
 
             if (indexPath.section == SECTIONS.THEME) {
@@ -59,6 +60,9 @@ exports.open = () => {
                   require("./style-editor").open();
                   break;
               }
+            } else if (indexPath.section == SECTIONS.IMAGES) {
+              const manager = require("../images/manager");
+              manager.open();
             } else if (indexPath.section == SECTIONS.EXPORT) {
               exportLocalFiles();
             }
@@ -102,6 +106,12 @@ function reloadData() {
         styleCell($l10n("FONT_SIZE"), `${storage.fontSize()}`),
         styleCell($l10n("LINE_PADDING"), `${storage.linePadding()}`),
         styleCell($l10n("CUSTOM_CSS"), ""),
+      ]
+    },
+    {
+      title: "",
+      rows: [
+        styleCell($l10n("LOCAL_IMAGES"), "")
       ]
     },
     {

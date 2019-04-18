@@ -36,3 +36,11 @@
 
 "AUTO_SAVE" = "自动保存文档";
 "EXPORT_LOCAL_FILES" = "导出本地文件";
+
+"LOCAL_IMAGES" = "本地图片";
+"CLEAR" = "清除";
+"ADD" = "添加";
+"DELETE" = "删除";
+
+"PHOTO_LIBRARY" = "选取照片";
+"CAMERA" = "拍摄照片";

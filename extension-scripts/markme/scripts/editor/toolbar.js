@@ -1,5 +1,7 @@
+const constants = require("../common/constants");
 const util = require("../common/util");
-const keys = ["undo", "redo", "#", "-", "*", "`", ">", "!", "[", "]", "(", ")", "|", ":", "~", "_", "$"];
+const keys = ["delete", "undo", "redo", "photo", "#", "-", "*", "`", ">", "!", "[", "]", "(", ")", "|", ":", "~", "_", "$"];
+const font = $objc("UIFont").$systemFontOfSize_weight(23, 0.1).rawValue();
 
 exports.new = textView => {
   const btnInset = 5;
@@ -59,7 +61,7 @@ exports.new = textView => {
       },
       views: [
         (() => {
-          if (key === "undo" || key === "redo") {
+          if (key.length > 1) {
             return {
               type: "image",
               props: {
@@ -76,11 +78,11 @@ exports.new = textView => {
               props: {
                 text: key,
                 textColor: $color("black"),
-                font: $font(".SF UI Text", 24)
+                font: font
               },
               layout: (make, view) => {
                 make.centerX.equalTo(view.super);
-                make.centerY.equalTo(view.super).offset(-1.5);
+                make.centerY.equalTo(view.super).offset(-1);
               }
             }
           }
@@ -98,11 +100,35 @@ function btnTapped(sender, textView) {
   const title = sender.info.key;
   const undoManager = textView.$undoManager();
   
-  if (title === "undo") {
+  if (title === "delete") {
+    textView.$__deleteToFront();
+  } else if (title === "undo") {
     undoManager.$undo();
   } else if (title === "redo") {
     undoManager.$redo();
+  } else if (title === "photo") {
+    insertImage(textView);
   } else {
     textView.$insertTextBlock(title);
   }
+}
+
+function insertImage(textView) {
+
+  function insertLink(path) {
+    textView.$becomeFirstResponder();
+    textView.$insertTextBlock(`![image](${path})`);
+  }
+
+  const _util = require("../images/util");
+  _util.openImagePicker({
+    localEnabled: true,
+    selectedPath: path => {
+      insertLink(path);
+    },
+    selectLocalImage: () => {
+      const _manager = require("../images/manager");
+      _manager.open(insertLink);
+    }
+  });
 }
