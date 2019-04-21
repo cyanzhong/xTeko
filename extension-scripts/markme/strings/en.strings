@@ -44,3 +44,10 @@
 
 "PHOTO_LIBRARY" = "Photo Library";
 "CAMERA" = "Camera";
+"SCAN_DOCUMENTS" = "Scan Documents";
+"ADD_SKETCH" = "Add Sketch";
+
+"UPGRADE_IOS" = "Sorry, please upgrade your iOS.";
+"DONE" = "Done";
+"COPY" = "Copy";
+"COPIED" = "Copied";

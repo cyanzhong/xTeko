@@ -44,3 +44,10 @@
 
 "PHOTO_LIBRARY" = "选取照片";
 "CAMERA" = "拍摄照片";
+"SCAN_DOCUMENTS" = "扫描文稿";
+"ADD_SKETCH" = "添加速绘";
+
+"UPGRADE_IOS" = "抱歉，请升级你的 iOS 版本。";
+"DONE" = "完成";
+"COPY" = "复制";
+"COPIED" = "已复制";

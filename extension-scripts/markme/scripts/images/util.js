@@ -2,36 +2,57 @@ const imageFolder = "images";
 const thumbFolder = "images/thumb";
 
 exports.openImagePicker = async(args) => {
-  const options = [$l10n("PHOTO_LIBRARY"), $l10n("CAMERA")];
+  const options = [$l10n("PHOTO_LIBRARY"), $l10n("CAMERA"), $l10n("SCAN_DOCUMENTS"), $l10n("ADD_SKETCH")];
   if (args.localEnabled) {
     options.push($l10n("LOCAL_IMAGES"));
   }
   
   const {index} = await $ui.menu(options);
-  let result = null;
 
-  if (index == 0) {
-    result = await $photo.pick();
-  } else if (index == 1) {
-    result = await $photo.take();
-  } else {
+  const INDEX = {
+    PHOTOS: 0,
+    CAMERA: 1,
+    SCANNER: 2,
+    SKETCH: 3,
+    LOCAL: 4,
+  }
+
+  function handleImage(image) {
+    if (image == null) {
+      return;
+    }
+
+    const screen = $device.info.screen;
+    const scale = screen.scale;
+    const dimension = screen.width * screen.height * scale * scale * 1.5;
+    
+    const type = (image.size.width * image.size.height > dimension) ? "jpg" : "png";
+    const hash = saveImage(image, type);
+    if (args.selectedPath) {
+      args.selectedPath(`${hash}.${type}`);
+    }
+  }
+
+  if (index == INDEX.PHOTOS) {
+    const result = await $photo.pick();
+    handleImage(result.image.orientationFixedImage);
+  } else if (index == INDEX.CAMERA) {
+    const result = await $photo.take();
+    handleImage(result.image.orientationFixedImage);
+  } else if (index == INDEX.SCANNER) {
+    const scanner = require("../images/scanner");
+    scanner.open(images => {
+      if (images.length > 0) {
+        handleImage(images[0]);
+      }
+    });
+  } else if (index == INDEX.SKETCH) {
+    const sketcher = require("../images/sketcher");
+    sketcher.open(image => {
+      handleImage(image);
+    });
+  } else if (index == INDEX.LOCAL) {
     args.selectLocalImage();
-    return;
-  }
-
-  const image = result.image.orientationFixedImage;
-  if (image == null) {
-    return;
-  }
-
-  const screen = $device.info.screen;
-  const scale = screen.scale;
-  const dimension = screen.width * screen.height * scale * scale * 1.5;
-  
-  const type = (image.size.width * image.size.height > dimension) ? "jpg" : "png";
-  const hash = saveImage(image, type);
-  if (args.selectedPath) {
-    args.selectedPath(`${hash}.${type}`);
   }
 }
 
