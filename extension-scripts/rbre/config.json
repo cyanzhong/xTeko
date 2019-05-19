@@ -8,7 +8,7 @@
     "types": 0
   },
   "settings": {
-    "minSDKVer": "1.0.0",
+    "minSDKVer": "1.46.0",
     "minOSVer": "11.0.0",
     "idleTimerDisabled": false,
     "autoKeyboardEnabled": false,
