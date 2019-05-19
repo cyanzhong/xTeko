@@ -70,7 +70,7 @@ exports.loadFile = (path, command) => {
             if (landscapeMode) {
               $("key-input").blur();
 
-              scale = (frame.height - ($device.isIphoneX ? 40 : 70) - topInset) / 400;
+              scale = Math.min(1.0, (frame.height - ($device.isIphoneX ? 40 : 70) - topInset) / 400);
               canvas.scale(scale);
               canvas.frame = $rect(
                 (frame.width - 640 * scale) * 0.5,
@@ -79,7 +79,7 @@ exports.loadFile = (path, command) => {
                 400
               );
             } else {
-              scale = frame.width / 640;
+              scale = Math.min(1.0, frame.width / 640);
               canvas.scale(scale);
               canvas.frame = $rect(
                 (frame.width - 640 * scale) * 0.5,
