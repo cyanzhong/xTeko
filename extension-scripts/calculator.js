@@ -155,7 +155,7 @@ $ui.render({
             })(),
             textColor: colors.white,
             align: $align.right,
-            lines: compactMode ? 1 : 2
+            lines: 0
           },
           layout: (make, view) => {
             make.top.bottom.equalTo(0);
