@@ -146,36 +146,19 @@ function shareFile(textView, path) {
 
 async function shareImage(textView, path) {
   const html = getHTML(textView);
-  const fastRender = util.buildNumber() < 430 || html.indexOf("<img") < 0;
+  const webView = $objc("UIWebView").$alloc().$initWithFrame(textView.$frame());
+  webView.$setHidden(true);
+  textView.$superview().$addSubview(webView);
+  webView.$loadHTMLString_baseURL(html, null);
 
-  if (fastRender) {
-    $ui.loading(true);
-    const webView = $objc("WKWebView").$alloc().$initWithFrame(textView.$frame());
-    const handler = require("./handler").connect(webView);
-
-    webView.$setHidden(true);
-    webView.$loadHTMLString_baseURL(html, null);
-
-    const configuration = webView.$configuration();
-    configuration.$userContentController().$addScriptMessageHandler_name(handler, "render");
-
-    const window = $objc("UIApplication").$sharedApplication().$keyWindow();
-    window.$addSubview(webView);
-  } else {
-    const webView = $objc("UIWebView").$alloc().$initWithFrame(textView.$frame());
-    webView.$setHidden(true);
-    textView.$superview().$addSubview(webView);
-    webView.$loadHTMLString_baseURL(html, null);
-
-    $ui.loading(true);
-    $delay(2, () => {
-      $ui.loading(false);
-      const scrollView = webView.$scrollView();
-      const image = scrollView.$snapshotForEntireView();
-      $share.sheet(image.rawValue());
-      webView.$removeFromSuperview();
-    });
-  }
+  $ui.loading(true);
+  $delay(2, () => {
+    $ui.loading(false);
+    const scrollView = webView.$scrollView();
+    const image = scrollView.$snapshotForEntireView();
+    $share.sheet(image.rawValue());
+    webView.$removeFromSuperview();
+  });
 }
 
 async function sharePDF(textView, path) {
