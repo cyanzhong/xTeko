@@ -135,7 +135,12 @@ $define({
       picker.$notifyToolSelected(true);
 
       let tintColor = $color("tint").runtimeValue();
-      ["_shareButton", "_shapesPickerButton", "_attributesPickerButton", "_currentColorButton"].forEach(key => {
+      let attributes = ["_shareButton", "_shapesPickerButton", "_attributesPickerButton"];
+      if (majorVersion < 13) {
+        attributes.push("_currentColorButton");
+      }
+      
+      attributes.forEach(key => {
         toolbar.$valueForKey(key).$setTintColor(tintColor);
       });
 
@@ -274,6 +279,7 @@ exports.open = handler => {
   _handler = handler;
   let canvasVC = $objc("PKCanvasVC").$new();
   let navigator = $objc("PKNavigator").$alloc().$initWithRootViewController(canvasVC);
+  navigator.$setModalPresentationStyle(0);
   let rootVC = $ui.controller.runtimeValue();
   rootVC.$presentViewController_animated_completion(navigator, true, null);
 }

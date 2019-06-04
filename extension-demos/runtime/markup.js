@@ -1,5 +1,6 @@
 $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/MarkupUI.framework").$load();
 $defc("NSTemporaryDirectory", "NSString *");
+let ios13 = parseInt($device.info.version.split(".")[0]) >= 13;
 
 $define({
   type: "MarkupVC: MarkupViewController",
@@ -11,8 +12,13 @@ $define({
 
       let tintColor = $color("tint").runtimeValue();
       let toolbar = self.$modernToolbar();
+      let attributes = ["_shareButton", "_shapesPickerButton", "_attributesPickerButton"];
+
+      if (!ios13) {
+        attributes.push("_currentColorButton");
+      }
       
-      ["_shareButton", "_shapesPickerButton", "_attributesPickerButton", "_currentColorButton"].forEach(key => {
+      attributes.forEach(key => {
         toolbar.$valueForKey(key).$setTintColor(tintColor);
       });
 
@@ -53,6 +59,7 @@ function showMarkupView(image) {
   markupVC.$setShowShareButtonInToolbar(true);
 
   let navigator = $objc("UINavigationController").$alloc().$initWithRootViewController(markupVC);
+  navigator.$setModalPresentationStyle(0);
   let rootVC = $ui.controller.runtimeValue();
   rootVC.$presentViewController_animated_completion(navigator, true, null);
 }
