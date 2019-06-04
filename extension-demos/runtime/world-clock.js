@@ -5,6 +5,7 @@ let screen = $device.info.screen;
 let itemHeight = 44;
 let lineHeight = 1.0 / screen.scale;
 let scaleRatio = 0.5;
+let ios13 = parseInt($device.info.version.split(".")[0]) >= 13;
 
 $define({
   type: "ClockView: MTUIWorldClockCellView",
@@ -22,7 +23,8 @@ $define({
       nameLabel.$setFrame({"x": 10, "y": combinedLabel.$frame().height + combinedLabel.$frame().y + 1, "width": nameLabel.$frame().width, "height": nameLabel.$frame().height});
 
       let digitalClock = self.$digitalClock();
-      digitalClock.$setFrame({"x": self.$frame().width - digitalClock.$frame().width - 10, "y": 4, "width": digitalClock.$frame().width, "height": digitalClock.$frame().height});
+      let offset = ios13 ? -14 : 4;
+      digitalClock.$setFrame({"x": self.$frame().width - digitalClock.$frame().width - 10, "y": offset, "width": digitalClock.$frame().width, "height": digitalClock.$frame().height});
 
       let lineView = self.$lineView();
       lineView.$setFrame({"x": 0, "y": self.$frame().height - lineHeight, "width": self.$frame().width, "height": lineHeight});
