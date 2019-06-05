@@ -83,17 +83,19 @@ $define({
   type: "AKToolbarView",
   props: ["canvas"],
   events: {
+    "paletteViewSelectedToolInkDidChange:": sender => {
+      self.$ORIGpaletteViewSelectedToolInkDidChange(sender);
+      self.$selectInk(sender.$selectedToolInk());
+    },
     "inlineInkPicker:didSelectColor:": (picker, color) => {
       self.$ORIGinlineInkPicker_didSelectColor(picker, color);
-      self.$notify();
+      self.$selectInk(picker.$selectedInk());
     },
     "inlineInkPicker:didSelectTool:": (picker, tool) => {
       self.$ORIGinlineInkPicker_didSelectTool(picker, tool);
-      self.$notify();
+      self.$selectInk(picker.$selectedInk());
     },
-    "notify": () => {
-      let inkPicker = self.$inkPicker();
-      let ink = inkPicker.$selectedInk();
+    "selectInk:": ink => {
       let canvas = self.$canvas();
       canvas.$setInk(ink);
 
@@ -165,6 +167,21 @@ $define({
   type: "PKCanvasVC: MarkupViewController",
   props: ["canvas", "topLine", "bottomLine"],
   events: {
+    "viewDidAppear:": animated => {
+      self.$ORIGviewDidAppear(animated);
+
+      if (majorVersion < 13) {
+        return;
+      }
+
+      let toolbar = self.$modernToolbar();
+      let palette = toolbar.$valueForKey("paletteView");
+      let ink = getInk();
+      if (ink) {
+        palette.$setSelectedToolInk(ink);
+        palette.$toolPickerDidChangeSelectedToolInk(palette);
+      }
+    },
     "viewDidLoad": () => {
       self.$super().$viewDidLoad();
       self.$setBackgroundColor($color("white").runtimeValue());
@@ -192,21 +209,21 @@ $define({
       let toolbar = self.$modernToolbar();
       toolbar.$setCanvas(canvas);
 
-      let picker = toolbar.$inkPicker();
-      let ink = getInk();
-      if (ink) {
-        picker.$setSelectedInk_animated(ink, true);
-      } else {
-        let identifier = picker.$inkIdentifiers().$objectAtIndex(0);
-        picker.$setSelectedInkIdentifier_animated(identifier, true);
-      }
-
-      picker.$notifyToolSelected(true);
-
       let tintColor = $color("tint").runtimeValue();
       let attributes = ["_shareButton", "_shapesPickerButton", "_attributesPickerButton"];
       if (majorVersion < 13) {
         attributes.push("_currentColorButton");
+
+        let picker = toolbar.$inkPicker();
+        let ink = getInk();
+        if (ink) {
+          picker.$setSelectedInk_animated(ink, true);
+        } else {
+          let identifier = picker.$inkIdentifiers().$objectAtIndex(0);
+          picker.$setSelectedInkIdentifier_animated(identifier, true);
+        }
+
+        picker.$notifyToolSelected(true);
       }
 
       attributes.forEach(key => {
@@ -273,7 +290,29 @@ $define({
       self.$dismissViewControllerAnimated_completion(true, null);
       $widget.height = widgetHeight;
     },
-    "clearButtonTapped": () => self.$canvas().$eraseAll(),
+    "clearButtonTapped": () => {
+      if (majorVersion < 13) {
+        self.$canvas().$eraseAll()
+      } else {
+        self.$canvas().$removeFromSuperview();
+
+        let canvas = $objc("PKCanvasView").$new();
+        canvas.$setBackgroundColor($color("#FFFFFF").runtimeValue());
+        canvas.$setBackgroundImage(null);
+        self.$setCanvas(canvas);
+        self.$view().$addSubview(canvas);
+  
+        let toolbar = self.$modernToolbar();
+        toolbar.$setCanvas(canvas);
+
+        let palette = toolbar.$valueForKey("paletteView");
+        let ink = getInk();
+        if (ink) {
+          palette.$setSelectedToolInk(ink);
+          palette.$toolPickerDidChangeSelectedToolInk(palette);
+        }
+      }
+    },
     "settingButtonTapped": () => settingButtonTapped(),
     "_toolbarShareButtonTapped:": () => {
 
