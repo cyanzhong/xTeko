@@ -98,7 +98,7 @@ function initActionButtons() {
       type: "button",
       props: {
         bgcolor: $color("clear"),
-        icon: $icon(action.icon, $color("darkText"), $size(20, 20)),
+        icon: $icon(action.icon, $color("#333333"), $size(20, 20)),
         info: { pattern: action.pattern, noenc: action.noenc }
       },
       layout: function(make, view) {
