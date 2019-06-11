@@ -37,9 +37,18 @@ function dismiss(vc, blk) {
 }
 
 function showCamera() {
-  let camVC = $objc("DocCamVC").$alloc().$initWithDelegate(null);
-  let rootVC = $ui.controller.runtimeValue();
-  rootVC.$presentViewController_animated_completion(camVC, true, null);
+  if (typeof $photo.scan === "function") {
+    $photo.scan().then(response => {
+      let images = response.results;
+      if (images) {
+        $share.sheet(images);
+      }
+    });
+  } else {
+    let camVC = $objc("DocCamVC").$alloc().$initWithDelegate(null);
+    let rootVC = $ui.controller.runtimeValue();
+    rootVC.$presentViewController_animated_completion(camVC, true, null);
+  }
 }
 
 showCamera();
