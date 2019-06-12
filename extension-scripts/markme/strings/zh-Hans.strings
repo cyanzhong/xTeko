@@ -51,3 +51,9 @@
 "DONE" = "完成";
 "COPY" = "复制";
 "COPIED" = "已复制";
+
+"CANVAS_SIZE" = "画布大小";
+"FULL_SCREEN" = "全屏";
+"A4_PAPER" = "A4 纸";
+"SQUARE" = "方形";
+"CLEAR_AFTER_COPYING" = "复制后清除";

@@ -51,3 +51,9 @@
 "DONE" = "Done";
 "COPY" = "Copy";
 "COPIED" = "Copied";
+
+"CANVAS_SIZE" = "Canvas Size";
+"FULL_SCREEN" = "Full";
+"A4_PAPER" = "A4";
+"SQUARE" = "Square";
+"CLEAR_AFTER_COPYING" = "Clear After Copying";

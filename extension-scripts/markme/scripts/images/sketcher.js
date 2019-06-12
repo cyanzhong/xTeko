@@ -1,6 +1,9 @@
 $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/MarkupUI.framework").$load();
+$objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/PencilKit.framework").$load();
 
 let majorVersion = parseInt($device.info.version.split(".")[0]);
+let ios13 = majorVersion >= 13;
+
 if (majorVersion < 12) {
   alert($l10n("UPGRADE_IOS"));
   return;
@@ -95,58 +98,44 @@ $define({
 });
 
 $define({
-  type: "PKCanvasVC: MarkupViewController",
+  type: `MMCanvasVC: ${ios13 ? "UIViewController<PKToolPickerObserver>" : "MarkupViewController"}`,
   props: ["canvas", "topLine", "bottomLine"],
   events: {
-    "viewDidAppear:": animated => {
-      self.$ORIGviewDidAppear(animated);
-
-      if (majorVersion < 13) {
-        return;
-      }
-
-      let toolbar = self.$modernToolbar();
-      let palette = toolbar.$valueForKey("paletteView");
-      let ink = getInk();
-      if (ink) {
-        palette.$setSelectedToolInk(ink);
-        palette.$toolPickerDidChangeSelectedToolInk(palette);
-      }
-    },
     "viewDidLoad": () => {
       self.$super().$viewDidLoad();
-      self.$setBackgroundColor($color("white").runtimeValue());
+      self.$setBackgroundColor($color("white").ocValue());
+      self.$view().$setBackgroundColor($color("white").ocValue());
       self.$setShowShareButtonInToolbar(true);
       self.$didReceiveMemoryWarning(null);
-
-      let canvas = $objc("PKCanvasView").$new();
-      canvas.$setBackgroundColor($color("#FFFFFF").runtimeValue());
-      canvas.$setBackgroundImage(null);
-      self.$setCanvas(canvas);
-      self.$view().$addSubview(canvas);
+      self.$resetCanvas();
       self.$setImage($objc("UIImage").$new());
 
-      let lineColor = $color("lightGray").runtimeValue();
-      let topLine = $objc("UIView").$new();
-      topLine.$setBackgroundColor(lineColor);
-      self.$setTopLine(topLine);
-      self.$view().$addSubview(topLine);
+      if (ios13) {
+        const that = self;
+        const barItem = (name, action) => {
+          const image = $objc("UIImage").$systemImageNamed(name);
+          const item = $objc("UIBarButtonItem").$alloc().$initWithImage_style_target_action(image, 0, that, action);
+          return item;
+        }
 
-      let bottomLine = $objc("UIView").$new();
-      bottomLine.$setBackgroundColor(lineColor);
-      self.$setBottomLine(bottomLine);
-      self.$view().$addSubview(bottomLine);
+        const share = barItem("square.and.arrow.up", "shareButtonTapped");
+        const undo = barItem("arrow.uturn.left.circle", "undoButtonTapped");
+        const redo = barItem("arrow.uturn.right.circle", "redoButtonTapped");
+        const items = $objc("NSMutableArray").$array();
+        items.$addObject(share);
+        items.$addObject(redo);
+        items.$addObject(undo);
 
-      let toolbar = self.$modernToolbar();
-      toolbar.$setCanvas(canvas);
+        self.$navigationItem().$setRightBarButtonItems(items);
+      } else {
+        let canvas = self.$canvas();
+        let toolbar = self.$modernToolbar();
+        toolbar.$setCanvas(canvas);
 
-      let tintColor = $color("tint").runtimeValue();
-      let attributes = ["_shareButton", "_shapesPickerButton", "_attributesPickerButton"];
-      if (majorVersion < 13) {
-        attributes.push("_currentColorButton");
-        
+        let tintColor = $color("tint").runtimeValue();
         let picker = toolbar.$inkPicker();
         let ink = getInk();
+
         if (ink) {
           picker.$setSelectedInk_animated(ink, true);
         } else {
@@ -155,27 +144,51 @@ $define({
         }
 
         picker.$notifyToolSelected(true);
+
+        let attributes = [
+          "_shareButton",
+          "_shapesPickerButton",
+          "_attributesPickerButton",
+          "_currentColorButton"
+        ];
+        attributes.forEach(key => {
+          toolbar.$valueForKey(key).$setTintColor(tintColor);
+        });
       }
-      
-      attributes.forEach(key => {
-        toolbar.$valueForKey(key).$setTintColor(tintColor);
-      });
 
       let doneButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("DONE"), 0, self, "doneButtonTapped");
       let clearButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("CLEAR"), 0, self, "clearButtonTapped");
+      let settingButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("SETTINGS"), 0, self, "settingButtonTapped");
 
       let navButtons = NSMutableArray.$new();
       navButtons.$addObject(doneButton);
-      navButtons.$addObject(clearButton);      
+      navButtons.$addObject(clearButton);
+
+      if (!lowMemory) {
+        navButtons.$addObject(settingButton);
+      }
+      
       self.$navigationItem().$setLeftBarButtonItems(navButtons);
+    },
+    "viewDidAppear:": animated => {
+      self.$super().$viewDidAppear(animated);
+      if (ios13) {
+        self.$resetToolbar();
+      }
+    },
+    "viewWillDisappear:": animated => {
+      self.$super().$viewWillDisappear(animated);
+      if (ios13) {
+        self.$toolbar().$setVisible_forFirstResponder(false, null);
+      }
     },
     "viewDidLayoutSubviews": () => {
       self.$super().$viewDidLayoutSubviews();
 
       let canvas = self.$canvas();
       let maxBounds = self.$view().$bounds();
-      let toolbarBounds = self.$modernToolbar().$bounds();
-      let pageHeight = maxBounds.height - toolbarBounds.height;
+      let toolbarHeight = ios13 ? 76 : self.$modernToolbar().$bounds().height;
+      let pageHeight = maxBounds.height - toolbarHeight;
 
       let canvasWidth = maxBounds.width;
       let canvasHeight = (() => {
@@ -211,45 +224,76 @@ $define({
         "height": lineHeight
       });
     },
-    "doneButtonTapped": () => {
-      const that = self;
-      const canvas = self.$canvas();
-      renderImage(canvas, image => {
-        if (_handler) {
-          _handler(image.rawValue());
+    "resetCanvas": () => {
+      (() => {
+        const canvas = self.$canvas();
+        if (canvas) {
+          canvas.$removeFromSuperview();
         }
-        that.$dismissViewControllerAnimated_completion(true, null);
-        $widget.height = widgetHeight;
+
+        const topLine = self.$topLine();
+        if (topLine) {
+          topLine.$removeFromSuperview();
+        }
+
+        const bottomLine = self.$bottomLine();
+        if (bottomLine) {
+          bottomLine.$removeFromSuperview();
+        }
+      })();
+
+      const canvas = $objc("PKCanvasView").$new();
+      canvas.$setBackgroundColor($color("#FFFFFF").runtimeValue());
+      canvas.$setBackgroundImage(null);
+      self.$view().$addSubview(canvas);
+      self.$setCanvas(canvas);
+
+      let lineColor = $color("lightGray").runtimeValue();
+      let topLine = $objc("UIView").$new();
+      topLine.$setBackgroundColor(lineColor);
+      self.$setTopLine(topLine);
+      self.$view().$addSubview(topLine);
+
+      let bottomLine = $objc("UIView").$new();
+      bottomLine.$setBackgroundColor(lineColor);
+      self.$setBottomLine(bottomLine);
+      self.$view().$addSubview(bottomLine);
+    },
+    "resetToolbar": () => {
+      const window = $objc("UIApplication").$sharedApplication().$keyWindow();
+      const picker = $objc("PKToolPicker").$sharedToolPickerForWindow(window);
+      self.$setToolbar(picker);
+
+      const canvas = self.$canvas();
+      picker.$addObserver(canvas);
+      picker.$setVisible_forFirstResponder(true, canvas);
+      canvas.$becomeFirstResponder();
+    },
+    "doneButtonTapped": () => {
+      exportImage(self.$canvas(), image => {
+        _handler(image);
       });
+
+      self.$dismissViewControllerAnimated_completion(true, null);
+      $widget.height = widgetHeight;
     },
     "clearButtonTapped": () => {
-      if (majorVersion < 13) {
-        self.$canvas().$eraseAll()
+      if (ios13) {
+        self.$resetCanvas();
+        self.$resetToolbar();
       } else {
-        self.$canvas().$removeFromSuperview();
-
-        let canvas = $objc("PKCanvasView").$new();
-        canvas.$setBackgroundColor($color("#FFFFFF").runtimeValue());
-        canvas.$setBackgroundImage(null);
-        self.$setCanvas(canvas);
-        self.$view().$addSubview(canvas);
-  
-        let toolbar = self.$modernToolbar();
-        toolbar.$setCanvas(canvas);
-
-        let palette = toolbar.$valueForKey("paletteView");
-        let ink = getInk();
-        if (ink) {
-          palette.$setSelectedToolInk(ink);
-          palette.$toolPickerDidChangeSelectedToolInk(palette);
-        }
+        self.$canvas().$eraseAll();
       }
     },
+    "settingButtonTapped": () => settingButtonTapped(),
     "_toolbarShareButtonTapped:": () => {
-      const canvas = self.$canvas();
-      renderImage(canvas, async(image) => {
+      self.$shareButtonTapped();
+    },
+    "shareButtonTapped": () => {
+      exportImage(self.$canvas(), async(image) => {
+        
         function copyImage() {
-          $clipboard.image = image.rawValue();
+          $clipboard.image = image;
           $device.taptic(2);
           $ui.toast($l10n("COPIED"));
 
@@ -259,7 +303,7 @@ $define({
         }
 
         function shareImage() {
-          $share.sheet(image.rawValue());
+          $share.sheet(image);
         }
 
         if (lowMemory) {
@@ -273,6 +317,12 @@ $define({
           }
         }
       });
+    },
+    "undoButtonTapped": () => {
+      self.$canvas().$undoManager().$undo();
+    },
+    "redoButtonTapped": () => {
+      self.$canvas().$undoManager().$redo();
     }
   },
   classEvents: {
@@ -281,6 +331,97 @@ $define({
     }
   }
 });
+
+if (!lowMemory) {
+  $define({
+    type: "PKSettingVC: UIViewController<UITableViewDataSource, UITableViewDelegate>",
+    props: ["cells", "tableView", "completionBlock"],
+    events: {
+      "viewDidLoad": () => {
+        self.$super().$viewDidLoad();
+        self.$view().$setBackgroundColor($color("white").runtimeValue());
+  
+        let sizeCell = (() => {
+  
+          let cell = $objc("UITableViewCell").$alloc().$initWithStyle_reuseIdentifier(0, "sizeCell");
+          cell.$textLabel().$setText($l10n("CANVAS_SIZE"));
+  
+          let items = NSMutableArray.$new();
+          items.$addObject($l10n("FULL_SCREEN"));
+          items.$addObject($l10n("A4_PAPER"));
+          items.$addObject($l10n("SQUARE"));
+  
+          let control = $objc("UISegmentedControl").$alloc().$initWithItems(items);
+          control.$setTintColor($color("tint").runtimeValue());
+          control.$setSelectedSegmentIndex($cache.get("page-size") || 0);
+          control.$addTarget_action_forControlEvents(self, "pageSizeChanged:", 1 << 12);
+          cell.$setAccessoryView(control);
+  
+          return cell;
+        })();
+  
+        let clearCell = (() => {
+  
+          let cell = $objc("UITableViewCell").$alloc().$initWithStyle_reuseIdentifier(0, "clearCell");
+          cell.$textLabel().$setText($l10n("CLEAR_AFTER_COPYING"));
+  
+          let switcher = $objc("UISwitch").$new();
+          switcher.$setOnTintColor($color("tint").runtimeValue());
+          switcher.$setOn($cache.get("auto-clear") || false);
+          switcher.$addTarget_action_forControlEvents(self, "clearBehaviorChanged:", 1 << 12);
+          cell.$setAccessoryView(switcher);
+  
+          return cell;
+        })();
+  
+        let cells = NSMutableArray.$new();
+        cells.$addObject(sizeCell);
+        cells.$addObject(clearCell);
+        self.$setCells(cells);
+  
+        let tableView = $objc("UITableView").$alloc().$initWithFrame_style({
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        }, 1);
+  
+        tableView.$setAllowsSelection(false);
+        tableView.$setDataSource(self);
+        tableView.$setDelegate(self);
+  
+        self.$setTableView(tableView);
+        self.$view().$addSubview(tableView);
+      },
+      "viewDidLayoutSubviews": () => {
+        self.$super().$viewDidLayoutSubviews();
+  
+        let frame = self.$view().$bounds();
+        self.$tableView().$setFrame(frame);
+      },
+      "tableView:numberOfRowsInSection:": (tableView, section) => {
+        return self.$cells().$count();
+      },
+      "tableView:cellForRowAtIndexPath:": (tableView, indexPath) => {
+        return self.$cells().$objectAtIndex(indexPath.$row());
+      },
+      "tableView:didSelectRowAtIndexPath:": (tableView, indexPath) => {
+        tableView.$deselectRowAtIndexPath_animated(indexPath, true);
+      },
+      "pageSizeChanged": sender => {
+        let index = sender.$selectedSegmentIndex();
+        $cache.set("page-size", index);
+        self.$notifyChanges();
+      },
+      "clearBehaviorChanged": sender => {
+        let on = sender.$isOn();
+        $cache.set("auto-clear", on);
+        self.$notifyChanges();
+      },
+      "notifyChanges": () => self.$completionBlock()()
+    }
+  });
+}
 
 function getInk() {
   let _ink = $cache.get("ink");
@@ -295,30 +436,47 @@ function getInk() {
   }
 }
 
-function renderImage(canvas, handler) {
+function settingButtonTapped() {
+  let settingVC = $objc("PKSettingVC").$new();
+  settingVC.$setCompletionBlock(() => {
+    let view = _canvasVC.$view();
+    view.$setNeedsLayout();
+    view.$layoutIfNeeded();
+  });
+  
+  let rootVC = $ui.controller.runtimeValue();
+  _navigator.$pushViewController_animated(settingVC, true);
+}
+
+function exportImage(canvas, handler) {
   let bounds = canvas.$bounds();
   let size = {"width": bounds.width, "height": bounds.height};
   let scale = lowMemory ? 1 : $device.info.screen.scale;
   let renderer = $objc("PKImageRenderer").$alloc().$initWithSize_scale_useMetal(size, scale, true);
   let drawing = canvas.$drawing();
-
   let block = $block("void, UIImage *", image => {
     $thread.main({
-      handler: () => {
-        handler(image);
+      handler: async() => {
+        handler(image.rawValue());
       }
     });
   });
-
   renderer.$renderDrawing_completion(drawing, block);
 }
 
 let _handler = null;
+let _navigator = null;
+let _canvasVC = null;
 exports.open = handler => {
   _handler = handler;
-  let canvasVC = $objc("PKCanvasVC").$new();
+  
+  let canvasVC = $objc("MMCanvasVC").$new();
+  _canvasVC = canvasVC;
+
   let navigator = $objc("PKNavigator").$alloc().$initWithRootViewController(canvasVC);
+  _navigator = navigator;
   navigator.$setModalPresentationStyle(0);
+  
   let rootVC = $ui.controller.runtimeValue();
   rootVC.$presentViewController_animated_completion(navigator, true, null);
 }
