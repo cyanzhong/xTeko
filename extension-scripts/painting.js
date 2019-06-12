@@ -1,6 +1,7 @@
-const __VERSION__ = "1.3";
+const __VERSION__ = "1.4";
 
 $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/MarkupUI.framework").$load();
+$objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/PencilKit.framework").$load();
 
 (async() => {
   let url = "https://xteko.com/store/fetch?id=124";
@@ -70,6 +71,8 @@ $app.strings = {
 };
 
 let majorVersion = parseInt($device.info.version.split(".")[0]);
+let ios13 = majorVersion >= 13;
+
 if (majorVersion < 12) {
   alert($l10n("UPGRADE_IOS"));
   return;
@@ -164,58 +167,44 @@ $define({
 });
 
 $define({
-  type: "PKCanvasVC: MarkupViewController",
+  type: `PKCanvasVC: ${ios13 ? "UIViewController<PKToolPickerObserver>" : "MarkupViewController"}`,
   props: ["canvas", "topLine", "bottomLine"],
   events: {
-    "viewDidAppear:": animated => {
-      self.$ORIGviewDidAppear(animated);
-
-      if (majorVersion < 13) {
-        return;
-      }
-
-      let toolbar = self.$modernToolbar();
-      let palette = toolbar.$valueForKey("paletteView");
-      let ink = getInk();
-      if (ink) {
-        palette.$setSelectedToolInk(ink);
-        palette.$toolPickerDidChangeSelectedToolInk(palette);
-      }
-    },
     "viewDidLoad": () => {
       self.$super().$viewDidLoad();
-      self.$setBackgroundColor($color("white").runtimeValue());
+      self.$setBackgroundColor($color("white").ocValue());
+      self.$view().$setBackgroundColor($color("white").ocValue());
       self.$setShowShareButtonInToolbar(true);
       self.$didReceiveMemoryWarning(null);
-
-      let canvas = $objc("PKCanvasView").$new();
-      canvas.$setBackgroundColor($color("#FFFFFF").runtimeValue());
-      canvas.$setBackgroundImage(null);
-      self.$setCanvas(canvas);
-      self.$view().$addSubview(canvas);
+      self.$resetCanvas();
       self.$setImage($objc("UIImage").$new());
 
-      let lineColor = $color("lightGray").runtimeValue();
-      let topLine = $objc("UIView").$new();
-      topLine.$setBackgroundColor(lineColor);
-      self.$setTopLine(topLine);
-      self.$view().$addSubview(topLine);
+      if (ios13) {
+        const that = self;
+        const barItem = (name, action) => {
+          const image = $objc("UIImage").$systemImageNamed(name);
+          const item = $objc("UIBarButtonItem").$alloc().$initWithImage_style_target_action(image, 0, that, action);
+          return item;
+        }
 
-      let bottomLine = $objc("UIView").$new();
-      bottomLine.$setBackgroundColor(lineColor);
-      self.$setBottomLine(bottomLine);
-      self.$view().$addSubview(bottomLine);
+        const share = barItem("square.and.arrow.up", "shareButtonTapped");
+        const undo = barItem("arrow.uturn.left.circle", "undoButtonTapped");
+        const redo = barItem("arrow.uturn.right.circle", "redoButtonTapped");
+        const items = $objc("NSMutableArray").$array();
+        items.$addObject(share);
+        items.$addObject(redo);
+        items.$addObject(undo);
 
-      let toolbar = self.$modernToolbar();
-      toolbar.$setCanvas(canvas);
+        self.$navigationItem().$setRightBarButtonItems(items);
+      } else {
+        let canvas = self.$canvas();
+        let toolbar = self.$modernToolbar();
+        toolbar.$setCanvas(canvas);
 
-      let tintColor = $color("tint").runtimeValue();
-      let attributes = ["_shareButton", "_shapesPickerButton", "_attributesPickerButton"];
-      if (majorVersion < 13) {
-        attributes.push("_currentColorButton");
-
+        let tintColor = $color("tint").runtimeValue();
         let picker = toolbar.$inkPicker();
         let ink = getInk();
+
         if (ink) {
           picker.$setSelectedInk_animated(ink, true);
         } else {
@@ -224,11 +213,17 @@ $define({
         }
 
         picker.$notifyToolSelected(true);
-      }
 
-      attributes.forEach(key => {
-        toolbar.$valueForKey(key).$setTintColor(tintColor);
-      });
+        let attributes = [
+          "_shareButton",
+          "_shapesPickerButton",
+          "_attributesPickerButton",
+          "_currentColorButton"
+        ];
+        attributes.forEach(key => {
+          toolbar.$valueForKey(key).$setTintColor(tintColor);
+        });
+      }
 
       let doneButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("DONE"), 0, self, "closeButtonTapped");
       let clearButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("CLEAR"), 0, self, "clearButtonTapped");
@@ -244,13 +239,25 @@ $define({
       
       self.$navigationItem().$setLeftBarButtonItems(navButtons);
     },
+    "viewDidAppear:": animated => {
+      self.$super().$viewDidAppear(animated);
+      if (ios13) {
+        self.$resetToolbar();
+      }
+    },
+    "viewWillDisappear:": animated => {
+      self.$super().$viewWillDisappear(animated);
+      if (ios13) {
+        self.$toolbar().$setVisible_forFirstResponder(false, null);
+      }
+    },
     "viewDidLayoutSubviews": () => {
       self.$super().$viewDidLayoutSubviews();
 
       let canvas = self.$canvas();
       let maxBounds = self.$view().$bounds();
-      let toolbarBounds = self.$modernToolbar().$bounds();
-      let pageHeight = maxBounds.height - toolbarBounds.height;
+      let toolbarHeight = ios13 ? 76 : self.$modernToolbar().$bounds().height;
+      let pageHeight = maxBounds.height - toolbarHeight;
 
       let canvasWidth = maxBounds.width;
       let canvasHeight = (() => {
@@ -286,36 +293,68 @@ $define({
         "height": lineHeight
       });
     },
+    "resetCanvas": () => {
+      (() => {
+        const canvas = self.$canvas();
+        if (canvas) {
+          canvas.$removeFromSuperview();
+        }
+
+        const topLine = self.$topLine();
+        if (topLine) {
+          topLine.$removeFromSuperview();
+        }
+
+        const bottomLine = self.$bottomLine();
+        if (bottomLine) {
+          bottomLine.$removeFromSuperview();
+        }
+      })();
+
+      const canvas = $objc("PKCanvasView").$new();
+      canvas.$setBackgroundColor($color("#FFFFFF").runtimeValue());
+      canvas.$setBackgroundImage(null);
+      self.$view().$addSubview(canvas);
+      self.$setCanvas(canvas);
+
+      let lineColor = $color("lightGray").runtimeValue();
+      let topLine = $objc("UIView").$new();
+      topLine.$setBackgroundColor(lineColor);
+      self.$setTopLine(topLine);
+      self.$view().$addSubview(topLine);
+
+      let bottomLine = $objc("UIView").$new();
+      bottomLine.$setBackgroundColor(lineColor);
+      self.$setBottomLine(bottomLine);
+      self.$view().$addSubview(bottomLine);
+    },
+    "resetToolbar": () => {
+      const window = $objc("UIApplication").$sharedApplication().$keyWindow();
+      const picker = $objc("PKToolPicker").$sharedToolPickerForWindow(window);
+      self.$setToolbar(picker);
+
+      const canvas = self.$canvas();
+      picker.$addObserver(canvas);
+      picker.$setVisible_forFirstResponder(true, canvas);
+      canvas.$becomeFirstResponder();
+    },
     "closeButtonTapped": () => {
       self.$dismissViewControllerAnimated_completion(true, null);
       $widget.height = widgetHeight;
     },
     "clearButtonTapped": () => {
-      if (majorVersion < 13) {
-        self.$canvas().$eraseAll()
+      if (ios13) {
+        self.$resetCanvas();
+        self.$resetToolbar();
       } else {
-        self.$canvas().$removeFromSuperview();
-
-        let canvas = $objc("PKCanvasView").$new();
-        canvas.$setBackgroundColor($color("#FFFFFF").runtimeValue());
-        canvas.$setBackgroundImage(null);
-        self.$setCanvas(canvas);
-        self.$view().$addSubview(canvas);
-  
-        let toolbar = self.$modernToolbar();
-        toolbar.$setCanvas(canvas);
-
-        let palette = toolbar.$valueForKey("paletteView");
-        let ink = getInk();
-        if (ink) {
-          palette.$setSelectedToolInk(ink);
-          palette.$toolPickerDidChangeSelectedToolInk(palette);
-        }
+        self.$canvas().$eraseAll();
       }
     },
     "settingButtonTapped": () => settingButtonTapped(),
     "_toolbarShareButtonTapped:": () => {
-
+      self.$shareButtonTapped();
+    },
+    "shareButtonTapped": () => {
       let canvas = self.$canvas();
       let bounds = canvas.$bounds();
       let size = {"width": bounds.width, "height": bounds.height};
@@ -358,6 +397,12 @@ $define({
       });
       
       renderer.$renderDrawing_completion(drawing, block);
+    },
+    "undoButtonTapped": () => {
+      self.$canvas().$undoManager().$undo();
+    },
+    "redoButtonTapped": () => {
+      self.$canvas().$undoManager().$redo();
     }
   },
   classEvents: {
