@@ -1676,8 +1676,8 @@ $ui.render({
         data: map(visibleItems)
       },
       layout: (make, view) => {
-        make.left.equalTo(view.super.safeAreaLeft).inset(8);
-        make.right.equalTo(view.super.safeAreaRight).inset(8);
+        make.left.equalTo(view.super.safeAreaLeft);
+        make.right.equalTo(view.super.safeAreaRight);
         make.top.equalTo($("search-bar").bottom).offset(8);
         make.bottom.equalTo(0);
       },
