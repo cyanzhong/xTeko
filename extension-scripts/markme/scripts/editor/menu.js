@@ -1,4 +1,5 @@
 let needsFocus = false;
+let ios13 = parseInt($device.info.version.split(".")[0]) >= 13;
 
 $define({
   type: "EventHandler: NSObject",
@@ -52,6 +53,11 @@ exports.setup = () => {
     menu.$setWidth_forSegmentAtIndex(64, 0);
     menu.$setWidth_forSegmentAtIndex(64, 1);
     menu.$addTarget_action_forControlEvents(eventHandler, "didSelectMenuItem:", 1 << 12);
+
+    if (ios13) {
+      const color = $rgb(238, 238, 239);
+      menu.$setBackgroundColor(color.ocValue());
+    }
   
     return menu;
   })());
