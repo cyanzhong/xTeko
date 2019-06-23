@@ -53,6 +53,17 @@ JSBox 对编程新手和有经验的工程师都是非常友好的，你不想�
 
 我们一直在努力，在之后也会不断地带来更多超酷的特性，敬请期待。
 
+# 相关项目
+
+- [vscode-jsbox](https://github.com/cyanzhong/vscode-jsbox): VSCode 上面的 JSBox 扩展
+- [react-jsbox](https://github.com/Nicify/react-jsbox): 一个用 React 编写 JSBox 脚本的 Renderer
+- [jsbox-cli](https://github.com/Dreamacro/jsbox-cli): VSCode 插件的 CLI 版本
+- [jsbox-cli-plus](https://github.com/Fndroid/jsbox-cli-plus): 另一个 VSCode 插件的 CLI 版本
+- [jsbox_pc_debuger](https://github.com/Fndroid/jsbox_pc_debuger): JSBox 在 PC 上面的日志工具
+- [jsbox-ksc](https://github.com/mooz/jsbox-ksc): 为基于 Web 的编辑器提供键盘配置
+
+如果你有相关的有趣项目并且想要加入上述列表，欢迎[提交一个 PR！](https://github.com/cyanzhong/xTeko/pull/new/master)
+
 # 联系我们吧！
 
 当你在使用中碰到任何问题，无论是作为用户还是开发者，请通过以下方式与我们取得联系，感谢！

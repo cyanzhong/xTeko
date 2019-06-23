@@ -53,6 +53,17 @@ JSBox is not only a full-fledged environment for standard JavaScript, but also p
 
 We are still working on it and will introduce cooler features in the future.
 
+# Related projects
+
+- [vscode-jsbox](https://github.com/cyanzhong/vscode-jsbox): JSBox Development Utilities on VSCode
+- [react-jsbox](https://github.com/Nicify/react-jsbox): A Custom React Renderer for writing JSBox apps in React
+- [jsbox-cli](https://github.com/Dreamacro/jsbox-cli): CLI version of JSBox VSCode extension
+- [jsbox-cli-plus](https://github.com/Fndroid/jsbox-cli-plus): Another CLI version of JSBox VSCode extension
+- [jsbox_pc_debuger](https://github.com/Fndroid/jsbox_pc_debuger): JSBox logging utility on your PC
+- [jsbox-ksc](https://github.com/mooz/jsbox-ksc): Keyconfig experience on web-based rich text editors in iOS
+
+If you have something interesting and want to join the list, feel free to [open a PR!](https://github.com/cyanzhong/xTeko/pull/new/master)
+
 # Contact us!
 
 Please contact us in following ways. Don't hesitate to report any issues. Thank you!
