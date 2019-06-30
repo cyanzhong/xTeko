@@ -319,10 +319,16 @@ $define({
       });
     },
     "undoButtonTapped": () => {
-      self.$canvas().$undoManager().$undo();
+      const manager = self.$canvas().$undoManager();
+      if (manager.$canUndo()) {
+        manager.$undo();
+      }
     },
     "redoButtonTapped": () => {
-      self.$canvas().$undoManager().$redo();
+      const manager = self.$canvas().$undoManager();
+      if (manager.$canRedo()) {
+        manager.$redo();
+      }
     }
   },
   classEvents: {
