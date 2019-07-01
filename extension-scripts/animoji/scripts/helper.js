@@ -1,5 +1,7 @@
+var util = require("./util");
+
 function loadPuppets(path) {
-  var names = $objc("AVTPuppet").$puppetNames();
+  var names = util.ios13 ? $objc("AVTAnimoji").$animojiNames() : $objc("AVTPuppet").$puppetNames();
   var puppets = [];
 
   for (var idx=0; idx<names.$count(); ++idx) {

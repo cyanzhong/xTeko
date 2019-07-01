@@ -1,6 +1,7 @@
 var factory = require("./factory");
 var templates = require("./templates");
 var helper = require("./helper");
+var util = require("./util");
 
 var puppetNames = helper.loadPuppets();
 var movieExists = false;
@@ -224,8 +225,13 @@ function registerNotifications() {
 
 function selectPuppetAtIndex(index) {
   var name = puppetNames[index];
-  var puppet = $objc("AVTPuppet").$puppetNamed_options(name, null);
-  _puppetView().$setAvatarInstance(puppet);
+  if (util.ios13) {
+    var puppet = $objc("AVTAnimoji").$animojiNamed(name);
+    _puppetView().$setAvatar(puppet);
+  } else {
+    var puppet = $objc("AVTPuppet").$puppetNamed_options(name, null);
+    _puppetView().$setAvatarInstance(puppet);
+  }
 }
 
 function removeRecording() {

@@ -1,5 +1,8 @@
+var util = require("./util");
+var type = util.ios13 ? "AVTRecordView" : "AVTPuppetView";
+
 $define({
-  type: "PuppetView: AVTPuppetView",
+  type: "PuppetView: " + type,
   events: {
     startRecording: startRecording,
     stopRecording: stopRecording,
