@@ -37,7 +37,8 @@ function dismiss(vc, blk) {
 }
 
 function showCamera() {
-  if (typeof $photo.scan === "function") {
+  let ios13 = parseInt($device.info.version.split(".")[0]) >= 13;
+  if (ios13 && typeof $photo.scan === "function") {
     $photo.scan().then(response => {
       let images = response.results;
       if (images) {
