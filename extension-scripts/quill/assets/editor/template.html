@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    {{highlight}}
+    {{katex}}
+    {{quill}}
+    {{theme}}
+    {{fonts}}
+    {{style}}
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #editor {
+        height: auto;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      #placeholder {
+        display: none;
+      }
+
+      .ql-editor {
+        overflow-y: hidden;
+      }
+
+      .ql-container {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 17px;
+      }
+
+      .ql-container.ql-snow {
+        border: none;
+      }
+    </style>
+  </head>
+  {{body}}
+</html>
