@@ -2,6 +2,7 @@ const constants = require("../common/constants");
 const util = require("../common/util");
 const keys = ["delete", "undo", "redo", "photo", "#", "-", "*", "`", ">", "!", "[", "]", "(", ")", "|", ":", "~", "_", "$"];
 const font = $objc("UIFont").$systemFontOfSize_weight(23, 0.1).rawValue();
+const ios12 = parseInt($device.info.version.split(".")[0]) >= 12;
 
 exports.new = textView => {
   const btnInset = 5;
@@ -12,7 +13,7 @@ exports.new = textView => {
     "x": 0,
     "y": 0,
     "width": 0,
-    "height": btnHeight + btnInset
+    "height": btnHeight + btnInset * (ios12 ? 1 : 2)
   }, 1);
 
   const view = toolbar.rawValue();

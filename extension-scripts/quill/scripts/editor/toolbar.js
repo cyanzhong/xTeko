@@ -1,5 +1,6 @@
 const BTNS = require("../define/constants").BTNS;
 const eventCenter = require("./event").new();
+const ios12 = parseInt($device.info.version.split(".")[0]) >= 12;
 let btnRefs = {};
 
 exports.new = () => {
@@ -7,7 +8,13 @@ exports.new = () => {
   const btnInset = 5;
   const btnWidth = 40;
   const btnHeight = 40;
-  const frame = {"x": 0, "y": 0, "width": 0, "height": btnHeight + btnInset};
+  const frame = {
+    "x": 0,
+    "y": 0,
+    "width": 0,
+    "height": btnHeight + btnInset * (ios12 ? 1 : 2)
+  };
+  
   const style = 1;
   const toolbar = $objc("UIInputView").$alloc().$initWithFrame_inputViewStyle(frame, style);
 
