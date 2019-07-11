@@ -101,8 +101,7 @@ exports.shareFolder = async(folder) => {
 
 exports.loadImage = name => {
   let file = $file.read(`assets/${name}.png`);
-  let scale = $device.info.screen.scale;
-  return $objc("UIImage").$imageWithData_scale(file, scale).jsValue();
+  return $objc("UIImage").$imageWithData_scale(file, 3).jsValue();
 }
 
 exports.imageWithInsets = (image, insets) => {
