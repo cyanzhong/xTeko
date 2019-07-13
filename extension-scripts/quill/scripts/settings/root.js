@@ -162,8 +162,8 @@ function styleSheetsHelp() {
 const themes = [
   "background-color: rgb(255, 255, 255);\n  color: rgb(27, 27, 27);",
   "background-color: rgb(248, 241, 227);\n  color: rgb(79, 50, 28);",
-  "background-color: rgb(74, 74, 77);\n  color: rgba(255, 255, 255, 0.78);",
-  "background-color: rgb(18, 18, 18);\n  color: rgb(176, 176, 176);",
+  "background-color: rgb(74, 74, 77);\n  color: rgba(255, 255, 255, 0.78);\n  caret-color: white;",
+  "background-color: rgb(18, 18, 18);\n  color: rgb(176, 176, 176);\n  caret-color: lightgray;",
 ];
 
 function setTheme(index) {
