@@ -158,6 +158,7 @@
       function getHTML() {
         const body = document.body.cloneNode(true);
         body.querySelectorAll("script").forEach(node => node.remove());
+        body.querySelectorAll("[contenteditable]").forEach(node => node.setAttribute("contenteditable", false));
         return body.innerHTML;
       }
 
