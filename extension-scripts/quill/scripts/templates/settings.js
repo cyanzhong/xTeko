@@ -16,18 +16,6 @@ module.exports = (() => {
         }
       },
       {
-        type: "label",
-        props: {
-          id: "subtitle",
-          textColor: colors.gray,
-          align: $align.right
-        },
-        layout: (make, view) => {
-          make.right.inset(0);
-          make.centerY.equalTo(view.super);
-        }
-      },
-      {
         type: "switch",
         props: {
           id: "switcher"
@@ -57,6 +45,23 @@ module.exports = (() => {
           make.right.inset(15);
           make.size.equalTo($size(32, 32));
           make.centerY.equalTo(view.super);
+        }
+      },
+      {
+        type: "tab",
+        props: {
+          id: "quality"
+        },
+        layout: (make, view) => {
+          make.right.inset(15);
+          make.centerY.equalTo(view.super);
+        },
+        events: {
+          changed: sender => {
+            const index = sender.index;
+            storage.setImageQuality(index);
+            $device.taptic(1);
+          }
         }
       }
     ]

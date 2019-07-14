@@ -38,8 +38,9 @@ exports.open = () => {
             const section = indexPath.section;
             if (section === SECTIONS.OPTIONS) {
               const ROWS = {
-                STYLE_SHEETS: 0,
-                AUTO_SAVE: 1,
+                IMAGE_QUALITY: 0,
+                STYLE_SHEETS: 1,
+                AUTO_SAVE: 2,
               }
               if (indexPath.row === ROWS.STYLE_SHEETS) {
                 styleSheetsHelp();
@@ -71,7 +72,8 @@ function reloadData() {
     return {
       title: {
         text: title,
-        textColor: tintColor
+        textColor: tintColor,
+        align: $align.left
       },
       switcher: {
         hidden: true
@@ -80,6 +82,9 @@ function reloadData() {
         hidden: false,
         bgcolor: color,
         borderColor: tintColor
+      },
+      quality: {
+        hidden: true
       }
     };
   }
@@ -90,6 +95,24 @@ function reloadData() {
       rows: [
         {
           title: {
+            text: $l10n("IMAGE_QUALITY"),
+            textColor: colors.text,
+            align: $align.left
+          },
+          switcher: {
+            hidden: true
+          },
+          theme: {
+            hidden: true
+          },
+          quality: {
+            hidden: false,
+            items: [$l10n("LOW"), $l10n("MEDIUM"), $l10n("HIGH")],
+            index: storage.imageQuality()
+          }
+        },
+        {
+          title: {
             text: $l10n("CUSTOM_STYLE_SHEETS"),
             textColor: colors.text,
             align: $align.left
@@ -98,6 +121,9 @@ function reloadData() {
             hidden: true
           },
           theme: {
+            hidden: true
+          },
+          quality: {
             hidden: true
           }
         },
@@ -115,6 +141,9 @@ function reloadData() {
             }
           },
           theme: {
+            hidden: true
+          },
+          quality: {
             hidden: true
           }
         }
@@ -142,6 +171,9 @@ function reloadData() {
             hidden: true
           },
           theme: {
+            hidden: true
+          },
+          quality: {
             hidden: true
           }
         }

@@ -37,6 +37,10 @@
 "COPY_RICH_CONTENT" = "Copy Rich Content";
 
 "SETTINGS" = "Settings";
+"IMAGE_QUALITY" = "Image Quality";
+"HIGH" = "High";
+"MEDIUM" = "Medium";
+"LOW" = "Low";
 "CUSTOM_STYLE_SHEETS" = "Custom Style Sheets";
 "STYLE_SHEETS_HELP" = "Quill refers to the style.css file in the root folder (Quill/style.css), you can simply add your style sheets in it.";
 "AUTO_SAVE" = "Auto Save";

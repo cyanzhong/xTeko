@@ -1,3 +1,5 @@
+const storage = require("../settings/storage");
+
 exports.buildNumber = () => {
   return $app.info.build;
 }
@@ -116,17 +118,17 @@ exports.compressImage = image => {
 
   const size = $size(width * scale, height * scale);
   const resized = image.resized(size);
+  const small = (image.size.width < screen.width * scale);
 
-  const dimension = screen.width * screen.height * scale * scale * 1.2;
-  const small = (image.size.width * image.size.height < dimension);
   if (small) {
     return {
       "data": resized.png,
       "type": "png"
     };
   } else {
+    const quality = [0.3, 0.5, 0.7][storage.imageQuality()];
     return {
-      "data": resized.jpg(0.7),
+      "data": resized.jpg(quality),
       "type": "jpeg"
     }
   }

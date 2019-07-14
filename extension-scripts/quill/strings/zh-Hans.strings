@@ -37,6 +37,10 @@
 "COPY_RICH_CONTENT" = "复制富文本";
 
 "SETTINGS" = "设置";
+"IMAGE_QUALITY" = "图片质量";
+"HIGH" = "高";
+"MEDIUM" = "中";
+"LOW" = "低";
 "CUSTOM_STYLE_SHEETS" = "自定义样式表";
 "STYLE_SHEETS_HELP" = "Quill 将会引用根目录的 style.css 文件 (Quill/style.css)，你可以简单地将自定义的样式添加至该文件。";
 "AUTO_SAVE" = "自动保存文档";
