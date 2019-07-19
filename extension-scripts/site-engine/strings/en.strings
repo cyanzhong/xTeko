@@ -1,3 +1,9 @@
+"UPDATE" = "Update";
+"CANCEL" = "Cancel";
+"OK" = "OK";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+
 "README_FILE" = "README.md";
 "WEB_SERVER" = "Web Server";
 "SERVER_STARTED" = "Server Started";

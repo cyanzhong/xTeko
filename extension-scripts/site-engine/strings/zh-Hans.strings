@@ -1,3 +1,9 @@
+"UPDATE" = "更新";
+"CANCEL" = "取消";
+"OK" = "确认";
+"FOUND_NEW_VERSION" = "发现新版本";
+"UPDATE_TO_NEW_VERSION" = "更新到最新版本？";
+
 "README_FILE" = "README_CN.md";
 "WEB_SERVER" = "Web 服务器";
 "SERVER_STARTED" = "服务器已启动";

@@ -4,4 +4,5 @@ util.setup();
 const explorer = require("./scripts/explorer");
 explorer.open();
 
-$addin.checkUpdate();
+const updater = require("./scripts/updater");
+updater.check();
