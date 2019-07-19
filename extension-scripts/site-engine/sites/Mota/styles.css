@@ -1,0 +1,281 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    overflow: hidden;
+}
+
+#gameGroup {
+    position: absolute;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: #000;
+}
+
+#mainTips {
+    color: #fff;
+    font-size: 0.8rem;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 15;
+}
+
+#startPanel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow: hidden;
+    z-index: 11;
+}
+
+#startTop {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    z-index: 14;
+}
+
+#startTopProgressBar {
+    width: 90%;
+    height: 5%;
+    margin: 0 5%;
+    position: absolute;
+    top: 5%;
+    background-color: #fff;
+    z-index: 15;
+}
+
+#startTopProgress {
+    width: 0%;
+    height: 100%;
+    background-color: #666;
+}
+
+#startTopLoadTips {
+    color: #fff;
+    font-size: 0.6rem;
+    position: absolute;
+    top: 8%;
+    left: 5%;
+    z-index: 15;
+}
+
+#startBackground {
+    position:absolute;
+    top:50%;
+    left:50%;
+    height: 100%;
+    width: auto;
+    transform:translate(-50%,-50%);
+    z-index: 12;
+}
+
+#startLogo {
+    position: absolute;
+    z-index: 12;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8%;
+    max-width: 100%;
+    text-align: center;
+    font: bold 4rem STXingkai;
+}
+
+#startTitle {
+    position: absolute;
+    z-index: 13;
+}
+
+#startButtonGroup {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-size: 1.4rem;
+    background-color: #000;
+    opacity: 0.85;
+    display: none;
+    z-index: 12;
+    bottom: 0;
+    margin-bottom: 7%;
+}
+
+#startButtons {
+    display: block;
+}
+
+#levelChooseButtons {
+    display: none;
+}
+
+.startButton {
+    width: 100%;
+    margin: 20px 0;
+    color: #fff;
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+}
+
+.startButton:hover {
+    color: #ff0000;
+}
+
+#floorMsgGroup {
+    /* width: 100%;
+    height: 100%; */
+    /* top: 0;
+    right: 0; */
+    position: absolute;
+    text-align: center;
+    display: none;
+    color: #fff;
+    background-color: #000;
+    z-index: 10;
+}
+
+#logoLabel {
+    margin-top: 8%;
+    font: bold 3rem STXingkai;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#versionLabel {
+    margin-top: -3%;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#floorNameLabel {
+    margin-top: 30px;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+#statusBar {
+    position: absolute;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background: url(images/ground.png) repeat;
+    z-index: 9;
+    display: none;
+}
+#statusBar .status{
+    position: relative;
+    display: block;
+    float: left;
+}
+.status img{
+    vertical-align: middle;
+    width: auto;
+    height: 100%;
+    max-height: 1.6em;
+}
+#statusBar span{
+    color: white;
+    font: bold italic 1.1em Verdana;
+}
+#statusBar p {
+    display: inline-block;
+    vertical-align: middle;
+    width: 60%;
+    margin: 0;
+    color: white;
+    font: bold italic 1.1em Verdana;
+}
+#toolBar {
+    position: absolute;
+    background: url(images/ground.png) repeat;
+    z-index: 8;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: none;
+}
+#toolBar .tools{
+    position: relative;
+    display: block;
+    float: left;
+}
+
+p#hard {
+    width: 6em;
+    vertical-align: middle;
+    display: inline-block;
+    color: red;
+    font: bold normal 1.1em "Arial Black";
+    text-align: center;
+    margin: 0 6px 6px 0;
+}
+
+span#poison, span#weak, span#curse {
+    font-style: normal;
+    font-size: 1em;
+}
+
+.gameCanvas {
+    position: absolute;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+#curtain {
+    z-index: 7;
+    position: absolute;
+    opacity: 0;
+    background: #000000;
+}
+
+#bg {
+    z-index: 1;
+}
+
+#event {
+    z-index: 2;
+}
+
+#fg {
+    z-index: 3;
+}
+
+#hero {
+    z-index: 4;
+}
+
+#animate {
+    z-index: 5;
+}
+
+#weather {
+    z-index: 6;
+}
+
+#ui {
+    z-index: 8;
+}
+
+#data {
+    z-index: 9;
+}
+
+.clearfix:before,
+.clearfix:after {
+   content: ".";
+   display: block;
+   height: 0;
+   visibility: hidden;
+}

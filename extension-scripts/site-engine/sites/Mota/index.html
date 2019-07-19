@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html' charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge, chrome=1'>
+    <meta name='author' content='ckcz123'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes'>
+    <title></title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="screen-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <link type='text/css' href='styles.css' rel='stylesheet'>
+</head>
+<body>
+<div id='gameGroup'>
+    <p id='mainTips'>请稍后...</p>
+    <div id='startPanel'>
+        <div id='startTop'>
+            <div id='startTopProgressBar'>
+                <div id='startTopProgress'></div>
+            </div>
+            <p id='startTopLoadTips'>资源即将开始加载</p>
+        </div>
+        <img id='startBackground' src='images/bg.png'>
+        <!-- 标题界面；可以改style的color使标题改变颜色 -->
+        <p id='startLogo' style="color: black"></p>
+        <div id='startButtonGroup'>
+            <div id='startButtons'>
+                <span class='startButton' id='playGame'>开始游戏</span>
+                <span class='startButton' id='loadGame'>载入游戏</span>
+                <span class='startButton' id='replayGame'>录像回放</span>
+            </div>
+            <div id='levelChooseButtons'>
+                <span class='startButton' id='easyLevel'>简单</span>
+                <span class='startButton' id='normalLevel'>普通</span>
+                <span class='startButton' id='hardLevel'>困难</span>
+            </div>
+        </div>
+    </div>
+    <div id='floorMsgGroup'>
+        <p id='logoLabel'></p>
+        <p id='versionLabel'></p>
+        <p id='floorNameLabel'></p>
+    </div>
+    <div id='statusBar' class="clearfix">
+        <div class="status" id="floorCol">
+            <img src='images/floor.png' id="img-floor">
+            <p class='statusLabel' id='floor'></p>
+        </div>
+        <div class="status" id="lvCol">
+            <img src='images/lv.png' id="img-lv">
+            <p class='statusLabel' id='lv'></p>
+        </div>
+        <div class="status">
+            <img src='images/hp.png' id="img-hp">
+            <p class='statusLabel' id='hp'></p>
+        </div>
+        <div class="status">
+            <img src='images/atk.png' id="img-atk">
+            <p class='statusLabel' id='atk'></p>
+        </div>
+        <div class="status">
+            <img src='images/def.png' id="img-def">
+            <p class='statusLabel' id='def'></p>
+        </div>
+        <div class="status" id="mdefCol">
+            <img src='images/mdef.png' id="img-mdef">
+            <p class='statusLabel' id='mdef'></p>
+        </div>
+        <div class="status" id="moneyCol">
+            <img src='images/money.png' id="img-money">
+            <p class='statusLabel' id='money'></p>
+        </div>
+        <div class="status" id="expCol">
+            <img src='images/experience.png' id="img-experience">
+            <p class='statusLabel' id='experience'></p>
+        </div>
+        <div class="status" id="upCol">
+            <img src='images/up.png' id="img-up">
+            <p class='statusLabel' id='up'></p>
+        </div>
+        <div class="status">
+            <span class='statusLabel' id='yellowKey' style="color:#FFCCAA"></span>
+            <span class='statusLabel' id='blueKey' style="color:#AAAADD"></span>
+            <span class='statusLabel' id='redKey' style="color:#FF8888"></span>
+        </div>
+        <div class="status" id="debuffCol">
+            <span class='statusLabel' id='poison' style="color: #AFFCA8;"></span>
+            <span class='statusLabel' id='weak' style="color: #FECCD0;"></span>
+            <span class='statusLabel' id='curse' style="color: #C2F4E7;"></span>
+        </div>
+    </div>
+    <div id="toolBar" class="clearfix">
+        <img src="images/book.png" class="tools" id='img-book'>
+        <img src="images/fly.png" class="tools" id='img-fly'>
+        <img src="images/toolbox.png" class="tools" id='img-toolbox'>
+        <img src="images/shop.png" class="tools" id='img-shop'>
+        <img src="images/save.png" class="tools" id='img-save'>
+        <img src="images/load.png" class="tools" id='img-load'>
+        <img src="images/settings.png" class="tools" id='img-settings'>
+        <p class="statusLabel tools" id="hard"></p>
+    </div>
+    <div id="curtain"></div>
+    <canvas class='gameCanvas' id='bg' width='416' height='416'></canvas>
+    <canvas class='gameCanvas' id='event' width='416' height='416'></canvas>
+    <canvas class='gameCanvas' id='fg' width='416' height='416'></canvas>
+    <canvas class='gameCanvas' id='hero' width='416' height='416'></canvas>
+    <canvas class='gameCanvas' id='animate' width='416' height='416'></canvas>
+    <canvas class='gameCanvas' id='weather' width='416' height='416'></canvas>
+    <canvas class='gameCanvas' id='ui' width='416' height='416'></canvas>
+    <canvas class='gameCanvas' id='data' width='416' height='416'>此浏览器不支持HTML5</canvas>
+</div>
+<script id='mainScript' src='main.js'></script>
+<script src='libs/thirdparty/mid.min.js'></script>
+</body>
+</html>
