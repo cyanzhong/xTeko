@@ -19,7 +19,11 @@ exports.loadImage = name => {
 }
 
 exports.successTaptic = () => {
-  $objc("UINotificationFeedbackGenerator").$new().$notificationOccurred(0);
+  $thread.main({
+    handler: () => {
+      $objc("UINotificationFeedbackGenerator").$new().$notificationOccurred(0);
+    }
+  });
 }
 
 exports.convertCollections = collections => {
