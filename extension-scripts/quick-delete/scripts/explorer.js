@@ -55,7 +55,7 @@ exports.open = () => {
 
   function reloadData() {
     smartAlbums = $objc("PHAssetCollection").$fetchAssetCollectionsWithType_subtype_options(2, 2, null);
-    userCollections = $objc("PHCollectionList").$fetchTopLevelUserCollectionsWithOptions(null);
+    userCollections = util.userCollections();
 
     $("explorer-list").data = [
       {

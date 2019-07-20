@@ -30,3 +30,15 @@ exports.convertCollections = collections => {
   }
   return results;
 }
+
+exports.userCollections = () => {
+  const collections = $objc("PHCollectionList").$fetchTopLevelUserCollectionsWithOptions(null);
+  const results = $objc("NSMutableArray").$array();
+  for (let idx=0; idx<collections.$count(); ++idx) {
+    const collection = collections.$objectAtIndex(idx);
+    if (collection.$isKindOfClass($objc("PHAssetCollection").$class())) {
+      results.$addObject(collection);
+    }
+  }
+  return results;
+}

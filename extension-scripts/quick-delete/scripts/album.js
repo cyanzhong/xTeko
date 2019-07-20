@@ -75,7 +75,7 @@ function reloadData(resetIndexes = true) {
     selectedIndexes = [];
   }
 
-  collections = $objc("PHCollectionList").$fetchTopLevelUserCollectionsWithOptions(null);
+  collections = util.userCollections();
   const albumList = $("album-list");
   if (!albumList) {
     return;
