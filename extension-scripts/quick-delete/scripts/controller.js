@@ -3,28 +3,39 @@ require("./cell");
 const util = require("./util");
 const manager = $objc("PHImageManager").$defaultManager();
 const columns = 4;
+const spacing = 5;
 let assets = null;
 let selectedAssets = $objc("NSMutableSet").$set();
 
 $define({
   type: "PhotosWaterfallController: UIViewController<UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout>",
-  props: ["deleteButton", "assetCollection", "collectionView"],
+  props: ["deleteButton", "shareButton", "assetCollection", "collectionView"],
   events: {
     "viewDidLoad": () => {
       self.$super().$viewDidLoad();
+
       const deleteButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("DELETE"), 0, self, "delete");
       deleteButton.$setEnabled(false);
       self.$setDeleteButton(deleteButton);
-      self.$navigationItem().$setRightBarButtonItem(deleteButton);
+      
+      const shareButton = $objc("UIBarButtonItem").$alloc().$initWithTitle_style_target_action($l10n("SHARE"), 0, self, "share");
+      shareButton.$setEnabled(false);
+      self.$setShareButton(shareButton);
 
+      const navButtons = $objc("NSMutableArray").$array();
+      navButtons.$addObject(deleteButton);
+      navButtons.$addObject(shareButton);
+      self.$navigationItem().$setRightBarButtonItems(navButtons);
+      
       const frame = {"x": 0, "y": 0, "width": 0, "height": 0};
       const layout = $objc("CHTCollectionViewWaterfallLayout").$new();
       layout.$setColumnCount(columns);
-      layout.$setSectionInset({"top": 1, "left": 1, "bottom": 1, "right": 1});
-      layout.$setMinimumColumnSpacing(1);
-      layout.$setMinimumInteritemSpacing(1);
+      layout.$setSectionInset({"top": spacing, "left": spacing, "bottom": spacing, "right": spacing});
+      layout.$setMinimumColumnSpacing(spacing);
+      layout.$setMinimumInteritemSpacing(spacing);
 
       const collectionView = $objc("UICollectionView").$alloc().$initWithFrame_collectionViewLayout(frame, layout);
+      collectionView.$setBackgroundColor($color("white").ocValue());
       collectionView.$setAlwaysBounceVertical(true);
       collectionView.$registerClass_forCellWithReuseIdentifier($objc("PhotosWaterfallCell").$class(), "id");
       collectionView.$setDataSource(self);
@@ -66,6 +77,11 @@ $define({
       if (deleteButton) {
         deleteButton.$setEnabled(false);
       }
+
+      const shareButton = self.$shareButton();
+      if (shareButton) {
+        shareButton.$setEnabled(false);
+      }
     },
     "enterForeground": () => {
       self.$reloadData();
@@ -100,17 +116,37 @@ $define({
         });
       }));
     },
+    "share": () => {
+      const assets = selectedAssets.$allObjects();
+      const images = [];
+
+      const options = $objc("PHImageRequestOptions").$new();
+      options.$setSynchronous(true);
+      options.$setDeliveryMode(1);
+      options.$setResizeMode(0);
+      const size = {"width": -1, "height": -1};
+
+      for (let idx=0; idx<assets.$count(); ++idx) {
+        const asset = assets.$objectAtIndex(idx);
+        const handler = $block("void, UIImage *, NSDictionary *", (image, info) => {
+          images.push(image.jsValue());
+        });
+        manager.$requestImageForAsset_targetSize_contentMode_options_resultHandler(asset, size, 0, options, handler);
+      }
+
+      $share.sheet(images);
+    },
     "collectionView:numberOfItemsInSection:": (view, section) => {
       return assets.$count();
     },
     "collectionView:layout:sizeForItemAtIndexPath:": (view, layout, indexPath) => {
-      const asset = self.$assetsAtIndexPath(indexPath);
+      const asset = self.$assetAtIndexPath(indexPath);
       return {"width": asset.$pixelWidth(), "height": asset.$pixelHeight()};
     },
     "collectionView:cellForItemAtIndexPath:": (view, indexPath) => {
       const cell = view.$dequeueReusableCellWithReuseIdentifier_forIndexPath("id", indexPath);
 
-      const asset = self.$assetsAtIndexPath(indexPath);
+      const asset = self.$assetAtIndexPath(indexPath);
       cell.$setAssetIdentifier(asset.$localIdentifier());
       const selected = selectedAssets.$containsObject(asset);
       cell.$setSelected(selected);
@@ -133,7 +169,7 @@ $define({
     "collectionView:didSelectItemAtIndexPath:": (view, indexPath) => {
       view.$deselectItemAtIndexPath_animated(indexPath, true);
 
-      const asset = self.$assetsAtIndexPath(indexPath);
+      const asset = self.$assetAtIndexPath(indexPath);
       const cell = view.$cellForItemAtIndexPath(indexPath);
       if (selectedAssets.$containsObject(asset)) {
         selectedAssets.$removeObject(asset);
@@ -143,10 +179,12 @@ $define({
         cell.$setSelected(true);
       }
 
-      self.$deleteButton().$setEnabled(selectedAssets.$count() > 0);
+      const buttonEnabled = selectedAssets.$count() > 0;
+      self.$deleteButton().$setEnabled(buttonEnabled);
+      self.$shareButton().$setEnabled(buttonEnabled);
       $device.taptic();
     },
-    "assetsAtIndexPath:": indexPath => {
+    "assetAtIndexPath:": indexPath => {
       const asset = assets.$objectAtIndex(indexPath.$item());
       return asset;
     }

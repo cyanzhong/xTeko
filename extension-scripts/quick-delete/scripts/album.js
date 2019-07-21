@@ -1,4 +1,5 @@
 const util = require("./util");
+const templates = require("./templates");
 let collections = null;
 let selectedIndexes = null;
 
@@ -24,29 +25,7 @@ exports.open = () => {
         type: "list",
         props: {
           id: "album-list",
-          template: [
-            {
-              type: "label",
-              props: {
-                id: "title"
-              },
-              layout: (make, view) => {
-                make.centerY.equalTo(view.super);
-                make.left.right.inset(15);
-              }
-            },
-            {
-              type: "label",
-              props: {
-                id: "subtitle",
-                align: $align.right
-              },
-              layout: (make, view) => {
-                make.centerY.equalTo(view.super);
-                make.right.inset(15);
-              }
-            }
-          ]
+          template: templates.explorerList
         },
         layout: $layout.fill,
         events: {
@@ -83,7 +62,6 @@ function reloadData(resetIndexes = true) {
 
   albumList.data = util.convertCollections(collections).map((item, idx) => {
     const collection = collections.$objectAtIndex(idx);
-    const results = $objc("PHAsset").$fetchAssetsInAssetCollection_options(collection, null);
     const color = (() => {
       if (selectedIndexes.includes(idx)) {
         return $color("red");
@@ -94,11 +72,11 @@ function reloadData(resetIndexes = true) {
 
     return {
       "title": {
-        "text": item,
+        "text": util.collectionTitle(item),
         "textColor": color
       },
       "subtitle": {
-        "text": `${results.$count()}`,
+        "text": `${util.collectionLength(collection)}`,
         "textColor": color
       }
     }

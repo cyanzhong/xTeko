@@ -1,4 +1,5 @@
 const util = require("./util");
+const templates = require("./templates");
 
 exports.open = () => {
   let smartAlbums = null;
@@ -26,7 +27,8 @@ exports.open = () => {
         type: "list",
         props: {
           id: "explorer-list",
-          stickyHeader: false
+          stickyHeader: false,
+          template: templates.explorerList
         },
         layout: $layout.fill,
         events: {
@@ -57,18 +59,40 @@ exports.open = () => {
     smartAlbums = $objc("PHAssetCollection").$fetchAssetCollectionsWithType_subtype_options(2, 2, null);
     userCollections = util.userCollections();
 
+    const convertCollections = collections => {
+      return util.convertCollections(collections).map(collection => {
+        return {
+          title: {
+            text: util.collectionTitle(collection)
+          },
+          subtitle: {
+            text: `${util.collectionLength(collection)}`
+          }
+        }
+      });
+    }
+
     $("explorer-list").data = [
       {
         title: "",
-        rows: [$l10n("ALL_PHOTOS")]
+        rows: [
+          {
+            title: {
+              text: $l10n("ALL_PHOTOS")
+            },
+            subtitle: {
+              text: `${$objc("PHAsset").$fetchAssetsWithOptions(null).$count()}`
+            }
+          }
+        ]
       },
       {
         title: $l10n("SMART_ALBUMS"),
-        rows: util.convertCollections(smartAlbums)
+        rows: convertCollections(smartAlbums)
       },
       {
         title: $l10n("ALBUMS"),
-        rows: util.convertCollections(userCollections)
+        rows: convertCollections(smartAlbums)
       }
     ];
   }

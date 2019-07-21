@@ -30,7 +30,7 @@ exports.convertCollections = collections => {
   const results = [];
   for (let idx=0; idx<collections.$count(); ++idx) {
     const collection = collections.$objectAtIndex(idx);
-    results.push(collection.$localizedTitle().jsValue());
+    results.push(collection);
   }
   return results;
 }
@@ -45,4 +45,12 @@ exports.userCollections = () => {
     }
   }
   return results;
+}
+
+exports.collectionTitle = collection => {
+  return collection.$localizedTitle().jsValue();
+}
+
+exports.collectionLength = collection => {
+  return $objc("PHAsset").$fetchAssetsInAssetCollection_options(collection, null).$count();
 }

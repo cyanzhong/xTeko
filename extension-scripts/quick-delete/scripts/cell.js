@@ -8,12 +8,16 @@ $define({
       self = self.$super().$initWithFrame(frame);
       self.$setBackgroundColor($color("white").ocValue());
 
+      const layer = self.$layer();
+      layer.$setBorderWidth(1.0 / $device.info.screen.scale);
+      layer.$setBorderColor($color("#DDDDDD").ocValue().$CGColor());
+
       const imageView = $objc("UIImageView").$new();
       self.$setImageView(imageView);
       self.$contentView().$addSubview(imageView);
 
       const overlayView = $objc("UIView").$new();
-      overlayView.$setBackgroundColor($color("white").ocValue());
+      overlayView.$setBackgroundColor($color("black").ocValue());
       overlayView.$setAlpha(0.5);
       overlayView.$setHidden(true);
       self.$setOverlayView(overlayView);
