@@ -56,7 +56,17 @@ exports.open = () => {
   });
 
   function reloadData() {
-    smartAlbums = $objc("PHAssetCollection").$fetchAssetCollectionsWithType_subtype_options(2, 2, null);
+    const assetCollections = $objc("PHAssetCollection").$fetchAssetCollectionsWithType_subtype_options(2, 2, null);
+    const _smartAlbums = $objc("NSMutableArray").$array();
+
+    for (let idx=0; idx<assetCollections.$count(); ++idx) {
+      const collection = assetCollections.$objectAtIndex(idx);
+      if (collection.$assetCollectionSubtype() < 10000) {
+        _smartAlbums.$addObject(collection);
+      }
+    }
+
+    smartAlbums = _smartAlbums;
     userCollections = util.userCollections();
 
     const convertCollections = collections => {
@@ -92,7 +102,7 @@ exports.open = () => {
       },
       {
         title: $l10n("ALBUMS"),
-        rows: convertCollections(smartAlbums)
+        rows: convertCollections(userCollections)
       }
     ];
   }
