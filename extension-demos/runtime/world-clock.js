@@ -15,7 +15,6 @@ $define({
       self.$ORIGlayoutSubviews();
 
       let combinedLabel = self.$combinedLabel();
-      combinedLabel.$setTextColor($color("darkGray").runtimeValue());
       combinedLabel.$sizeToFit();
       combinedLabel.$setFrame({"x": 10, "y": 4, "width": combinedLabel.$frame().width, "height": combinedLabel.$frame().height});
 
@@ -24,10 +23,13 @@ $define({
       nameLabel.$setFrame({"x": 10, "y": combinedLabel.$frame().height + combinedLabel.$frame().y + 1, "width": nameLabel.$frame().width, "height": nameLabel.$frame().height});
 
       let digitalClock = self.$digitalClock();
-      digitalClock.$setTextColor($color("white").runtimeValue());
-
       let offset = ios13 ? -14 : 4;
       digitalClock.$setFrame({"x": self.$frame().width - digitalClock.$frame().width - 10, "y": offset, "width": digitalClock.$frame().width, "height": digitalClock.$frame().height});
+
+      if (ios13) {
+        combinedLabel.$setTextColor($color("darkGray").runtimeValue());
+        digitalClock.$setTextColor($color("white").runtimeValue());
+      }
 
       let lineView = self.$lineView();
       lineView.$setFrame({"x": 0, "y": self.$frame().height - lineHeight, "width": self.$frame().width, "height": lineHeight});
