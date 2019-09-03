@@ -1,0 +1,17 @@
+"SETTINGS" = "配置选项";
+"GENERAL" = "通用";
+"STRING" = "文本";
+"BOOLEAN" = "布尔值";
+"LIST" = "列表";
+"NUMBER" = "浮点数";
+"SLIDER" = "滑块";
+"OTHERS" = "其他选项";
+"CHILD" = "二级设置";
+"MIN_VALUE" = "最小值";
+"MAX_VALUE" = "最大值";
+"SCRIPT" = "运行脚本";
+"LINK" = "链接";
+"INFO" = "信息展示";
+"LOW" = "低";
+"MEDIUM" = "中";
+"HIGH" = "高";

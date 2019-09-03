@@ -1,0 +1,17 @@
+"SETTINGS" = "Settings";
+"GENERAL" = "General";
+"STRING" = "Text";
+"BOOLEAN" = "Boolean";
+"LIST" = "Multi-value";
+"NUMBER" = "Number";
+"SLIDER" = "Slider";
+"OTHERS" = "Others";
+"CHILD" = "2nd level settings";
+"MIN_VALUE" = "Min Value";
+"MAX_VALUE" = "Max Value";
+"SCRIPT" = "Run Script";
+"LINK" = "Link";
+"INFO" = "Information";
+"LOW" = "Low";
+"MEDIUM" = "Medium";
+"HIGH" = "High";

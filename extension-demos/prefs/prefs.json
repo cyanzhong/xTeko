@@ -1,0 +1,82 @@
+{
+  "title": "SETTINGS",
+  "groups": [
+    {
+      "title": "GENERAL",
+      "items": [
+        {
+          "title": "STRING",
+          "type": "string",
+          "key": "prefs.demo.string",
+          "value": "ys7TSZaHxQu61aaL"
+        },
+        {
+          "title": "BOOLEAN",
+          "type": "boolean",
+          "key": "prefs.demo.boolean",
+          "value": false
+        },
+        {
+          "title": "LIST",
+          "type": "list",
+          "key": "prefs.demo.list",
+          "items": ["LOW", "MEDIUM", "HIGH"],
+          "value": 1
+        },
+        {
+          "title": "NUMBER",
+          "type": "number",
+          "key": "prefs.demo.number",
+          "value": 0
+        },
+        {
+          "title": "SLIDER",
+          "type": "slider",
+          "key": "prefs.demo.slider",
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "title": "OTHERS",
+      "items": [
+        {
+          "title": "CHILD",
+          "type": "child",
+          "value": {
+            "title": "CHILD",
+            "items": [
+              {
+                "title": "MIN_VALUE",
+                "type": "integer",
+                "key": "prefs.min.value",
+                "value": 0
+              },
+              {
+                "title": "MAX_VALUE",
+                "type": "integer",
+                "key": "prefs.max.value",
+                "value": 100
+              }
+            ]
+          }
+        },
+        {
+          "title": "SCRIPT",
+          "type": "script",
+          "value": "require('scripts/test').run();"
+        },
+        {
+          "title": "LINK",
+          "type": "link",
+          "value": "https://docs.xteko.com"
+        },
+        {
+          "title": "INFO",
+          "type": "info",
+          "value": "1.0.0"
+        }
+      ]
+    }
+  ]
+}
