@@ -1,0 +1,62 @@
+{
+  "title": "Properties",
+  "items": [
+    {
+      "title": "axis",
+      "type": "list",
+      "key": "demo.stack.axis",
+      "items": [
+        "$stackViewAxis.horizontal",
+        "$stackViewAxis.vertical"
+      ],
+      "value": 0
+    },
+    {
+      "title": "distribution",
+      "type": "list",
+      "key": "demo.stack.distribution",
+      "items": [
+        "$stackViewDistribution.fill",
+        "$stackViewDistribution.fillEqually",
+        "$stackViewDistribution.fillProportionally",
+        "$stackViewDistribution.equalSpacing",
+        "$stackViewDistribution.equalCentering"
+      ],
+      "value": 1
+    },
+    {
+      "title": "alignment",
+      "type": "list",
+      "key": "demo.stack.alignment",
+      "items": [
+        "$stackViewAlignment.fill",
+        "$stackViewAlignment.leading",
+        "$stackViewAlignment.top",
+        "$stackViewAlignment.firstBaseline",
+        "$stackViewAlignment.center",
+        "$stackViewAlignment.trailing",
+        "$stackViewAlignment.bottom",
+        "$stackViewAlignment.lastBaseline"
+      ],
+      "value": 0
+    },
+    {
+      "title": "spacing",
+      "type": "number",
+      "key": "demo.stack.spacing",
+      "value": 10
+    },
+    {
+      "title": "baselineRelative",
+      "type": "boolean",
+      "key": "demo.stack.baselineRelative",
+      "value": false
+    },
+    {
+      "title": "layoutMarginsRelative",
+      "type": "boolean",
+      "key": "demo.stack.layoutMarginsRelative",
+      "value": false
+    }
+  ]
+}
