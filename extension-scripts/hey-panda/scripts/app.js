@@ -84,7 +84,7 @@ function insertLabels() {
 }
 
 function updateText(text) {
-  const chars = [...text];
+  const chars = [...text].filter(item => item.length > 0 && item != "️");
   let cursor = 0;
   for (let idx=0; idx<9; ++idx) {
     const label = $(`label@${idx}`);
