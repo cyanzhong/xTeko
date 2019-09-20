@@ -1,0 +1,16 @@
+"UPDATE" = "更新";
+"CANCEL" = "取消";
+"OK" = "确认";
+"FOUND_NEW_VERSION" = "发现新版本";
+"UPDATE_TO_NEW_VERSION" = "更新到最新版本？";
+
+"NOT_AUTHORIZED" = "未授权使用相册";
+"OPEN_SETTINGS" = "打开设置";
+"QUIT" = "退出";
+"MAIN_TITLE" = "所有相册";
+"DELETE" = "删除";
+"SHARE" = "分享";
+"ALL_PHOTOS" = "所有图片";
+"SMART_ALBUMS" = "智能相册";
+"ALBUMS" = "相册";
+"ORGANIZE_ALBUMS" = "整理相册";

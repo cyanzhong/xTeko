@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #player {
+        width: 640px;
+        height: 400px;
+        background: black;
+        display: block;
+        text-align: center;
+      }
+
+      #btn {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        top: 160px;
+        left: 280px;
+      }
+    </style>
+    <script>
+      var _webkitAudioContext = webkitAudioContext;
+      var _audioHandles = [];
+
+      webkitAudioContext = function() {
+        var audioHandle = new _webkitAudioContext;
+        _audioHandles.push(audioHandle);
+        return audioHandle;
+      }
+    </script>
+    <script src="./js-dos.js"></script>
+    <script src="./js/main.js"></script>
+  </head>
+  <body unselectable="on" onselectstart="return false;" onmousedown="return false;">
+    <div id="player">
+			<img id="btn" src="./img/btn.png" onclick="loadGame()">
+		</div>
+    <div id="container" style="display: none;">
+      <canvas id="canvas" width="640" height="400" style="background: black"></canvas>
+      <script>
+        function initDosBox(name, folder, command) {
+          let canvas = document.querySelector("#canvas");
+          let options = {
+            onprogress: (stage, total, loaded) => {},
+            log: message => {}
+          };
+          Dos(canvas, options).ready((fs, main) => {
+            fs.extract(`./roms/${name}`, `/${folder}`).then(() => {
+              main(["-c", `cd ${folder}`, "-c", command || ""]);
+              setTimeout(() => {
+                $notify("didMount");
+              }, 200);
+            });
+          });
+        }
+
+        function setAudioEnabled(enabled) {
+          _audioHandles.forEach(handle => {
+            if (enabled) {
+              handle.resume();
+            } else {
+              handle.suspend();
+            }
+          });
+        }
+      </script>
+    </div>
+  </body>
+</html>

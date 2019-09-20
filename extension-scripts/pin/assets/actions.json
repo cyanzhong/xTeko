@@ -1,0 +1,273 @@
+[
+  {
+    "name": "ACTION_SEARCH",
+    "items": [
+      {
+        "name": "AS_DEFAULT",
+        "pattern": "x-web-search://?%@"
+      },
+      {
+        "name": "AS_GOOGLE",
+        "pattern": "https://www.google.com/#newwindow=1&q=%@"
+      },
+      {
+        "name": "AS_YAHOO",
+        "pattern": "https://search.yahoo.com/search?p=%@"
+      },
+      {
+        "name": "AS_BING",
+        "pattern": "http://cn.bing.com/search?q=%@"
+      },
+      {
+        "name": "AS_BAIDU",
+        "pattern": "https://www.baidu.com/s?wd=%@"
+      },
+      {
+        "name": "AS_DUCKDUCKGO",
+        "pattern": "https://duckduckgo.com/?q=%@"
+      },
+      {
+        "name": "AS_WOLFRAM",
+        "pattern": "http://www.wolframalpha.com/input/?i=%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_COMPOSE",
+    "items": [
+      {
+        "name": "AC_REMINDER",
+        "pattern": "compose://?id=com.apple.reminders.RemindersEditorExtension"
+      },
+      {
+        "name": "AC_NOTES",
+        "pattern": "compose://?id=com.apple.mobilenotes.SharingExtension"
+      },
+      {
+        "name": "AC_EVERNOTES",
+        "pattern": "compose://?id=com.evernote.iPhone.Evernote.EvernoteShare"
+      },
+      {
+        "name": "AC_WEIBO",
+        "pattern": "compose://?id=com.apple.share.SinaWeibo.post"
+      },
+      {
+        "name": "AC_FACEBOOK",
+        "pattern": "compose://?id=com.apple.share.Facebook.post"
+      },
+      {
+        "name": "AC_TWITTER",
+        "pattern": "compose://?id=com.apple.share.Twitter.post"
+      },
+      {
+        "name": "AC_ONENOTE",
+        "pattern": "compose://?id=com.microsoft.onenote.shareextension"
+      },
+      {
+        "name": "AC_DRAFTS",
+        "pattern": "compose://?id=com.agiletortoise.Drafts5.Drafts-Share"
+      },
+      {
+        "name": "AC_OUTLOOK",
+        "pattern": "compose://?id=com.microsoft.Office.Outlook.compose-shareextension"
+      },
+      {
+        "name": "AC_QQMAIL",
+        "pattern": "compose://?id=com.tencent.qqmail.shareextension"
+      },
+      {
+        "name": "AC_DAYONE",
+        "pattern": "compose://?id=com.bloombuilt.dayone-ios.Share"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_OPEN",
+    "items": [
+      {
+        "name": "AO_URL",
+        "pattern": "open-url://%@"
+      },
+      {
+        "name": "AO_SHARESHEET",
+        "pattern": "share-sheet://"
+      },
+      {
+        "name": "AO_MAILTO",
+        "pattern": "mailto:%@"
+      },
+      {
+        "name": "AO_TEL",
+        "pattern": "tel:%@"
+      },
+      {
+        "name": "AO_SMS",
+        "pattern": "sms:%@"
+      },
+      {
+        "name": "AO_FACETIME",
+        "pattern": "facetime:%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_DICTIONARY",
+    "items": [
+      {
+        "name": "AD_YOUDAO",
+        "pattern": "http://m.youdao.com/dict?&q=%@"
+      },
+      {
+        "name": "AD_BING",
+        "pattern": "http://cn.bing.com/dict/search?q=%@"
+      },
+      {
+        "name": "AD_BAIDU",
+        "pattern": "http://dict.baidu.com/s?wd=%@"
+      },
+      {
+        "name": "AD_ICIBA",
+        "pattern": "http://www.iciba.com/%@"
+      },
+      {
+        "name": "AD_EUDIC",
+        "pattern": "http://dict.eudic.net/mdicts/en/%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_TRANSLATE",
+    "items": [
+      {
+        "name": "AT_GOOGLE",
+        "pattern": "http://translate.google.cn/?hl=en#auto/zh-CN/%@"
+      },
+      {
+        "name": "AT_BAIDU",
+        "pattern": "http://fanyi.baidu.com/#en/zh/%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_WIKI",
+    "items": [
+      {
+        "name": "AW_WIKI",
+        "pattern": "https://zh.wikipedia.org/wiki/%@"
+      },
+      {
+        "name": "AW_BAIDU",
+        "pattern": "http://baike.baidu.com/item/%@"
+      },
+      {
+        "name": "AW_BAIKE",
+        "pattern": "http://so.baike.com/doc/%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_MAPS",
+    "items": [
+      {
+        "name": "AM_APPLE",
+        "pattern": "http://maps.apple.com/?q=%@"
+      },
+      {
+        "name": "AM_GOOGLE",
+        "pattern": "comgooglemaps://?q=%@"
+      },
+      {
+        "name": "AM_AMAP",
+        "pattern": "iosamap://poi?sourceApplication=pin&backScheme=pin:&name=%@"
+      },
+      {
+        "name": "AM_BAIDU",
+        "pattern": "baidumap://map/geocoder?address=%@"
+      },
+      {
+        "name": "AM_QQMAPS",
+        "pattern": "qqmap://map/"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_IMAGE",
+    "items": [
+      {
+        "name": "AI_GOOGLE",
+        "pattern": "https://www.google.com/search?q=%@&tbm=isch"
+      },
+      {
+        "name": "AI_BING",
+        "pattern": "http://cn.bing.com/images/search?q=%@"
+      },
+      {
+        "name": "AI_BAIDU",
+        "pattern": "http://image.baidu.com/search/wiseala?tn=wiseala&word=%@"
+      },
+      {
+        "name": "AI_FLICKR",
+        "pattern": "https://www.flickr.com/search/?text=%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_VIDEO",
+    "items": [
+      {
+        "name": "AV_YOUTUBE",
+        "pattern": "https://www.youtube.com/results?search_query=%@"
+      },
+      {
+        "name": "AV_YOUKU",
+        "pattern": "http://www.soku.com/search_video/q_%@"
+      },
+      {
+        "name": "AV_TUDOU",
+        "pattern": "http://www.soku.com/t/nisearch/%@"
+      },
+      {
+        "name": "AV_SOHU",
+        "pattern": "http://so.tv.sohu.com/mts?wd=%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_APPS",
+    "items": [
+      {
+        "name": "AA_APPSTORE",
+        "pattern": "itms-apps://search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?media=software&term=%@"
+      },
+      {
+        "name": "AA_SSPAI",
+        "pattern": "http://sspai.com/search/?q=%@"
+      },
+      {
+        "name": "AA_ZUIMEI",
+        "pattern": "http://zuimeia.com/search/?keyword=%@"
+      },
+      {
+        "name": "AA_PRODUCTHUNT",
+        "pattern": "http://www.producthunt.com/?#!/s/posts/%@"
+      }
+    ]
+  },
+  {
+    "name": "ACTION_SHOPPING",
+    "items": [
+      {
+        "name": "AS_TAOBAO",
+        "pattern": "taobao://s.taobao.com/?q=%@"
+      },
+      {
+        "name": "AS_JD",
+        "pattern": "http://m.jd.com/ware/search.action?keyword=%@"
+      },
+      {
+        "name": "AS_AMAZON",
+        "pattern": "http://www.amazon.cn/s/field-keywords=%@"
+      }
+    ]
+  }
+]

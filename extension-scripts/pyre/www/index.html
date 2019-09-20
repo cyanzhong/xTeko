@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <script type="text/javascript" src="./js/brython.js"></script>
+    <script type="text/javascript" src="./js/stdlib.js"></script>
+    <script>
+      function notify(event) {
+        const code = document.getElementById("code");
+        $notify(event, code.value);
+      }
+
+      function append(encoded) {
+        const text = _decodeBase64(encoded);
+        const code = document.getElementById("code");
+        code.value = code.value + text;
+        return code.value; 
+      }
+
+      function evaluate() {
+        const result = run_code();
+        if (typeof result === "string") {
+          return result;
+        } else {
+          return `Error: ${result}`;
+        }
+      }
+
+      function _decodeBase64(string) {
+        return decodeURIComponent(Array.prototype.map.call(atob(string), c => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(""));
+      }
+    </script>
+  </head>
+  <body onload="brython()">
+    <textarea id="code" class="codearea" rows="20"></textarea>
+    <script type="text/python3" src="./builtin/repl.py" id="__main__"></script>
+  </body>
+</html>

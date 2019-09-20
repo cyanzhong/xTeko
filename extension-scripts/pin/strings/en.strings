@@ -1,0 +1,104 @@
+"DONE" = "Done";
+"CLIPBOARD" = "Clipboard";
+"ACTION" = "Action";
+"SETTINGS" = "Settings";
+"CREATE" = "Create";
+"COPIED" = "Copied";
+"EDIT" = "Edit";
+"SEARCH" = "Search";
+"CLEAR" = "Clear";
+"CREATE_ACTION" = "Create Action";
+"SEARCH_ENGINE" = "Search Engine";
+"CLEAR_CLIPBOARD" = "Clear Clipboard";
+"LAUNCH" = "Launch";
+"MAKE_ICON" = "Make Icon";
+"USE_DEFAULT_ICON" = "Use Default Icon";
+"PHOTO_LIBRARY" = "Photo Library";
+
+"ACTION_JSBOX" = "JSBox Script";
+"ACTION_LIST" = "Action List";
+"ACTION_SHARE" = "Share Extension";
+"ACTION_CUSTOM" = "Custom Action";
+"ACTION_NAME" = "Action Name";
+"ACTION_PATTERN" = "Action Pattern";
+"ACTION_ICON" = "Action Icon";
+"DONT_ENCODE_URL" = "Don't encode URL";
+"ENCODE_TIPS" = "In most cases, we need to encode URL parameters, but some apps don't decode it correctly, in that case, you need to check this option.";
+
+"ACTION_QUICK" = "Quick Actions";
+"ACTION_SEARCH" = "Search";
+"ACTION_COMPOSE" = "Compose";
+"ACTION_OPEN" = "Open As";
+"ACTION_DICTIONARY" = "Dictionary";
+"ACTION_TRANSLATE" = "Translate";
+"ACTION_WIKI" = "Wiki";
+"ACTION_MAPS" = "Maps";
+"ACTION_IMAGE" = "Image";
+"ACTION_VIDEO" = "Video";
+"ACTION_APPS" = "Apps";
+"ACTION_SHOPPING" = "Shopping";
+
+"AS_DEFAULT" = "Default Search";
+"AS_GOOGLE" = "Google";
+"AS_YAHOO" = "Yahoo";
+"AS_BING" = "Bing";
+"AS_BAIDU" = "Baidu";
+"AS_DUCKDUCKGO" = "DuckDuckGo";
+"AS_WOLFRAM" = "Wolfram Alpha";
+
+"AC_REMINDER" = "Reminders";
+"AC_NOTES" = "Notes";
+"AC_EVERNOTES" = "EverNotes";
+"AC_WEIBO" = "Weibo";
+"AC_FACEBOOK" = "Facebook";
+"AC_TWITTER" = "Twitter";
+"AC_ONENOTE" = "OneNote";
+"AC_DRAFTS" = "Drafts";
+"AC_OUTLOOK" = "Outlook";
+"AC_QQMAIL" = "QQ Mail";
+"AC_DAYONE" = "Day One";
+
+"AO_URL" = "Link";
+"AO_SHARESHEET" = "Share Sheet";
+"AO_MAILTO" = "Mail";
+"AO_TEL" = "Telephone";
+"AO_SMS" = "Text Message";
+"AO_FACETIME" = "Facetime";
+
+"AD_YOUDAO" = "Youdao";
+"AD_BING" = "Bing";
+"AD_BAIDU" = "Baidu";
+"AD_ICIBA" = "iCiba";
+"AD_EUDIC" = "Eudic";
+
+"AT_GOOGLE" = "Google Translate";
+"AT_BAIDU" = "Baidu Translate";
+
+"AW_WIKI" = "Wikipedia";
+"AW_BAIDU" = "Baidu";
+"AW_BAIKE" = "Baike";
+
+"AM_APPLE" = "Apple Maps";
+"AM_GOOGLE" = "Google Maps";
+"AM_AMAP" = "AMap";
+"AM_BAIDU" = "Baidu Maps";
+"AM_QQMAPS" = "QQ Maps";
+
+"AI_GOOGLE" = "Google Images";
+"AI_BING" = "Bing Images";
+"AI_BAIDU" = "Baidu Images";
+"AI_FLICKR" = "Flickr";
+
+"AV_YOUTUBE" = "YouTube";
+"AV_YOUKU" = "Youku";
+"AV_TUDOU" = "Tudou";
+"AV_SOHU" = "Sohu";
+
+"AA_APPSTORE" = "App Store";
+"AA_SSPAI" = "Sspai";
+"AA_ZUIMEI" = "Zuimei";
+"AA_PRODUCTHUNT" = "Product Hunt";
+
+"AS_TAOBAO" = "Taobao";
+"AS_JD" = "JD.com";
+"AS_AMAZON" = "Amazon";

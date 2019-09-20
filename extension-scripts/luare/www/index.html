@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <script type="text/javascript" src="./js/fengari.js"></script>
+    <script>
+      function notify(event, result) {
+        $notify(event, result);
+      }
+
+      function runCode(encoded) {
+        const code = _decodeBase64(encoded);
+        return evaluate(code);
+      }
+
+      function _decodeBase64(string) {
+        return decodeURIComponent(Array.prototype.map.call(atob(string), c => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(""));
+      }
+    </script>
+    <body>
+      <code id="fengari-console"></code>
+      <label id="fengari-prompt" for="fengari-input">→ </label>
+      <script type="application/lua" src="./__repl__.lua" async></script>
+    </body>
+  </head>
+</html>

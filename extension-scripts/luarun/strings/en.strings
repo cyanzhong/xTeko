@@ -1,0 +1,12 @@
+"UPDATE" = "Update";
+"CANCEL" = "Cancel";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+
+"NEW_FOLDER" = "New Folder";
+"NEW_FILE" = "New File";
+"IMPORT_FILE" = "Import File";
+
+"FOLDER_NAME" = "Folder Name";
+"FILE_NAME" = "File Name";
+"INVALID_NAME" = "Invalid Name";

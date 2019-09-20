@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1">
+    <link rel="stylesheet" href="./css/katex.min.css">
+    <link rel="stylesheet" href="./css/prism.css">
+    <link rel="stylesheet" href="./css/notebook.css">
+    <link rel="stylesheet" href="./css/nbpreview.css">
+    <script type="text/javascript" src="./js/es5-shim.min.js"></script>
+    <script type="text/javascript" src="./js/marked.min.js"></script>
+    <script type="text/javascript" src="./js/ansi_up.min.js"></script>
+    <script type="text/javascript" src="./js/prism.min.js"></script>
+    <script type="text/javascript" src="./js/katex.min.js"></script>
+    <script type="text/javascript" src="./js/katex-auto-render.min.js"></script>
+    <script type="text/javascript" src="./js/notebook.min.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <div id="notebook-holder"></div>
+    </div>
+    <script>
+      const $holder = document.querySelector("#notebook-holder");
+
+      function render(path) {
+        fetch(path)
+        .then(resp => resp.json())
+        .then(json => {
+          const notebook = nb.parse(json);
+          while ($holder.hasChildNodes()) {
+            $holder.removeChild($holder.lastChild);
+          }
+          $holder.innerHTML = "";
+          $holder.appendChild(notebook.render());
+          Prism.highlightAll();
+        });
+      }
+    </script>
+  </body>
+</html>

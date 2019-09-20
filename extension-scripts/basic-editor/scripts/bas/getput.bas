@@ -1,0 +1,21 @@
+DIM IM%(10000)
+SCREEN 1
+LINE (10,20)-(30,50),2
+LINE (30,50)-(0,30),1
+LINE (0,30)-(10,20),3
+GET (0,0)-(50,50),IM%
+FOR I=1 to 100
+PUT (INT(RND*320), INT(RND*200)), IM%
+NEXT I
+WHILE INKEY$="": WEND
+SCREEN 18
+red# = &hff0000
+yellow# = &hffff00
+blue# = &h0000ff
+LINE (10,20)-(30,50),red#
+LINE (30,50)-(0,30),yellow#
+LINE (0,30)-(10,20),blue#
+GET (0,0)-(50,50),IM%
+FOR I=1 to 100
+PUT (INT(RND*320), INT(RND*200)), IM%
+NEXT I

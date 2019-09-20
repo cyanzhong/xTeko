@@ -1,0 +1,23 @@
+"UPDATE" = "更新";
+"CANCEL" = "取消";
+"FOUND_NEW_VERSION" = "发现新版本";
+"UPDATE_TO_NEW_VERSION" = "更新到最新版本？";
+
+"README" = "查看说明";
+"README_FILE" = "README_CN.md";
+"SETTINGS" = "设置";
+"KEYBOARD_UNAVAILABLE" = "请切换到竖屏模式来使用键盘";
+"HOT_KEYS" = "快捷键设置";
+"HOT_KEY_INDEX" = "快捷键";
+"NAME" = "显示名称";
+"KEY_CODE" = "键值";
+"LAUNCH" = "直接启动";
+"LAUNCH_WITH_COMMAND" = "带命令启动";
+"CONFIGURE" = "配置";
+"LAUNCH_COMMAND" = "启动命令";
+"MOUNT_FOLDER" = "挂载目录";
+"COMMAND_EXAMPLE" = "在这里输入 DOS 命令";
+"LETTERS_N_NUMBERS" = "仅支持数字和字母";
+"INVALID_FOLDER" = "目录名不能包含字母和数字以外的字符，并且不能超过 8 个字符。";
+"INPUT_LAUNCH_COMMAND" = "输入启动命令";
+"MODIFIERS" = "修饰符";

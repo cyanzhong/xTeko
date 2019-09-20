@@ -1,0 +1,82 @@
+"README_FILE" = "README_CN.md";
+"EXAMPLE_FILE" = "查看示例";
+
+"UPDATE" = "更新";
+"CANCEL" = "取消";
+"OK" = "确认";
+"FOUND_NEW_VERSION" = "发现新版本";
+"UPDATE_TO_NEW_VERSION" = "更新到最新版本？";
+
+"PLACEHOLDER" = "点击开始编辑...";
+"ADD_LINK" = "添加链接";
+"URL" = "链接地址";
+"NONE" = "无";
+
+"ADD_FORMULA" = "添加公式";
+"FORMULA_EXAMPLE" = "例如 e=mc^2";
+
+"ICLOUD_DRIVE" = "iCloud 云盘";
+"EDIT" = "编辑";
+"PREVIEW" = "预览";
+
+"NEW_FOLDER" = "新建目录";
+"NEW_FILE" = "新建文件";
+"IMPORT_FILE" = "导入文件";
+"FOLDER_NAME" = "目录名";
+"FILE_NAME" = "文件名";
+"INVALID_NAME" = "名称无效";
+
+"RENAME" = "重命名";
+"SHARE" = "分享";
+
+"SHARE_FILE" = "分享源文件";
+"SHARE_IMAGE" = "分享图片";
+"SHARE_PDF" = "分享 PDF";
+"SHARE_HTML" = "分享 HTML";
+"COPY_HTML" = "复制 HTML";
+"COPY_RICH_CONTENT" = "复制富文本";
+
+"SETTINGS" = "设置";
+"IMAGE_QUALITY" = "图片质量";
+"HIGH" = "高";
+"MEDIUM" = "中";
+"LOW" = "低";
+"CUSTOM_STYLE_SHEETS" = "自定义样式表";
+"STYLE_SHEETS_HELP" = "Quill 将会引用根目录的 style.css 文件 (Quill/style.css)，你可以简单地将自定义的样式添加至该文件。";
+"AUTO_SAVE" = "自动保存文档";
+"EXPORT_LOCAL_FILES" = "导出本地文件";
+
+"CLEAR" = "清除";
+"ADD" = "添加";
+"DELETE" = "删除";
+
+"PHOTO_LIBRARY" = "选取照片";
+"CAMERA" = "拍摄照片";
+"SCAN_DOCUMENTS" = "扫描文稿";
+"ADD_SKETCH" = "添加速绘";
+
+"UPGRADE_IOS" = "抱歉，请升级你的 iOS 版本。";
+"DONE" = "完成";
+"COPY" = "复制";
+"COPIED" = "已复制";
+
+"CANVAS_SIZE" = "画布大小";
+"FULL_SCREEN" = "全屏";
+"A4_PAPER" = "A4 纸";
+"SQUARE" = "方形";
+"CLEAR_AFTER_COPYING" = "复制后清除";
+
+"SAVE_WEBPAGE" = "保存当前网页到 Quill？";
+"SAVE" = "保存";
+
+"THEME" = "主题";
+"WHITE" = "白色";
+"SEPIA" = "棕色";
+"GRAY" = "灰色";
+"NIGHT" = "黑色";
+
+"FONTS" = "字体";
+"SMALL" = "小";
+"NORMAL" = "正常";
+"LARGE" = "大";
+"HUGE" = "超大";

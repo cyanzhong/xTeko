@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link href="local://assets/editor/highlight.css" rel="stylesheet">
+    <link href="local://assets/editor/katex.css" rel="stylesheet">
+    <link href="local://assets/editor/quill.css" rel="stylesheet">
+    <link href="local://assets/editor/theme.css" rel="stylesheet">
+    <link href="local://style.css" rel="stylesheet">
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 17px;
+      }
+
+      #editor {
+        height: auto;
+        width: 100%;
+        overflow: hidden;
+      }
+      
+      #placeholder {
+        margin: 15px;
+        color: lightgray;
+        display: none;
+      }
+
+      .ql-editor {
+        overflow-y: hidden;
+      }
+
+      .ql-container {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 17px;
+      }
+
+      .ql-container.ql-snow {
+        border: none;
+      }
+    </style>
+    <script src="local://assets/editor/highlight.js"></script>
+    <script src="local://assets/editor/katex.js"></script>
+    <script src="local://assets/editor/quill.js"></script>
+  </head>
+  <body>
+    <div id="placeholder">{{placeholder}}</div>
+    <div id="editor"></div>
+    <script>
+      const placeholder = document.querySelector("#placeholder");
+      const editor = new Quill("#editor", {
+        theme: "snow",
+        modules: {
+          syntax: true,
+          toolbar: false,
+          history: {
+            delay: 2000,
+            maxStack: 100,
+            userOnly: true
+          }
+        }
+      });
+
+      document.body.addEventListener("click", () => {
+        editor.focus();
+        placeholder.style.display = "none";
+      });
+
+      document.body.addEventListener("keydown", event => {
+        if (event.keyCode === 13) {
+          const container = document.querySelector(".ql-container");
+          $notify("heightChanged", container.clientHeight);
+        }
+      });
+
+      editor.on("editor-change", event => {
+        const delay = event === "text-change" ? 100 : 0;
+        setTimeout(notifyChange, delay);
+      });
+
+      function initEditor(config) {
+        const fonts = config.fonts;
+        const names = [];
+        let styles = "";
+
+        const empty = (() => {
+          const ops = config.contents.ops;
+          if (!ops || ops.length === 0) {
+            return true;
+          } else if (ops.length > 1) {
+            return false;
+          } else {
+            const insert = ops[0].insert;
+            if (!insert) {
+              return true;
+            } else {
+              return insert === "" || insert === "\n";
+            }
+          }
+        })();
+
+        if (empty) {
+          placeholder.style.display = "block";
+        }
+        
+        fonts.forEach(font => {
+          const name = getFontName(font);
+          names.push(name);
+          styles += `.ql-font-${name} {\n  font-family: "${font}"\n}\n\n`;
+        });
+
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = styles;
+        document.head.appendChild(styleSheet);
+
+        const attributor = Quill.import("attributors/class/font");
+        attributor.whitelist = names;
+        Quill.register(attributor, true);
+        
+        editor.setContents(config.contents);
+      }
+
+      function getContents() {
+        return editor.getContents();
+      }
+
+      function convertHTML(base64) {
+        const decode = string => {
+          return decodeURIComponent(Array.prototype.map.call(atob(string), c => {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          }).join(""));
+        }
+
+        const strip = (a, b) => {
+          with (new Option()) {
+            innerHTML = a;
+            for (a = getElementsByTagName("script"); (b = a[0]);) {
+              b.parentNode.removeChild(b);
+            }
+            return innerHTML;
+          }
+        };
+
+        const html = strip(decode(base64));
+        setHTML(html);
+        $notify("didFinishRendering", getContents());
+      }
+
+      function setHTML(html) {
+        editor.clipboard.dangerouslyPasteHTML(html);
+      }
+
+      function getHTML() {
+        const body = document.body.cloneNode(true);
+        body.querySelectorAll("script").forEach(node => node.remove());
+        body.querySelectorAll("[contenteditable]").forEach(node => node.setAttribute("contenteditable", false));
+        return body.innerHTML;
+      }
+
+      function clean() {
+        const range = editor.getSelection();
+        if (range == null) return;
+        if (range.length === 0) {
+          Object.keys(editor.getFormat()).forEach(name => {
+            editor.format(name, false);
+          });
+        } else {
+          editor.removeFormat(range);
+        }
+        notifyChange();
+      }
+
+      function insertImage(source) {
+        editor.insertEmbed(editor.getSelection().index || 0, "image", source);
+      }
+
+      function indent(offset) {
+        editor.format("indent", (editor.getFormat().indent || 0) + parseInt(offset));
+      }
+
+      function getFormat() {
+        return editor.getFormat();
+      }
+
+      function format(name, args) {
+        editor.format(name, args);
+      }
+
+      function undo() {
+        editor.history.undo();
+      }
+
+      function redo() {
+        editor.history.redo();
+      }
+
+      function focus() {
+        editor.focus();
+      }
+
+      function blur() {
+        editor.blur();
+      }
+
+      function setFont(font) {
+        const name = getFontName(font);
+        format("font", name);
+      }
+
+      function getFontName(font) {
+        return font.replace(/ /g, "");
+      }
+
+      function notifyChange() {
+        $notify("editorChanged", editor.getFormat());
+      }
+    </script>
+  </body>
+</html>

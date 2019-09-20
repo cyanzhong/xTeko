@@ -1,0 +1,82 @@
+"README_FILE" = "README.md";
+"EXAMPLE_FILE" = "Example";
+
+"UPDATE" = "Update";
+"CANCEL" = "Cancel";
+"OK" = "OK";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+
+"PLACEHOLDER" = "Tap to Edit...";
+"ADD_LINK" = "Add Link";
+"URL" = "URL";
+"NONE" = "None";
+
+"ADD_FORMULA" = "Add Formula";
+"FORMULA_EXAMPLE" = "E.g. e=mc^2";
+
+"ICLOUD_DRIVE" = "iCloud Drive";
+"EDIT" = "Edit";
+"PREVIEW" = "Preview";
+
+"NEW_FOLDER" = "New Folder";
+"NEW_FILE" = "New File";
+"IMPORT_FILE" = "Import File";
+"FOLDER_NAME" = "Folder Name";
+"FILE_NAME" = "File Name";
+"INVALID_NAME" = "Invalid Name";
+
+"RENAME" = "Rename";
+"SHARE" = "Share";
+
+"SHARE_FILE" = "Share Source File";
+"SHARE_IMAGE" = "Share Image";
+"SHARE_PDF" = "Share PDF";
+"SHARE_HTML" = "Share HTML";
+"COPY_HTML" = "Copy HTML";
+"COPY_RICH_CONTENT" = "Copy Rich Content";
+
+"SETTINGS" = "Settings";
+"IMAGE_QUALITY" = "Image Quality";
+"HIGH" = "High";
+"MEDIUM" = "Medium";
+"LOW" = "Low";
+"CUSTOM_STYLE_SHEETS" = "Custom Style Sheets";
+"STYLE_SHEETS_HELP" = "Quill refers to the style.css file in the root folder (Quill/style.css), you can simply add your style sheets in it.";
+"AUTO_SAVE" = "Auto Save";
+"EXPORT_LOCAL_FILES" = "Export Local Files";
+
+"CLEAR" = "Clear";
+"ADD" = "Add";
+"DELETE" = "Delete";
+
+"PHOTO_LIBRARY" = "Photo Library";
+"CAMERA" = "Camera";
+"SCAN_DOCUMENTS" = "Scan Documents";
+"ADD_SKETCH" = "Add Sketch";
+
+"UPGRADE_IOS" = "Sorry, please upgrade your iOS.";
+"DONE" = "Done";
+"COPY" = "Copy";
+"COPIED" = "Copied";
+
+"CANVAS_SIZE" = "Canvas Size";
+"FULL_SCREEN" = "Full";
+"A4_PAPER" = "A4";
+"SQUARE" = "Square";
+"CLEAR_AFTER_COPYING" = "Clear After Copying";
+
+"SAVE_WEBPAGE" = "Save this web page to Quill?";
+"SAVE" = "Save";
+
+"THEME" = "Theme";
+"WHITE" = "White";
+"SEPIA" = "Sepia";
+"GRAY" = "Gray";
+"NIGHT" = "Night";
+
+"FONTS" = "Fonts";
+"SMALL" = "Small";
+"NORMAL" = "Normal";
+"LARGE" = "Large";
+"HUGE" = "Huge";

@@ -1,0 +1,242 @@
+[
+  {
+    "title": "Text Processing",
+    "rows": [
+      {
+        "name": "Not Folding",
+        "icon": "010",
+        "file": "not-folding.js"
+      },
+      {
+        "name": "Upper Case",
+        "icon": "031",
+        "file": "upper-case.js"
+      },
+      {
+        "name": "Lower Case",
+        "icon": "031",
+        "file": "lower-case.js"
+      },
+      {
+        "name": "Capitalize",
+        "icon": "031",
+        "file": "capitalize.js"
+      },
+      {
+        "name": "Reverse",
+        "icon": "031",
+        "file": "reverse.js"
+      },
+      {
+        "name": "Rotate",
+        "icon": "031",
+        "file": "rotate.js"
+      },
+      {
+        "name": "Get Content",
+        "icon": "060",
+        "file": "get-content.js"
+      },
+      {
+        "name": "Quote",
+        "icon": "104",
+        "file": "quote.js"
+      },
+      {
+        "name": "To Pinyin",
+        "icon": "162",
+        "file": "pinyin.js"
+      },
+      {
+        "name": "Count Chars",
+        "icon": "118",
+        "file": "count-chars.js"
+      }
+    ]
+  },
+  {
+    "title": "Text Encoding",
+    "rows": [
+      {
+        "name": "URL Encode",
+        "icon": "031",
+        "file": "url-encode.js"
+      },
+      {
+        "name": "URL Decode",
+        "icon": "031",
+        "file": "url-decode.js"
+      },
+      {
+        "name": "Base64 Encode",
+        "icon": "031",
+        "file": "base64-encode.js"
+      },
+      {
+        "name": "Base64 Decode",
+        "icon": "031",
+        "file": "base64-decode.js"
+      },
+      {
+        "name": "HTML Escape",
+        "icon": "031",
+        "file": "html-escape.js"
+      },
+      {
+        "name": "HTML Unescape",
+        "icon": "031",
+        "file": "html-unescape.js"
+      },
+      {
+        "name": "MD5",
+        "icon": "031",
+        "file": "md5.js"
+      },
+      {
+        "name": "SHA1",
+        "icon": "031",
+        "file": "sha1.js"
+      },
+      {
+        "name": "SHA256",
+        "icon": "031",
+        "file": "sha256.js"
+      },
+      {
+        "name": "Mars Encode",
+        "icon": "031",
+        "file": "mars.js"
+      }
+    ]
+  },
+  {
+    "title": "Special Keyboard",
+    "rows": [
+      {
+        "name": "Chars Keyboard",
+        "icon": "062",
+        "file": "chars-keyboard.js"
+      },
+      {
+        "name": "Big Emoji",
+        "icon": "055",
+        "file": "big-emoji.js"
+      },
+      {
+        "name": "Emoticons",
+        "icon": "229",
+        "file": "emoticons.js"
+      },
+      {
+        "name": "Morse Code",
+        "icon": "139",
+        "file": "morse-code.js"
+      }
+    ]
+  },
+  {
+    "title": "Utility",
+    "rows": [
+      {
+        "name": "Calculator",
+        "icon": "118",
+        "file": "calculator.js"
+      },
+      {
+        "name": "Drawing",
+        "icon": "151",
+        "file": "drawing.js"
+      },
+      {
+        "name": "Insert Date",
+        "icon": "125",
+        "file": "insert-date.js"
+      },
+      {
+        "name": "Insert Time",
+        "icon": "040",
+        "file": "insert-time.js"
+      },
+      {
+        "name": "Speak",
+        "icon": "012",
+        "file": "speak.js"
+      },
+      {
+        "name": "QR Code",
+        "icon": "017",
+        "file": "qrcode.js"
+      },
+      {
+        "name": "Plotting",
+        "icon": "164",
+        "file": "plotting.js"
+      },
+      {
+        "name": "Dice",
+        "icon": "039",
+        "file": "dice.js"
+      }
+    ] 
+  },
+  {
+    "title": "Information",
+    "rows": [
+      {
+        "name": "Google",
+        "icon": "179",
+        "file": "google.js"
+      },
+      {
+        "name": "Maps",
+        "icon": "042",
+        "file": "maps.js"
+      },
+      {
+        "name": "Translate",
+        "icon": "162",
+        "file": "translate.js"
+      }
+    ]
+  },
+  {
+    "title": "Programmer",
+    "rows": [
+      {
+        "name": "Run JavaScript",
+        "icon": "054",
+        "file": "run-js.js"
+      },
+      {
+        "name": "Run BASIC",
+        "icon": "054",
+        "file": "run-basic.js"
+      },
+      {
+        "name": "Render HTML",
+        "icon": "026",
+        "file": "render-html.js"
+      },
+      {
+        "name": "Render Markdown",
+        "icon": "031",
+        "file": "render-markdown.js"
+      }
+    ]
+  },
+  {
+    "title": "Designer",
+    "rows": [
+      {
+        "name": "Palette",
+        "icon": "151",
+        "file": "palette.js"
+      },
+      {
+        "name": "Colors",
+        "icon": "151",
+        "file": "colors.js"
+      }
+    ]
+  }
+]

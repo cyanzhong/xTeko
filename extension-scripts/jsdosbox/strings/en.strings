@@ -1,0 +1,23 @@
+"UPDATE" = "Update";
+"CANCEL" = "Cancel";
+"FOUND_NEW_VERSION" = "Found new version";
+"UPDATE_TO_NEW_VERSION" = "Update to the latest version?";
+
+"README" = "README";
+"README_FILE" = "README.md";
+"SETTINGS" = "Settings";
+"KEYBOARD_UNAVAILABLE" = "Please switch to portrait mode for inputing";
+"HOT_KEYS" = "Hot Keys";
+"HOT_KEY_INDEX" = "Hot Key";
+"NAME" = "Display Name";
+"KEY_CODE" = "Key Code";
+"LAUNCH" = "Launch";
+"LAUNCH_WITH_COMMAND" = "Launch with command";
+"CONFIGURE" = "Configure";
+"LAUNCH_COMMAND" = "Launch Command";
+"MOUNT_FOLDER" = "Mount Folder";
+"COMMAND_EXAMPLE" = "Type DOS command here";
+"LETTERS_N_NUMBERS" = "Only support letters and numbers";
+"INVALID_FOLDER" = "Folder name cannot contain characters besides letters and numbers, and must less than 8 characters.";
+"INPUT_LAUNCH_COMMAND" = "Input launch command";
+"MODIFIERS" = "Modifiers";

@@ -1,0 +1,35 @@
+body {
+    font-family: Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+#main {
+    width: 99%;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+#header {
+    line-height: 2;
+    margin-bottom: 0.25em;
+    font-weight: bold;
+}
+
+#controls {
+    border: 1px dotted #CCC;
+    padding: 0.75em;
+    margin-bottom: 0.5em;
+    background-color: #EEF;
+}
+
+#footer {
+    border: 1px dotted #CCC;
+    background-color: #EEF;
+    font-size: 0.8em;
+    padding: 0.5em;
+    text-align: center;
+}
+
+#footer a, #footer a:visited {
+    color: #0077EE;
+}

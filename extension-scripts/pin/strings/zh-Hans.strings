@@ -1,0 +1,104 @@
+"DONE" = "完成";
+"CLIPBOARD" = "剪贴板";
+"ACTION" = "动作";
+"SETTINGS" = "设置项";
+"CREATE" = "创建";
+"COPIED" = "已复制";
+"EDIT" = "编辑";
+"SEARCH" = "搜索";
+"CLEAR" = "清除";
+"CREATE_ACTION" = "创建动作";
+"SEARCH_ENGINE" = "搜索引擎";
+"CLEAR_CLIPBOARD" = "清除剪贴板项目";
+"LAUNCH" = "启动";
+"MAKE_ICON" = "制作图标";
+"USE_DEFAULT_ICON" = "使用默认图标";
+"PHOTO_LIBRARY" = "从照片中选取";
+
+"ACTION_JSBOX" = "JSBox 脚本";
+"ACTION_LIST" = "动作列表";
+"ACTION_SHARE" = "分享扩展";
+"ACTION_CUSTOM" = "自定义动作";
+"ACTION_NAME" = "动作名称";
+"ACTION_PATTERN" = "动作模式";
+"ACTION_ICON" = "动作图标";
+"DONT_ENCODE_URL" = "不进行 URL 编码";
+"ENCODE_TIPS" = "在大多数时候我们需要对链接里面的参数进行 URL 编码，但有些应用在解析参数的时候不会进行解码，所以会出现错误，在这种情况下你可以打开这个选项。";
+
+"ACTION_QUICK" = "快捷动作";
+"ACTION_SEARCH" = "搜索";
+"ACTION_COMPOSE" = "编写";
+"ACTION_OPEN" = "打开为";
+"ACTION_DICTIONARY" = "词典";
+"ACTION_TRANSLATE" = "翻译";
+"ACTION_WIKI" = "百科";
+"ACTION_MAPS" = "地图";
+"ACTION_IMAGE" = "图片";
+"ACTION_VIDEO" = "视频";
+"ACTION_APPS" = "应用";
+"ACTION_SHOPPING" = "购物";
+
+"AS_DEFAULT" = "默认搜索";
+"AS_GOOGLE" = "谷歌";
+"AS_YAHOO" = "雅虎";
+"AS_BING" = "必应";
+"AS_BAIDU" = "百度";
+"AS_DUCKDUCKGO" = "DuckDuckGo";
+"AS_WOLFRAM" = "Wolfram Alpha";
+
+"AC_REMINDER" = "提醒事项";
+"AC_NOTES" = "备忘录";
+"AC_EVERNOTES" = "印象笔记";
+"AC_WEIBO" = "微博";
+"AC_FACEBOOK" = "Facebook";
+"AC_TWITTER" = "Twitter";
+"AC_ONENOTE" = "OneNote";
+"AC_DRAFTS" = "Drafts";
+"AC_OUTLOOK" = "Outlook";
+"AC_QQMAIL" = "QQ 邮箱";
+"AC_DAYONE" = "Day One";
+
+"AO_URL" = "链接";
+"AO_SHARESHEET" = "分享面板";
+"AO_MAILTO" = "邮件";
+"AO_TEL" = "电话";
+"AO_SMS" = "短信";
+"AO_FACETIME" = "Facetime";
+
+"AD_YOUDAO" = "有道词典";
+"AD_BING" = "必应词典";
+"AD_BAIDU" = "百度词典";
+"AD_ICIBA" = "爱词霸";
+"AD_EUDIC" = "欧路词典";
+
+"AT_GOOGLE" = "谷歌翻译";
+"AT_BAIDU" = "百度翻译";
+
+"AW_WIKI" = "维基百科";
+"AW_BAIDU" = "百度百科";
+"AW_BAIKE" = "互动百科";
+
+"AM_APPLE" = "苹果地图";
+"AM_GOOGLE" = "谷歌地图";
+"AM_AMAP" = "高德地图";
+"AM_BAIDU" = "百度地图";
+"AM_QQMAPS" = "腾讯地图";
+
+"AI_GOOGLE" = "谷歌图片";
+"AI_BING" = "必应图片";
+"AI_BAIDU" = "百度图片";
+"AI_FLICKR" = "Flickr";
+
+"AV_YOUTUBE" = "YouTube";
+"AV_YOUKU" = "优酷";
+"AV_TUDOU" = "土豆";
+"AV_SOHU" = "搜狐";
+
+"AA_APPSTORE" = "App Store";
+"AA_SSPAI" = "少数派";
+"AA_ZUIMEI" = "最美应用";
+"AA_PRODUCTHUNT" = "Product Hunt";
+
+"AS_TAOBAO" = "淘宝";
+"AS_JD" = "京东";
+"AS_AMAZON" = "亚马逊";

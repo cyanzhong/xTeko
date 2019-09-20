@@ -1,0 +1,8 @@
+"MAIN_TITLE" = "JSON Viewer";
+"FROM_CLIPBOARD" = "From clipboard";
+"RUN_API" = "From API response";
+"PRO_TIP" = "Also, you can run this from share sheet";
+"STRUCTURED_VIEW" = "Structured View";
+"THEME" = "Theme";
+"PLEASE_ENTER_THE_API" = "Please enter the API";
+"FORMAT_ERROR" = "Not a valid JSON";
