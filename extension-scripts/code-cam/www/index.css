@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "Source Code Pro";
+  src: local("Source Code Pro"), url("local://www/assets/fonts/SourceCodePro-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Monaco";
+  src: local("Monaco"), url("local://www/assets/fonts/Monaco.ttf");
+}
+
+@font-face {
+  font-family: "Iosevka";
+  src: local("Iosevka"), url("local://www/assets/fonts/iosevka-regular.ttf");
+}
+
+@font-face {
+  font-family: "Ubuntu Mono";
+  src: local("Ubuntu Mono"), url("local://www/assets/fonts/UbuntuMono-R.ttf");
+}
+
+@font-face {
+  font-family: "Hack";
+  src: local("Hack-Regular"), url("local://www/assets/fonts/Hack-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Cascadia Code";
+  src: local("CascadiaCode-Regular"), url("local://www/assets/fonts/CascadiaCode-Regular-VTT.ttf");
+}
+
+* {
+  caret-color: lightgray;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.CodeMirror {
+  font-size: 15px;
+  min-width: 100%;
+  max-width: 150%;
+  height: auto;
+  display: inline-block;
+  padding: 10px 10px 10px 10px;
+}

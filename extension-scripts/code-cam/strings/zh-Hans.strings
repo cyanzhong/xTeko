@@ -1,0 +1,29 @@
+"README_FILE" = "README_CN.md";
+
+"EDIT" = "编辑";
+"PREVIEW" = "预览";
+"COPY" = "复制";
+"QUICKLOOK" = "快速查看";
+"SHARE" = "分享";
+"SETTINGS" = "设置项";
+"ABOUT" = "关于 codeCam";
+"LANGUAGE" = "编程语言";
+
+"EDITOR" = "编辑器";
+"THEME" = "主题";
+"FONT_NAME" = "字体";
+"FONT_SIZE" = "字号";
+"LINE_HEIGHT" = "行高";
+"SHOWS_LINE_NUMBERS" = "显示代码行号";
+"SHOWS_INVISIBLES" = "显示不可见字符";
+"RUN_PRETTIER" = "运行 Prettier";
+
+"WINDOW" = "窗口";
+"MAX_WIDTH" = "最大宽度";
+"HORIZONTAL_PADDING" = "水平间距";
+"VERTICAL_PADDING" = "垂直间距";
+"SHADOW_OFFSET_X" = "阴影水平偏移";
+"SHADOW_OFFSET_Y" = "阴影垂直偏移";
+"SHADOW_RADIUS" = "阴影半径";
+"BACKGROUND_COLOR" = "卡片背景色";
+"BACKGROUND_ALPHA" = "卡片背景透明度";

@@ -1,0 +1,29 @@
+"README_FILE" = "README.md";
+
+"EDIT" = "Edit";
+"PREVIEW" = "Preview";
+"COPY" = "Copy";
+"QUICKLOOK" = "Quick Look";
+"SHARE" = "Share";
+"SETTINGS" = "Settings";
+"ABOUT" = "About codeCam";
+"LANGUAGE" = "Language";
+
+"EDITOR" = "EDITOR";
+"THEME" = "Theme";
+"FONT_NAME" = "Font Name";
+"FONT_SIZE" = "Font Size";
+"LINE_HEIGHT" = "Line Height";
+"SHOWS_LINE_NUMBERS" = "Shows Line Numbers";
+"SHOWS_INVISIBLES" = "Shows Invisibles";
+"RUN_PRETTIER" = "Run Prettier";
+
+"WINDOW" = "Window";
+"MAX_WIDTH" = "Max Width";
+"HORIZONTAL_PADDING" = "Horizontal Padding";
+"VERTICAL_PADDING" = "Vertical Padding";
+"SHADOW_OFFSET_X" = "Shadow Offset X";
+"SHADOW_OFFSET_Y" = "Shadow Offset Y";
+"SHADOW_RADIUS" = "Shadow Radius";
+"BACKGROUND_COLOR" = "Card Background Color";
+"BACKGROUND_ALPHA" = "Card Background Alpha";

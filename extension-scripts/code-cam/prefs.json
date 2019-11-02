@@ -1,0 +1,186 @@
+{
+  "title": "SETTINGS",
+  "groups": [
+    {
+      "title": "EDITOR",
+      "items": [
+        {
+          "title": "THEME",
+          "type": "list",
+          "key": "editor.theme",
+          "value": 38,
+          "items": [
+            "3024-day",
+            "3024-night",
+            "abcdef",
+            "ambiance-mobile",
+            "ambiance",
+            "base16-dark",
+            "base16-light",
+            "bespin",
+            "blackboard",
+            "cobalt",
+            "colorforth",
+            "darcula",
+            "dracula",
+            "duotone-dark",
+            "duotone-light",
+            "eclipse",
+            "elegant",
+            "erlang-dark",
+            "gruvbox-dark",
+            "hopscotch",
+            "icecoder",
+            "idea",
+            "isotope",
+            "lesser-dark",
+            "liquibyte",
+            "lucario",
+            "material-darker",
+            "material-ocean",
+            "material-palenight",
+            "material",
+            "mbo",
+            "mdn-like",
+            "midnight",
+            "monokai",
+            "moxer",
+            "neat",
+            "neo",
+            "night",
+            "nord",
+            "oceanic-next",
+            "panda-syntax",
+            "paraiso-dark",
+            "paraiso-light",
+            "pastel-on-dark",
+            "railscasts",
+            "rubyblue",
+            "seti",
+            "shadowfox",
+            "solarized",
+            "ssms",
+            "the-matrix",
+            "tomorrow-night-bright",
+            "tomorrow-night-eighties",
+            "ttcn",
+            "twilight",
+            "vibrant-ink",
+            "xq-dark",
+            "xq-light",
+            "yeti",
+            "yonce",
+            "zenburn"
+          ]
+        },
+        {
+          "title": "FONT_NAME",
+          "type": "list",
+          "key": "editor.font.name",
+          "value": 0,
+          "items": [
+            "Menlo",
+            "Source Code Pro",
+            "Monaco",
+            "Iosevka",
+            "Ubuntu Mono",
+            "Hack",
+            "Cascadia Code"
+          ]
+        },
+        {
+          "title": "FONT_SIZE",
+          "type": "number",
+          "key": "editor.font.size",
+          "value": 15
+        },
+        {
+          "title": "LINE_HEIGHT",
+          "type": "number",
+          "key": "editor.line.height",
+          "value": 20
+        },
+        {
+          "title": "SHOWS_LINE_NUMBERS",
+          "type": "boolean",
+          "key": "editor.line.numbers",
+          "value": false
+        },
+        {
+          "title": "SHOWS_INVISIBLES",
+          "type": "boolean",
+          "key": "editor.invisibles",
+          "value": false
+        },
+        {
+          "title": "RUN_PRETTIER",
+          "type": "script",
+          "value": "$app.notify({'name': 'prettify'})"
+        }
+      ]
+    },
+    {
+      "title": "WINDOW",
+      "items": [
+        {
+          "title": "MAX_WIDTH",
+          "type": "string",
+          "key": "window.width.max",
+          "value": "150%"
+        },
+        {
+          "title": "HORIZONTAL_PADDING",
+          "type": "number",
+          "key": "window.padding.x",
+          "value": 10
+        },
+        {
+          "title": "VERTICAL_PADDING",
+          "type": "number",
+          "key": "window.padding.y",
+          "value": 10
+        },
+        {
+          "title": "SHADOW_OFFSET_X",
+          "type": "number",
+          "key": "window.shadow.x",
+          "value": 10
+        },
+        {
+          "title": "SHADOW_OFFSET_Y",
+          "type": "number",
+          "key": "window.shadow.y",
+          "value": 10
+        },
+        {
+          "title": "SHADOW_RADIUS",
+          "type": "number",
+          "key": "window.shadow.radius",
+          "value": 15
+        },
+        {
+          "title": "BACKGROUND_COLOR",
+          "type": "string",
+          "key": "window.bg.color",
+          "value": "#FFFFFF"
+        },
+        {
+          "title": "BACKGROUND_ALPHA",
+          "type": "number",
+          "key": "window.bg.alpha",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "title": "",
+      "items": [
+        {
+          "title": "ABOUT",
+          "type": "script",
+          "value": "require('scripts/readme').open();"
+        }
+      ]
+    }
+  ]
+}
