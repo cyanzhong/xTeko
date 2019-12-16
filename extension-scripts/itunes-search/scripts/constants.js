@@ -9,7 +9,7 @@ var countries = [
   { name: "🇨🇳 CN", code: "cn" },
   { name: "🇭🇰 HK", code: "hk" },
   { name: "🇺🇸 US", code: "us" },
-  { name: "🇬🇧 UK", code: "uk" },
+  { name: "🇬🇧 UK", code: "gb" },
   { name: "🇯🇵 JP", code: "jp" }
 ]
 

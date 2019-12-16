@@ -2,7 +2,7 @@ let regions = [
   { name: "🇨🇳 中国", code: "cn" },
   { name: "🇭🇰 香港", code: "hk" },
   { name: "🇺🇸 美国", code: "us" },
-  { name: "🇬🇧 英国", code: "uk" },
+  { name: "🇬🇧 英国", code: "gb" },
   { name: "🇯🇵 日本", code: "jp" },
 ]
 
