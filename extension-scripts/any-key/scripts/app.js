@@ -123,8 +123,7 @@ async function addPlugin() {
   }
 }
 
-function showMenu(index) {
-
+async function showMenu(index) {
   let items = [
     $l10n("RUN"),
     $l10n("EDIT"),
@@ -137,11 +136,10 @@ function showMenu(index) {
     () => deletePlugin(index),
   ];
 
-  $ui.menu(items).then(selected => {
-    if (selected) {
-      handlers[selected.index]();
-    }
-  });
+  const selected = await $ui.menu(items);
+  if (selected) {
+    handlers[selected.index]();
+  }
 }
 
 function runPlugin(plugin) {
