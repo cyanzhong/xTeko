@@ -3,7 +3,8 @@ var utility = require("./utility");
 function init() {
   $ui.render({
     props: {
-      title: $l10n("MAIN_TITLE")
+      title: $l10n("MAIN_TITLE"),
+      clipsToSafeArea: true
     },
     views: [
       {
