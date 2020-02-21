@@ -30,6 +30,9 @@ function init() {
               make.centerX.equalTo(view.super);
               make.centerY.equalTo(view.super).offset(-15);
               make.size.equalTo($size(80, 80));
+            },
+            events: {
+              tapped: selectIcon
             }
           },
           {
@@ -144,7 +147,9 @@ function selectBuiltinIcons() {
       } else {
         var palette = require("vendor/palette/main");
         palette.show(function(color) {
-          makeIcon(name, color);
+          $delay(0.5, function() {
+            makeIcon(name, color);
+          });
         });
       }
     });
