@@ -48,6 +48,15 @@ exports.open = path => {
           alpha: 0
         },
         layout: $layout.fill
+      },
+      {
+        type: "web",
+        props: {
+          id: "mindmap",
+          showsProgress: false,
+          alpha: 0
+        },
+        layout: $layout.fill
       }
     ],
     events: {

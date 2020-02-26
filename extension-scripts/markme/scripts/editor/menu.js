@@ -7,22 +7,35 @@ $define({
     "didSelectMenuItem:": sender => {
       const editor = $("editor");
       const renderer = $("renderer");
+      const mindmap = $("mindmap");
       let editorAlpha;
       let rendererAlpha;
+      let mindmapAlpha;
+      let selectedIndex = sender.$selectedSegmentIndex();
 
-      if (sender.$selectedSegmentIndex() == 0) {
+      if (selectedIndex == 0) {
         editorAlpha = 1;
         rendererAlpha = 0;
+        mindmapAlpha = 0;
         if (needsFocus) {
           editor.focus();
         }
-      } else {
+      } else if (selectedIndex == 1) {
         needsFocus = editor.runtimeValue().$isFirstResponder();
         editor.blur();
         editorAlpha = 0;
         rendererAlpha = 1;
+        mindmapAlpha = 0;
         renderer.runtimeValue().$render(editor.text);
         injectStyleSheet(renderer);
+      } else if (selectedIndex == 2) {
+        needsFocus = editor.runtimeValue().$isFirstResponder();
+        editor.blur();
+        editorAlpha = 0;
+        rendererAlpha = 0;
+        mindmapAlpha = 1;
+        const transform = require("../mindmap/transform");
+        mindmap.html = transform(editor.text);
       }
 
       $ui.animate({
@@ -30,6 +43,7 @@ $define({
         animation: () => {
           editor.alpha = editorAlpha;
           renderer.alpha = rendererAlpha;
+          mindmap.alpha = mindmapAlpha;
         }
       });
     }
@@ -47,11 +61,10 @@ exports.setup = () => {
     const items = $objc("NSMutableArray").$array();
     items.$addObject($l10n("EDIT"));
     items.$addObject($l10n("PREVIEW"));
+    items.$addObject($l10n("MINDMAP"));
 
     const menu = $objc("UISegmentedControl").$alloc().$initWithItems(items);
     menu.$setSelectedSegmentIndex(0);
-    menu.$setWidth_forSegmentAtIndex(64, 0);
-    menu.$setWidth_forSegmentAtIndex(64, 1);
     menu.$addTarget_action_forControlEvents(eventHandler, "didSelectMenuItem:", 1 << 12);
 
     const mainBundle = $objc("NSBundle").$mainBundle();

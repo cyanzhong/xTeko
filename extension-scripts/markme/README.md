@@ -7,6 +7,7 @@ Lightweight markdown editor.
 - File explorer
 - iCloud Drive support
 - Edit & Preview markdown files
+- Preview as MindMap
 - Themes, fonts and text sizes
 - Import from Files app
 - Export to HTML/PDF/Image
