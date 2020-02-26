@@ -23,7 +23,7 @@ module.exports = (() => {
           align: $align.right
         },
         layout: (make, view) => {
-          make.right.inset(0);
+          make.right.inset(5);
           make.centerY.equalTo(view.super);
         }
       },

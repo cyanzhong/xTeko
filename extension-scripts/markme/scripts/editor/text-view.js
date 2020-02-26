@@ -12,7 +12,14 @@ $define({
     "setFontSize": size => {
       self.$super().$setFontSize(size);
 
-      const font = $objc("UIFont").$fontWithName_size(self.$fontName(), size);
+      const font = (() => {
+        const name = self.$fontName();
+        if (name === ".SF UI Text") {
+          return $objc("UIFont").$systemFontOfSize(size);
+        } else {
+          return $objc("UIFont").$fontWithName_size(name, size);
+        }
+      })();
       self.$setFont(font);
 
       const highlighter = self.$storage().$highlighter();

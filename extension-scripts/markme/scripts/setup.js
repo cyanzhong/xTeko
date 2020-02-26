@@ -17,6 +17,14 @@ exports.example = () => {
     $file.mkdir(constants.cloudFolder);
   }
 
+  if (!$file.exists("files")) {
+    $file.mkdir("files");
+  }
+
+  if (!$file.exists("images")) {
+    $file.mkdir("images");
+  }
+
   if (!($cache.get(key) || false)) {
     $cache.set(key, true);
 

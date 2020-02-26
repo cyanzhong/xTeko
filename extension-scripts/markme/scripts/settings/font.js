@@ -3,7 +3,7 @@ const helper = require("./helper");
 const preview = require("./preview");
 
 exports.open = callback => {
-  const data = [".SF UI Text", "Lato", "Menlo", "Courier", "Source Code Pro", "Monaco", "Iosevka", "Ubuntu Mono", "Hack"];
+  const data = [".SF UI Text", "Lato", "Menlo", "Courier", "Source Code Pro", "Monaco", "Iosevka", "Ubuntu Mono", "Hack", "JetBrains Mono", "Cascadia Code"];
   const selectedIndex = data.indexOf(storage.font());
 
   $ui.push({
