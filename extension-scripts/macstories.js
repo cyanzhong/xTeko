@@ -1,3 +1,5 @@
+$app.appearance = "auto";
+
 $ui.render({
   views: [
     {

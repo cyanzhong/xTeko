@@ -1,3 +1,5 @@
+$app.appearance = "auto";
+
 $app.strings = {
   "en": {
     "main-title": "Exchange Rates",

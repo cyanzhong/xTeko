@@ -1,3 +1,5 @@
+$app.appearance = "auto";
+
 // Prepare data
 const data = [
   {

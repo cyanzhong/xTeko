@@ -1,5 +1,7 @@
 const rates = [0.12, 0.15, 0.18, 0.2];
 
+$app.appearance = "auto";
+
 $ui.render({
   props: {
     title: "Tip Calculator"
