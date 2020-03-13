@@ -8,12 +8,12 @@ $ui.render({
       props: {
         placeholder: "Type text here..."
       },
-      layout: function(make) {
-        make.top.left.right.inset(10);
-        make.height.equalTo(32);
+      layout({top, height}) {
+        top.left.right.inset(10);
+        height.equalTo(32);
       },
       events: {
-        returned: function(sender) {
+        returned(sender) {
           insertItem(sender.text);
           sender.blur();
           sender.text = "";
@@ -27,18 +27,18 @@ $ui.render({
         actions: [
           {
             title: "delete",
-            handler: function(sender, indexPath) {
+            handler(sender, indexPath) {
               deleteItem(indexPath);
             }
           }
         ]
       },
-      layout: function(make) {
-        make.left.bottom.right.equalTo(0);
-        make.top.equalTo($("input").bottom).offset(10);
+      layout({left, top}) {
+        left.bottom.right.equalTo(0);
+        top.equalTo($("input").bottom).offset(10);
       },
       events: {
-        didSelect: function(sender, indexPath, title) {
+        didSelect(sender, indexPath, title) {
           $clipboard.text = title;
           $device.taptic();
           $ui.toast("Copied");
@@ -48,8 +48,8 @@ $ui.render({
   ]
 });
 
-var listView = $("list");
-var clips = $cache.get("clips") || [];
+const listView = $("list");
+const clips = $cache.get("clips") || [];
 listView.data = clips;
 
 function insertItem(text) {
@@ -61,9 +61,9 @@ function insertItem(text) {
   saveItems();
 }
 
-function deleteItem(indexPath) {
-  var text = clips[indexPath.row];
-  var index = clips.indexOf(text);
+function deleteItem({row}) {
+  const text = clips[row];
+  const index = clips.indexOf(text);
   if (index >= 0) {
     clips.splice(index, 1);
     saveItems();

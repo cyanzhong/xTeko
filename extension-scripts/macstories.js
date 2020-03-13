@@ -10,9 +10,9 @@ $ui.render({
             props: {
               id: "image"
             },
-            layout: (make, view) => {
-              make.left.top.bottom.inset(5);
-              make.width.equalTo(view.height);
+            layout: ({left, width}, {height}) => {
+              left.top.bottom.inset(5);
+              width.equalTo(height);
             }
           },
           {
@@ -22,10 +22,10 @@ $ui.render({
               font: $font("bold", 17),
               lines: 0
             },
-            layout: make => {
-              make.left.equalTo($("image").right).offset(10);
-              make.top.bottom.equalTo(0);
-              make.right.inset(10);
+            layout: ({left, top, right}) => {
+              left.equalTo($("image").right).offset(10);
+              top.bottom.equalTo(0);
+              right.inset(10);
             }
           }
         ],
@@ -33,7 +33,7 @@ $ui.render({
           {
             title: "Share",
             handler: (sender, indexPath) => {
-              var data = sender.object(indexPath);
+              const data = sender.object(indexPath);
               $share.sheet([data.url, data.label.text]);
             }
           }
@@ -41,8 +41,8 @@ $ui.render({
       },
       layout: $layout.fill,
       events: {
-        didSelect: (sender, indexPath, data) => {
-          showDetail(data.label.text, data.url);
+        didSelect: (sender, indexPath, {label, url}) => {
+          showDetail(label.text, url);
         },
         pulled: refresh
       }
@@ -51,31 +51,29 @@ $ui.render({
 });
 
 function renderItems(items) {
-  var list = $("list");
-  list.data = items.map(item => {
-    return {
-      label: {
-        text: $text.HTMLUnescape(item.title)
-      },
-      image: {
-        src: extractImageURL(item)
-      },
-      url: item.url
-    };
-  });
+  const list = $("list");
+  list.data = items.map(item => ({
+    label: {
+      text: $text.HTMLUnescape(item.title)
+    },
+    image: {
+      src: extractImageURL(item)
+    },
+    url: item.url
+  }));
   list.endRefreshing();
 }
 
 function showDetail(title, url) {
   $ui.push({
     props: {
-      title: title
+      title
     },
     views: [
       {
         type: "web",
         props: {
-          url: url
+          url
         },
         layout: $layout.fill
       }
@@ -86,11 +84,11 @@ function showDetail(title, url) {
 function refresh() {
 
   $ui.loading(true);
-  var url = "https://macstories.net/feed/json";
+  const url = "https://macstories.net/feed/json";
   
-  var handler = function(resp) {
+  const handler = ({data}) => {
     $ui.loading(false);
-    var items = resp.data.items;
+    const items = data.items;
     renderItems(items);
     $cache.set("items", items);
   };
@@ -99,7 +97,7 @@ function refresh() {
 }
 
 function extractImageURL(item) {
-  var matches = item["content_html"].match(/<img src="(.*)" alt="/);
+  const matches = item["content_html"].match(/<img src="(.*)" alt="/);
   if (matches && matches.length >= 2) {
     return matches[1];
   } else {
@@ -107,7 +105,7 @@ function extractImageURL(item) {
   }
 }
 
-var cachedItems = $cache.get("items");
+const cachedItems = $cache.get("items");
 if (cachedItems && cachedItems.length > 0) {
   renderItems(cachedItems);
 }

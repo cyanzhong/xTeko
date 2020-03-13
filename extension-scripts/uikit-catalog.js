@@ -1,5 +1,5 @@
 // Prepare data
-var data = [
+const data = [
   {
     name: "Activity Indicators",
     page: {
@@ -20,7 +20,7 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(sender, indexPath) {
+            didSelect(sender, indexPath) {
               sender.cell(indexPath).startLoading(
                 indexPath.section > 0
                   ? {
@@ -54,14 +54,14 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(sender, indexPath) {
-              var message = {
+            didSelect(sender, {section}) {
+              const message = {
                 title: "Title",
                 message: "Message",
                 actions: [
                   {
                     title: "OK",
-                    handler: function() {
+                    handler() {
                       $ui.toast("OK");
                     }
                   },
@@ -71,7 +71,7 @@ var data = [
                   }
                 ]
               };
-              if (indexPath.section == 0) {
+              if (section == 0) {
                 $ui.alert(message);
               } else {
                 $ui.action(message);
@@ -98,12 +98,12 @@ var data = [
                     props: {
                       title: "Button"
                     },
-                    layout: function(make, view) {
-                      make.center.equalTo(view.super);
-                      make.width.equalTo(64);
+                    layout({center, width}, view) {
+                      center.equalTo(view.super);
+                      width.equalTo(64);
                     },
                     events: {
-                      tapped: function(sender) {
+                      tapped(sender) {
                         $ui.toast("Tapped");
                       }
                     }
@@ -159,12 +159,12 @@ var data = [
       views: [
         {
           type: "date-picker",
-          layout: function(make) {
-            make.left.top.right.equalTo(0);
+          layout({left}) {
+            left.top.right.equalTo(0);
           },
           events: {
-            changed: function(sender) {
-              $("date-label").text = sender.date;
+            changed({date}) {
+              $("date-label").text = date;
             }
           }
         },
@@ -175,9 +175,9 @@ var data = [
             align: $align.center,
             text: new Date().toString()
           },
-          layout: function(make, view) {
-            make.centerX.equalTo(view.super);
-            make.bottom.inset(10);
+          layout({centerX, bottom}, view) {
+            centerX.equalTo(view.super);
+            bottom.inset(10);
           }
         }
       ]
@@ -193,10 +193,10 @@ var data = [
             src:
               "https://images.apple.com/v/ios/what-is/b/images/performance_large.jpg"
           },
-          layout: function(make, view) {
-            make.left.right.equalTo(0);
-            make.centerY.equalTo(view.super);
-            make.height.equalTo(320);
+          layout({left, centerY, height}, view) {
+            left.right.equalTo(0);
+            centerY.equalTo(view.super);
+            height.equalTo(320);
           }
         }
       ]
@@ -212,10 +212,10 @@ var data = [
             src:
               "https://images.apple.com/media/cn/ipad-pro/2017/43c41767_0723_4506_889f_0180acc13482/films/feature/ipad-pro-feature-cn-20170605_1280x720h.mp4"
           },
-          layout: function(make, view) {
-            make.left.right.equalTo(0);
-            make.centerY.equalTo(view.super);
-            make.height.equalTo(256);
+          layout({left, centerY, height}, view) {
+            left.right.equalTo(0);
+            centerY.equalTo(view.super);
+            height.equalTo(256);
           }
         }
       ]
@@ -254,10 +254,10 @@ var data = [
             interval: 3,
             radius: 5.0
           },
-          layout: function(make, view) {
-            make.left.right.inset(10);
-            make.centerY.equalTo(view.super);
-            make.height.equalTo(320);
+          layout({left, centerY, height}, view) {
+            left.right.inset(10);
+            centerY.equalTo(view.super);
+            height.equalTo(320);
           }
         }
       ]
@@ -271,10 +271,10 @@ var data = [
           type: "picker",
           props: {
             id: "picker",
-            items: (function() {
+            items: (() => {
               function fill() {
-                var array = [];
-                for (var i = 0; i < 256; ++i) {
+                const array = [];
+                for (let i = 0; i < 256; ++i) {
                   array.push(i);
                 }
                 return array;
@@ -282,13 +282,13 @@ var data = [
               return [fill(), fill(), fill()];
             })()
           },
-          layout: function(make) {
-            make.left.top.right.equalTo(0);
+          layout({left}) {
+            left.top.right.equalTo(0);
           },
           events: {
-            changed: function(sender) {
-              var data = sender.data;
-              var color = $rgb(
+            changed(sender) {
+              const data = sender.data;
+              const color = $rgb(
                 parseInt(data[0]),
                 parseInt(data[1]),
                 parseInt(data[2])
@@ -306,9 +306,9 @@ var data = [
             bgcolor: $rgb(0, 0, 0),
             radius: 5
           },
-          layout: function(make) {
-            make.top.equalTo($("picker").bottom);
-            make.left.bottom.right.inset(10);
+          layout({top, left}) {
+            top.equalTo($("picker").bottom);
+            left.bottom.right.inset(10);
           }
         }
       ]
@@ -330,9 +330,9 @@ var data = [
                     props: {
                       value: 0.5
                     },
-                    layout: function(make, view) {
-                      make.centerY.equalTo(view.super);
-                      make.left.right.inset(20);
+                    layout({centerY, left}, view) {
+                      centerY.equalTo(view.super);
+                      left.right.inset(20);
                     }
                   }
                 ]
@@ -347,9 +347,9 @@ var data = [
                       trackColor: $color("#00EEEE"),
                       progressColor: $color("#EE00EE")
                     },
-                    layout: function(make, view) {
-                      make.centerY.equalTo(view.super);
-                      make.left.right.inset(20);
+                    layout({centerY, left}, view) {
+                      centerY.equalTo(view.super);
+                      left.right.inset(20);
                     }
                   }
                 ]
@@ -379,7 +379,7 @@ var data = [
                     },
                     layout: $layout.center,
                     events: {
-                      ready: function(sender) {
+                      ready(sender) {
                         sender.disable(2);
                       }
                     }
@@ -422,9 +422,9 @@ var data = [
                     props: {
                       value: 0.5
                     },
-                    layout: function(make, view) {
-                      make.center.equalTo(view.super);
-                      make.left.right.inset(10);
+                    layout({center, left}, view) {
+                      center.equalTo(view.super);
+                      left.right.inset(10);
                     }
                   }
                 ]
@@ -440,9 +440,9 @@ var data = [
                       maxColor: $color("#EE00EE"),
                       thumbColor: $color("#EEEE00")
                     },
-                    layout: function(make, view) {
-                      make.center.equalTo(view.super);
-                      make.left.right.inset(10);
+                    layout({center, left}, view) {
+                      center.equalTo(view.super);
+                      left.right.inset(10);
                     }
                   }
                 ]
@@ -465,13 +465,13 @@ var data = [
             min: 1,
             value: 5
           },
-          layout: function(make, view) {
-            make.centerX.equalTo(view.super);
-            make.top.equalTo(24);
+          layout({centerX, top}, view) {
+            centerX.equalTo(view.super);
+            top.equalTo(24);
           },
           events: {
-            changed: function(sender) {
-              $("stepper-label").text = "" + sender.value;
+            changed({value}) {
+              $("stepper-label").text = `${value}`;
             }
           }
         },
@@ -481,9 +481,9 @@ var data = [
             id: "stepper-label",
             text: "5"
           },
-          layout: function(make) {
-            make.centerY.equalTo($("stepper"));
-            make.right.inset(20);
+          layout({centerY, right}) {
+            centerY.equalTo($("stepper"));
+            right.inset(20);
           }
         }
       ]
@@ -544,10 +544,10 @@ var data = [
                       type: $kbType.search,
                       darkKeyboard: true
                     },
-                    layout: function(make, view) {
-                      make.center.equalTo(view.super);
-                      make.height.equalTo(32);
-                      make.left.right.inset(20);
+                    layout({center, height, left}, view) {
+                      center.equalTo(view.super);
+                      height.equalTo(32);
+                      left.right.inset(20);
                     }
                   }
                 ]
@@ -561,10 +561,10 @@ var data = [
                       placeholder: "Placeholder text",
                       secure: true
                     },
-                    layout: function(make, view) {
-                      make.center.equalTo(view.super);
-                      make.height.equalTo(32);
-                      make.left.right.inset(20);
+                    layout({center, height, left}, view) {
+                      center.equalTo(view.super);
+                      height.equalTo(32);
+                      left.right.inset(20);
                     }
                   }
                 ]
@@ -631,10 +631,10 @@ var data = [
                   id: "title",
                   font: $font(20)
                 },
-                layout: function(make) {
-                  make.left.equalTo(10);
-                  make.top.right.inset(8);
-                  make.height.equalTo(24);
+                layout({left, top, height}) {
+                  left.equalTo(10);
+                  top.right.inset(8);
+                  height.equalTo(24);
                 }
               },
               {
@@ -644,10 +644,10 @@ var data = [
                   textColor: $color("#888888"),
                   font: $font(15)
                 },
-                layout: function(make) {
-                  make.left.right.equalTo($("title"));
-                  make.top.equalTo($("title").bottom);
-                  make.bottom.equalTo(0);
+                layout({left, top, bottom}) {
+                  left.right.equalTo($("title"));
+                  top.equalTo($("title").bottom);
+                  bottom.equalTo(0);
                 }
               }
             ],
@@ -726,7 +726,7 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
+            didSelect(tableView, indexPath) {
               $ui.push({
                 views: [
                   {
@@ -788,22 +788,20 @@ var data = [
               "C",
               ".",
               "="
-            ].map(function(item) {
-              return {
-                tile: {
-                  text: "" + item
-                }
-              };
-            })
+            ].map(item => ({
+              tile: {
+                text: `${item}`
+              }
+            }))
           },
-          layout: function(make) {
-            make.left.bottom.right.equalTo(0);
-            make.height.equalTo(446);
+          layout({left, height}) {
+            left.bottom.right.equalTo(0);
+            height.equalTo(446);
           },
           events: {
-            didSelect: function(sender, indexPath, data) {
-              var token = data.tile.text;
-              var label = $("input");
+            didSelect(sender, indexPath, data) {
+              const token = data.tile.text;
+              const label = $("input");
               if (token === "C") {
                 label.text = "";
               } else if (token === "=") {
@@ -821,10 +819,10 @@ var data = [
             align: $align.right,
             font: $font("bold", 48)
           },
-          layout: function(make) {
-            make.left.right.inset(15);
-            make.top.equalTo(0);
-            make.bottom.equalTo($("matrix").top);
+          layout({left, top, bottom}) {
+            left.right.inset(15);
+            top.equalTo(0);
+            bottom.equalTo($("matrix").top);
           }
         }
       ]
@@ -838,15 +836,15 @@ var data = [
           type: "canvas",
           layout: $layout.fill,
           events: {
-            draw: function(view, ctx) {
-              var centerX = view.frame.width * 0.5;
-              var centerY = view.frame.height * 0.3;
-              var radius = 50.0;
+            draw({frame}, ctx) {
+              const centerX = frame.width * 0.5;
+              const centerY = frame.height * 0.3;
+              const radius = 50.0;
               ctx.fillColor = $color("#FF0000");
               ctx.moveToPoint(centerX, centerY - radius);
-              for (var i = 1; i < 5; ++i) {
-                var x = radius * Math.sin(i * Math.PI * 0.8);
-                var y = radius * Math.cos(i * Math.PI * 0.8);
+              for (let i = 1; i < 5; ++i) {
+                const x = radius * Math.sin(i * Math.PI * 0.8);
+                const y = radius * Math.cos(i * Math.PI * 0.8);
                 ctx.addLineToPoint(x + centerX, centerY - y);
               }
               ctx.fillPath();
@@ -867,7 +865,7 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "URL") {
                 $ui.preview({
                   title: "URL",
@@ -893,9 +891,9 @@ var data = [
   }
 ];
 
-data.forEach(function(item) {
-  item.page.props = {
-    title: item.name
+data.forEach(({page, name}) => {
+  page.props = {
+    title: name
   };
 });
 
@@ -912,8 +910,8 @@ $ui.render({
       },
       layout: $layout.fill,
       events: {
-        didSelect: function(tableView, indexPath) {
-          $ui.push(data[indexPath.row].page);
+        didSelect(tableView, {row}) {
+          $ui.push(data[row].page);
         }
       }
     }
@@ -921,6 +919,4 @@ $ui.render({
 });
 
 // Render
-$("main-list").data = data.map(function(item) {
-  return item.name;
-});
+$("main-list").data = data.map(({name}) => name);

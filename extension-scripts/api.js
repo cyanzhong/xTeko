@@ -1,5 +1,5 @@
 // Prepare data
-var data = [
+const data = [
   {
     name: "$device",
     page: {
@@ -11,8 +11,8 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
-              switch (indexPath.row) {
+            didSelect(tableView, {row}) {
+              switch (row) {
                 case 0:
                   $ui.alert({
                     title: "Info",
@@ -42,8 +42,8 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
-              switch (indexPath.row) {
+            didSelect(tableView, {row}) {
+              switch (row) {
                 case 0:
                   $ui.alert({
                     title: "Info",
@@ -64,14 +64,13 @@ var data = [
                   break;
                 case 4:
                   $ui.action({
-                    actions: $file.extensions.map(function(file) {
-                      return {
-                        title: file,
-                        handler: function() {
-                          $app.openExtension(file);
-                        }
-                      };
-                    })
+                    actions: $file.extensions.map(file => ({
+                      title: file,
+
+                      handler() {
+                        $app.openExtension(file);
+                      }
+                    }))
                   });
                   break;
                 default:
@@ -99,8 +98,8 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
-              var message = "";
+            didSelect(tableView, indexPath, title) {
+              let message = "";
               if (title === "items") {
                 message = $clipboard.items;
               } else if (title === "text") {
@@ -113,56 +112,8 @@ var data = [
               }
               $ui.alert({
                 title: "Clipboard",
-                message: message
+                message
               });
-            }
-          }
-        }
-      ]
-    }
-  },
-  {
-    name: "$icloud",
-    page: {
-      views: [
-        {
-          type: "list",
-          props: {
-            data: ["isEnabled", "save", "remove", "clear", "list", "sync"]
-          },
-          layout: $layout.fill,
-          events: {
-            didSelect: function(tableView, indexPath, title) {
-              if (title === "isEnabled") {
-                $icloud.isEnabled(function(enaled) {
-                  $ui.alert({
-                    title: "iCloud",
-                    message: "Enabled: " + enaled
-                  });
-                });
-              } else if (title === "save") {
-                $icloud.save({
-                  text: "Hello, World"
-                });
-              } else if (title === "remove") {
-                $icloud.remove({
-                  text: "Hello, World"
-                });
-              } else if (title === "clear") {
-                $icloud.clear();
-              } else if (title === "list") {
-                $icloud.list({
-                  count: 5,
-                  handler: function(items) {
-                    $ui.alert({
-                      title: "iCloud items",
-                      message: items
-                    });
-                  }
-                });
-              } else if (title === "sync") {
-                $icloud.sync();
-              }
             }
           }
         }
@@ -189,16 +140,16 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "status") {
                 $ui.alert({
                   title: "Network",
-                  message: "Status: " + $http.status
+                  message: `Status: ${$http.status}`
                 });
               } else if (title === "get" || title === "post") {
                 $http.get({
                   url: "http://news-at.zhihu.com/api/4/news/latest",
-                  handler: function(resp) {
+                  handler(resp) {
                     $ui.alert({
                       title: "Response",
                       message: resp.data
@@ -209,7 +160,7 @@ var data = [
                 $http.request({
                   method: "get",
                   url: "http://news-at.zhihu.com/api/4/news/latest",
-                  handler: function(resp) {
+                  handler(resp) {
                     $ui.alert({
                       title: "Response",
                       message: resp.data
@@ -220,14 +171,14 @@ var data = [
                 $http.download({
                   url:
                     "https://images.apple.com/v/ios/what-is/b/images/performance_large.jpg",
-                  handler: function(resp) {
+                  handler(resp) {
                     $share.sheet(resp.data);
                   }
                 });
               } else if (title === "shorten") {
                 $http.shorten({
                   url: "https://apple.com",
-                  handler: function(result) {
+                  handler(result) {
                     $ui.alert({
                       title: "Shorten",
                       message: result
@@ -237,7 +188,7 @@ var data = [
               } else if (title === "lengthen") {
                 $http.lengthen({
                   url: "http://t.cn/hYzRy",
-                  handler: function(result) {
+                  handler(result) {
                     $ui.alert({
                       title: "Lengthen",
                       message: result
@@ -272,11 +223,11 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               function showResult(result) {
                 $ui.alert({
                   title: "Result",
-                  message: "" + result
+                  message: `${result}`
                 });
               }
               if (title === "write") {
@@ -330,7 +281,7 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
+            didSelect(tableView, {row}) {
               function showImage(image) {
                 if (image) {
                   $ui.push({
@@ -339,7 +290,7 @@ var data = [
                       {
                         type: "image",
                         props: {
-                          image: image
+                          image
                         },
                         layout: $layout.fill
                       }
@@ -347,26 +298,26 @@ var data = [
                   });
                 }
               }
-              switch (indexPath.row) {
+              switch (row) {
                 case 0:
                   $photo.take({
                     device: $imgPicker.device.front,
-                    handler: function(resp) {
-                      showImage(resp.image);
+                    handler({image}) {
+                      showImage(image);
                     }
                   });
                   break;
                 case 1:
                   $photo.pick({
-                    handler: function(resp) {
-                      showImage(resp.image);
+                    handler({image}) {
+                      showImage(image);
                     }
                   });
                   break;
                 case 2:
                   $photo.prompt({
-                    handler: function(resp) {
-                      showImage(resp.image);
+                    handler({image}) {
+                      showImage(image);
                     }
                   });
                   break;
@@ -374,14 +325,14 @@ var data = [
                   $http.download({
                     url:
                       "https://images.apple.com/v/ios/what-is/b/images/performance_large.jpg",
-                    handler: function(resp) {
+                    handler(resp) {
                       if (resp.data) {
                         $photo.save({
                           data: resp.data,
-                          handler: function(result) {
+                          handler(result) {
                             $ui.alert({
                               title: "Save",
-                              message: "Result: " + result
+                              message: `Result: ${result}`
                             });
                           }
                         });
@@ -393,7 +344,7 @@ var data = [
                   $photo.fetch({
                     count: 1,
                     subType: $assetMedia.subType.screenshot,
-                    handler: function(results) {
+                    handler(results) {
                       showImage(results[0]);
                     }
                   });
@@ -401,12 +352,12 @@ var data = [
                 case 5:
                   $photo.fetch({
                     count: 1,
-                    handler: function(results) {
-                      var image = results[0];
+                    handler(results) {
+                      const image = results[0];
                       if (image) {
                         $photo.edit({
-                          image: image,
-                          handler: function(edited) {
+                          image,
+                          handler(edited) {
                             $photo.save({ image: edited });
                           }
                         });
@@ -433,9 +384,9 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "encode") {
-                var image = $qrcode.encode("https://apple.com");
+                const image = $qrcode.encode("https://apple.com");
                 if (image) {
                   $ui.push({
                     title: "Image",
@@ -443,7 +394,7 @@ var data = [
                       {
                         type: "image",
                         props: {
-                          image: image
+                          image
                         },
                         layout: $layout.center
                       }
@@ -455,7 +406,7 @@ var data = [
                 $http.download({
                   url:
                     "https://raw.githubusercontent.com/cyanzhong/cyanzhong.github.io/master/alipay.png",
-                  handler: function(resp) {
+                  handler(resp) {
                     $ui.loading(false);
                     $ui.alert({
                       title: "Decoded",
@@ -464,7 +415,7 @@ var data = [
                   }
                 });
               } else if (title === "scan") {
-                $qrcode.scan(function(string) {
+                $qrcode.scan(string => {
                   $ui.alert({
                     title: "Scanned",
                     message: string
@@ -488,7 +439,7 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "set") {
                 $cache.set("demo-cache", {
                   a: [1, 2, 3],
@@ -521,15 +472,15 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
-              if (indexPath.row == 0) {
+            didSelect(tableView, {row}) {
+              if (row == 0) {
                 $thread.background({
-                  handler: function() {}
+                  handler() {}
                 });
-              } else if (indexPath.row == 1) {
+              } else if (row == 1) {
                 $thread.main({
                   delay: 1.5,
-                  handler: function() {
+                  handler() {
                     $ui.alert({
                       title: "Hello, World!"
                     });
@@ -553,8 +504,8 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
-              var image = $qrcode.encode("https://apple.com");
+            didSelect(tableView, indexPath, title) {
+              const image = $qrcode.encode("https://apple.com");
               if (title === "sheet") {
                 $share.sheet(image);
               } else if (title === "wechat") {
@@ -581,18 +532,18 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
-              if (indexPath.row == 0) {
+            didSelect(tableView, {row}, title) {
+              if (row == 0) {
                 $push.schedule({
                   title: "Push",
                   body: "Hello, World!"
                 });
-              } else if (indexPath.row == 1) {
+              } else if (row == 1) {
                 $push.cancel({
                   title: "Push",
                   body: "Hello, World!"
                 });
-              } else if (indexPath.row == 2) {
+              } else if (row == 2) {
                 $push.clear();
               }
             }
@@ -612,11 +563,11 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
-              if (indexPath.row == 0) {
+            didSelect(tableView, {row}) {
+              if (row == 0) {
                 $location.startUpdates({
                   once: true,
-                  handler: function(location) {
+                  handler(location) {
                     $ui.push({
                       props: {
                         title: "Map"
@@ -625,7 +576,7 @@ var data = [
                         {
                           type: "map",
                           props: {
-                            location: location
+                            location
                           },
                           layout: $layout.fill
                         }
@@ -633,11 +584,11 @@ var data = [
                     });
                   }
                 });
-              } else if (indexPath.row == 1) {
+              } else if (row == 1) {
                 $location.trackHeading({
                   once: true
                 });
-              } else if (indexPath.row == 2) {
+              } else if (row == 2) {
                 $location.stopUpdates();
               }
             }
@@ -657,7 +608,7 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "call") {
                 $system.call("10010");
               } else if (title === "sms") {
@@ -686,17 +637,15 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "fetch") {
                 $calendar.fetch({
                   startDate: new Date(),
                   hours: 24 * 3,
-                  handler: function(resp) {
+                  handler({events}) {
                     $ui.alert({
                       title: "Calendar",
-                      message: resp.events.map(function(item) {
-                        return item.title;
-                      })
+                      message: events.map(item => item.title)
                     });
                   }
                 });
@@ -705,7 +654,7 @@ var data = [
                   title: "New calendar event",
                   startDate: new Date(),
                   hours: 1,
-                  handler: function(resp) {
+                  handler(resp) {
                     $ui.alert({
                       title: "Calendar",
                       message: resp
@@ -716,9 +665,9 @@ var data = [
                 $calendar.fetch({
                   startDate: new Date(),
                   hours: 24 * 10,
-                  handler: function(resp) {
+                  handler({events}) {
                     $calendar.delete({
-                      event: resp.events[0]
+                      event: events[0]
                     });
                   }
                 });
@@ -740,15 +689,13 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "fetch") {
                 $reminder.fetch({
-                  handler: function(resp) {
+                  handler({events}) {
                     $ui.alert({
                       title: "Reminder",
-                      message: resp.events.map(function(item) {
-                        return item.title;
-                      })
+                      message: events.map(item => item.title)
                     });
                   }
                 });
@@ -756,7 +703,7 @@ var data = [
                 $reminder.create({
                   title: "New reminder event",
                   alarmDate: new Date(),
-                  handler: function(resp) {
+                  handler(resp) {
                     $ui.alert({
                       title: "Reminder",
                       message: resp
@@ -765,9 +712,9 @@ var data = [
                 });
               } else if (title === "delete") {
                 $reminder.fetch({
-                  handler: function(resp) {
+                  handler({events}) {
                     $reminder.delete({
-                      event: resp.events[0]
+                      event: events[0]
                     });
                   }
                 });
@@ -789,15 +736,15 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "pick") {
                 $contact.pick({
                   multi: false,
-                  handler: function(contact) {
+                  handler({familyName}) {
                     $thread.main({
                       delay: 0.5,
-                      handler: function() {
-                        $ui.alert(contact.familyName);
+                      handler() {
+                        $ui.alert(familyName);
                       }
                     });
                   }
@@ -805,12 +752,10 @@ var data = [
               } else if (title === "fetch") {
                 $contact.fetch({
                   key: "Hello, World!",
-                  handler: function(resp) {
+                  handler(resp) {
                     $ui.alert({
                       title: "Contact",
-                      message: resp.map(function(item) {
-                        return item.givenName + " " + item.familyName;
-                      })
+                      message: resp.map(({givenName, familyName}) => `${givenName} ${familyName}`)
                     });
                   }
                 });
@@ -825,11 +770,9 @@ var data = [
               } else if (title === "delete") {
                 $contact.fetch({
                   key: "Hello, World!",
-                  handler: function(resp) {
+                  handler(resp) {
                     $contact.delete({
-                      identifiers: resp.map(function(item) {
-                        return item.identifier;
-                      })
+                      identifiers: resp.map(({identifier}) => identifier)
                     });
                   }
                 });
@@ -859,11 +802,11 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
-              if (indexPath.row == 0) {
+            didSelect({header}, {row}) {
+              if (row == 0) {
                 $motion.startUpdates({
-                  handler: function(resp) {
-                    tableView.header.text = JSON.stringify(resp);
+                  handler(resp) {
+                    header.text = JSON.stringify(resp);
                   }
                 });
               } else {
@@ -886,7 +829,7 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "index") {
                 $spotlight.index({
                   items: ["AAAAA", "BBBBB", "CCCCC"]
@@ -915,24 +858,24 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "text") {
                 $input.text({
-                  handler: function(text) {
+                  handler(text) {
                     $ui.toast(text);
                   }
                 });
               } else if (title === "ascii") {
                 $input.text({
                   type: $kbType.ascii,
-                  handler: function(text) {
+                  handler(text) {
                     $ui.toast(text);
                   }
                 });
               } else if (title === "number") {
                 $input.text({
                   type: $kbType.number,
-                  handler: function(text) {
+                  handler(text) {
                     $ui.toast(text);
                   }
                 });
@@ -954,11 +897,11 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath, title) {
+            didSelect(tableView, indexPath, title) {
               if (title === "tokenize") {
                 $text.tokenize({
                   text: "我能吞下玻璃而不伤身体",
-                  handler: function(results) {
+                  handler(results) {
                     $ui.alert({
                       title: "Tokenize",
                       message: results
@@ -995,10 +938,10 @@ var data = [
           },
           layout: $layout.fill,
           events: {
-            didSelect: function(tableView, indexPath) {
-              if (indexPath.row == 0) {
+            didSelect(tableView, {row}) {
+              if (row == 0) {
                 $pick.date({
-                  handler: function(date) {
+                  handler(date) {
                     $ui.toast(date);
                   }
                 });
@@ -1007,7 +950,7 @@ var data = [
                   props: {
                     items: [["1", "2", "3"], ["A", "B", "C"], ["!", "@", "#"]]
                   },
-                  handler: function(data) {
+                  handler(data) {
                     $ui.alert({
                       title: "Data",
                       message: data
@@ -1023,9 +966,9 @@ var data = [
   }
 ];
 
-data.forEach(function(item) {
-  item.page.props = {
-    title: item.name
+data.forEach(({page, name}) => {
+  page.props = {
+    title: name
   };
 });
 
@@ -1042,8 +985,8 @@ $ui.render({
       },
       layout: $layout.fill,
       events: {
-        didSelect: function(tableView, indexPath) {
-          $ui.push(data[indexPath.row].page);
+        didSelect(tableView, {row}) {
+          $ui.push(data[row].page);
         }
       }
     }
@@ -1051,6 +994,4 @@ $ui.render({
 });
 
 // Render
-$("main-list").data = data.map(function(item) {
-  return item.name;
-});
+$("main-list").data = data.map(({name}) => name);

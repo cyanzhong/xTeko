@@ -10,15 +10,15 @@ $ui.render({
       props: {
         type: $kbType.decimal
       },
-      layout: function(make) {
-        make.left.top.equalTo(10);
-        make.size.equalTo($size(128, 32));
+      layout({left, size}) {
+        left.top.equalTo(10);
+        size.equalTo($size(128, 32));
       },
       events: {
-        ready: function(sender) {
+        ready(sender) {
           sender.focus();
         },
-        changed: function(sender) {
+        changed(sender) {
           calculate();
         }
       }
@@ -30,25 +30,23 @@ $ui.render({
         align: $align.center,
         lines: 2
       },
-      layout: function(make) {
-        make.centerY.equalTo($("input"));
-        make.right.inset(10);
-        make.left.equalTo($("input").right).offset(10);
+      layout({centerY, right, left}) {
+        centerY.equalTo($("input"));
+        right.inset(10);
+        left.equalTo($("input").right).offset(10);
       }
     },
     {
       type: "tab",
       props: {
-        items: rates.map(function(item) {
-          return item * 100 + "%";
-        })
+        items: rates.map(item => `${item * 100}%`)
       },
-      layout: function(make) {
-        make.left.right.inset(10);
-        make.top.equalTo($("input").bottom).offset(10);
+      layout({left, top}) {
+        left.right.inset(10);
+        top.equalTo($("input").bottom).offset(10);
       },
       events: {
-        changed: function(sender) {
+        changed(sender) {
           calculate();
         }
       }
@@ -57,13 +55,9 @@ $ui.render({
 });
 
 function calculate() {
-  var origin = Number($("input").text);
-  var rate = rates[$("tab").index];
-  var tip = origin * rate;
+  const origin = Number($("input").text);
+  const rate = rates[$("tab").index];
+  const tip = origin * rate;
   $("label").text =
-    origin.toFixed(2) +
-    " + " +
-    tip.toFixed(2) +
-    " = " +
-    (origin + tip).toFixed(2);
+    `${origin.toFixed(2)} + ${tip.toFixed(2)} = ${(origin + tip).toFixed(2)}`;
 }
