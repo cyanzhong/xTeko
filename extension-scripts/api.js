@@ -1,4 +1,4 @@
-$app.appearance = "auto";
+$app.theme = "auto";
 
 // Prepare data
 const data = [
