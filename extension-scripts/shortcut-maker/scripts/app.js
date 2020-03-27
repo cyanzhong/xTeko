@@ -23,8 +23,9 @@ function init() {
             props: {
               id: "icon-image",
               bgcolor: $color("clear"),
-              image: utility.defaultIcon(),
-              smoothRadius: 17
+              smoothRadius: 17,
+              borderColor: $color("#bbbbbb"),
+              borderWidth: 1
             },
             layout: function(make, view) {
               make.centerX.equalTo(view.super);

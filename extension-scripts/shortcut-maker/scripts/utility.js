@@ -1,10 +1,3 @@
-function defaultIcon() {
-  var format = 2;
-  var scale = $device.info.screen.scale;
-  var image = $objc("UIImage").invoke("_applicationIconImageForBundleIdentifier:format:scale:", "", format, scale);
-  return image.rawValue();
-}
-
 function makeIcon(iconName, color) {
 
   var length = 180;
@@ -43,7 +36,6 @@ function dynamicInsets() {
 }
 
 module.exports = {
-  defaultIcon: defaultIcon,
   makeIcon: makeIcon,
   isIphoneX: isIphoneX,
   dynamicInsets: dynamicInsets,
