@@ -170,6 +170,9 @@ $define({
   type: `PKCanvasVC: ${ios13 ? "UIViewController<PKToolPickerObserver>" : "MarkupViewController"}`,
   props: ["canvas", "topLine", "bottomLine"],
   events: {
+    "canBecomeFirstResponder": () => {
+      return true;
+    },
     "viewDidLoad": () => {
       self.$super().$viewDidLoad();
       self.$setBackgroundColor($color("white").ocValue());
