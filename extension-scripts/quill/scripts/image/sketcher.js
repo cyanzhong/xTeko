@@ -271,6 +271,10 @@ $define({
       picker.$addObserver(canvas);
       picker.$setVisible_forFirstResponder(true, canvas);
       canvas.$becomeFirstResponder();
+
+      // UIKit trick to make sure toolpicker is visible
+      canvas.$resignFirstResponder();
+      canvas.$becomeFirstResponder();
     },
     "doneButtonTapped": () => {
       exportImage(self.$canvas(), image => {

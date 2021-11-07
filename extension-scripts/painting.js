@@ -1,4 +1,4 @@
-const __VERSION__ = "1.4";
+const __VERSION__ = "1.5";
 
 $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/MarkupUI.framework").$load();
 $objc("NSBundle").$bundleWithPath("/System/Library/PrivateFrameworks/PencilKit.framework").$load();
@@ -170,9 +170,6 @@ $define({
   type: `PKCanvasVC: ${ios13 ? "UIViewController<PKToolPickerObserver>" : "MarkupViewController"}`,
   props: ["canvas", "topLine", "bottomLine"],
   events: {
-    "canBecomeFirstResponder": () => {
-      return true;
-    },
     "viewDidLoad": () => {
       self.$super().$viewDidLoad();
       self.$setBackgroundColor($color("white").ocValue());
@@ -339,6 +336,10 @@ $define({
       const canvas = self.$canvas();
       picker.$addObserver(canvas);
       picker.$setVisible_forFirstResponder(true, canvas);
+      canvas.$becomeFirstResponder();
+
+      // UIKit trick to make sure toolpicker is visible
+      canvas.$resignFirstResponder();
       canvas.$becomeFirstResponder();
     },
     "closeButtonTapped": () => {
