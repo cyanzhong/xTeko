@@ -63,13 +63,3 @@ JSBox 对编程新手和有经验的工程师都是非常友好的，你不想�
 - [jsbox-ksc](https://github.com/mooz/jsbox-ksc): 为基于 Web 的编辑器提供键盘配置
 
 如果你有相关的有趣项目并且想要加入上述列表，欢迎[提交一个 PR！](https://github.com/cyanzhong/xTeko/pull/new/master)
-
-# 联系我们吧！
-
-当你在使用中碰到任何问题，无论是作为用户还是开发者，请通过以下方式与我们取得联系，感谢！
-
-- [社区](https://jsboxbbs.com)
-- [邮件](mailto:log.e@qq.com)
-- [Telegram](https://t.me/PinTG)
-- [Twitter](https://twitter.com/cyanapps)
-- [微博](https://weibo.com/0x00eeee)

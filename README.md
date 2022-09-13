@@ -63,13 +63,3 @@ We are still working on it and will introduce cooler features in the future.
 - [jsbox-ksc](https://github.com/mooz/jsbox-ksc): Keyconfig experience on web-based rich text editors in iOS
 
 If you have something interesting and want to join the list, feel free to [open a PR!](https://github.com/cyanzhong/xTeko/pull/new/master)
-
-# Contact us!
-
-Please contact us in following ways. Don't hesitate to report any issues. Thank you!
-
-- [Community](https://jsboxbbs.com)
-- [Email](mailto:log.e@qq.com)
-- [Telegram](https://t.me/PinTG)
-- [Twitter](https://twitter.com/cyanapps)
-- [Weibo](https://weibo.com/0x00eeee)
